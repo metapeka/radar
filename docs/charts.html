@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Данные — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Числа, которые лежат в основе разделов. Построены из таблиц сайта, а не из внешних датасетов — источник указан под каждым графиком.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span></button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd aria-hidden="true">/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html" class="active" aria-current="page">Данные</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.3 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <div class="crumbs"><a href="index.html">Главная</a><span class="sep">/</span><span>Начало</span><span class="sep">/</span><span class="here">Данные</span></div>
+      <h1>Данные</h1>
+      <blockquote>
+<p>Числа, которые лежат в основе разделов. Построены из таблиц сайта, а не из внешних датасетов — источник указан под каждым графиком.</p>
+</blockquote>
+<h2 id="cve-whatsapp-по-годам">CVE WhatsApp по годам</h2>
+<figure>
+<img src="assets/charts/cve.svg" alt="Столбчатая диаграмма: количество CVE WhatsApp по годам с 2019 по 2026. Максимум — три в 2019, 2025 и по два в 2020, 2022, 2023, 2026. Для 2021 и 2024 данных в таблице нет." />
+<figcaption aria-hidden="true">Столбчатая диаграмма: количество CVE WhatsApp по годам с 2019 по 2026. Максимум — три в 2019, 2025 и по два в 2020, 2022, 2023, 2026. Для 2021 и 2024 данных в таблице нет.</figcaption>
+</figure>
+<p>Диаграмма считает только те записи, которые перечислены в таблице на странице <a href="whatsapp.html">WhatsApp</a>. 2021 и 2024 помечены как «н/д»: в таблице для них нет строк, и это не то же самое, что ноль. Для 2024 в отчёте есть отдельная оговорка — отсутствие вендорских CVE является результатом проверки базы, а не доказательством «нулевого года».</p>
+<p>Что видно: пик 2019 года — эпоха VoIP-эксплойтов (CVE-2019-3568). После 2022 года критичность падает: в 2023–2026 нет ни одной уязвимости уровня 9.8, зато появляются логические ошибки в новых функциях — синхронизации устройств и AI-ответах.</p>
+<h2 id="функции-ios-по-версиям">Функции iOS по версиям</h2>
+<figure>
+<img src="assets/charts/ios.svg" alt="Матрица доступности шести функций безопасности iOS в версиях 16.7, 18.7 и 26.x. Stolen Device Protection отсутствует на 16.7; Background Security Improvements отсутствуют на обеих ветках 16 и 18." />
+<figcaption aria-hidden="true">Матрица доступности шести функций безопасности iOS в версиях 16.7, 18.7 и 26.x. Stolen Device Protection отсутствует на 16.7; Background Security Improvements отсутствуют на обеих ветках 16 и 18.</figcaption>
+</figure>
+<p>Матрица отвечает на практический вопрос: что даст обновление телефона. Например, <strong>Stolen Device Protection</strong> появляется только с iOS 17.3, а <strong>Background Security Improvements</strong> — с 26.1. Поэтому «у меня последняя версия для моей модели» и «у меня все функции» — разные утверждения.</p>
+<p>Источник — таблица на странице <a href="ios.html">iOS</a>. Для 26.x в таблице данных нет, поэтому везде стоит «н/д».</p>
+<h2 id="как-это-читать">Как это читать</h2>
+<ul>
+<li>Диаграмма не заменяет таблицу: в таблице есть номера CVE и оговорки, на графике — только количество.</li>
+<li>«Н/д» — это не ноль. Разница принципиальная: ноль означает проверенный факт, «н/д» — отсутствие данных.</li>
+<li>Данные лежат в <code>site/data/charts.json</code>, графики собираются из них при каждой сборке. Если поправить JSON, картинка изменится.</li>
+</ul>
+<h2 id="что-можно-добавить">Что можно добавить</h2>
+<ul>
+<li>Таймлайн инцидентов: события есть в JSON, но для графика нужен отбор — иначе 22 подписи на одной линии нечитаемы.</li>
+<li>Матрицу «вектор × платформа» — но она качественная, и любая числовая шкала там будет выдумкой.</li>
+<li>Динамику аудитории мессенджеров — требуются сторонние данные, которых у нас нет.</li>
+</ul>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="methodology.html"><span class="dir">Назад</span>Методика</a><a class="next" href="whatsapp.html"><span class="dir">Дальше</span>WhatsApp</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <nav class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#cve-whatsapp-по-годам">CVE WhatsApp по годам</a>
+<a class="d2" href="#функции-ios-по-версиям">Функции iOS по версиям</a>
+<a class="d2" href="#как-это-читать">Как это читать</a>
+<a class="d2" href="#что-можно-добавить">Что можно добавить</a>
+  </nav>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false" aria-label="Поиск по сайту">
+    <div id="searchResults" class="search-results" role="listbox" aria-live="polite" aria-label="Результаты поиска"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

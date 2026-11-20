@@ -7,31 +7,33 @@
 <meta name="description" content="Практическая вики: как устроена защита аккаунтов, устройств и переписки в WhatsApp, Telegram и Signal — и что конкретно проверять на macOS, Windows, Linux, iOS и Android.">
 <meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="assets/style.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
 <a class="skip" href="#main">К содержанию</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
 <header class="topbar">
-  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span></button>
   <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
   <div class="topbar-right">
-    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd aria-hidden="true">/</kbd></button>
     <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
   </div>
 </header>
 
 <div class="shell">
   <aside class="sidebar" id="sidebar">
-    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html" class="active" aria-current="page">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html" class="active" aria-current="page">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a></div>
 <div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a></div>
 <div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
 <div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
-    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+    <div class="sidebar-foot">Версия 0.3 · 21.11.2026</div>
   </aside>
 
   <main id="main" class="content">
     <article>
+      <div class="crumbs"></div>
       <h1>Защита личных данных и мессенджеров</h1>
       <blockquote>
 <p>Практическая вики: как устроена защита аккаунтов, устройств и переписки в WhatsApp, Telegram и Signal — и что конкретно проверять на macOS, Windows, Linux, iOS и Android.</p>
@@ -40,17 +42,17 @@
 <p>Большинство историй «взломали WhatsApp» — это не взлом шифрования. Это либо выманенный код подтверждения, либо подсунутый QR-код привязки устройства, либо украденная сессия с заражённого компьютера, либо незашифрованный облачный бэкап. Криптография в этих сценариях не участвует вообще.</p>
 <p>Отсюда устройство этой вики: сначала аккаунт и сессии, потом устройство и ОС, и только в конце — экзотика вроде zero-click. Порядок отражает частоту реальных инцидентов, а не сложность техник.</p>
 <h2 id="с-чего-начать">С чего начать</h2>
-<table>
+<table tabindex="0" aria-label="С чего начать">
 <colgroup>
 <col style="width: 33%" />
 <col style="width: 33%" />
 <col style="width: 33%" />
 </colgroup>
-<thead>
+<th scope="col"ead>
 <tr class="header">
-<th>Шаг</th>
-<th>Что сделать</th>
-<th>Время</th>
+<th scope="col">Шаг</th>
+<th scope="col">Что сделать</th>
+<th scope="col">Время</th>
 </tr>
 </thead>
 <tbody>
@@ -77,6 +79,10 @@
 <li><strong>Сквозное шифрование резервной копии</strong> — по умолчанию оно выключено.</li>
 <li><strong>Ревизия «Связанных устройств»</strong> — раз в месяц, вручную.</li>
 </ol>
+<h2 id="разделы">Разделы</h2>
+<div class="cards">
+<p><a class="card" href="whatsapp.html"><b>WhatsApp</b><span>E2EE, бэкапы, шесть векторов угона</span></a> <a class="card" href="ios.html"><b>iOS</b><span>Версии, Stolen Device Protection, MVT</span></a> <a class="card" href="android.html"><b>Android</b><span>Разрешения, банкеры, Advanced Protection</span></a> <a class="card" href="max.html"><b>MAX</b><span>Что собирает и что заявлено о шифровании</span></a> <a class="card" href="app-analysis.html"><b>Анализ приложений</b><span>Что клиент отправляет на самом деле</span></a> <a class="card" href="lab-bench.html"><b>Стенд</b><span>Изолированная сеть и мониторинг</span></a></p>
+</div>
 <h2 id="карта-разделов">Карта разделов</h2>
 <p><strong>Основы</strong></p>
 <ul>
@@ -106,11 +112,11 @@
 <li><a href="iphone-lab.html">iPhone как стенд</a> — подключение по проводу к Debian</li>
 </ul>
 <h2 id="статус-наполнения">Статус наполнения</h2>
-<table>
-<thead>
+<table tabindex="0" aria-label="Статус наполнения">
+<th scope="col"ead>
 <tr class="header">
-<th>Раздел</th>
-<th>Состояние</th>
+<th scope="col">Раздел</th>
+<th scope="col">Состояние</th>
 </tr>
 </thead>
 <tbody>
@@ -150,6 +156,10 @@
 <td>Диагностика с AI, iPhone-стенд</td>
 <td>готово</td>
 </tr>
+<tr class="even">
+<td>Данные и графики</td>
+<td>готово</td>
+</tr>
 </tbody>
 </table>
 <p>«Готово» здесь значит: есть проверяемые действия с приоритетом. Глубина L2 (пошаговые процедуры со скриншотами и разбором ложных срабатываний) добавляется по мере проверки на живых машинах.</p>
@@ -172,20 +182,21 @@
     </footer>
   </main>
 
-  <aside class="toc" aria-label="Содержание страницы">
+  <nav class="toc" aria-label="Содержание страницы">
     <div class="toc-title">На странице</div>
     <a class="d2" href="#зачем-это">Зачем это</a>
 <a class="d2" href="#с-чего-начать">С чего начать</a>
+<a class="d2" href="#разделы">Разделы</a>
 <a class="d2" href="#карта-разделов">Карта разделов</a>
 <a class="d2" href="#статус-наполнения">Статус наполнения</a>
 <a class="d2" href="#как-читать">Как читать</a>
-  </aside>
+  </nav>
 </div>
 
 <div class="search-modal" id="searchModal" hidden>
   <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
-    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
-    <div id="searchResults" class="search-results"></div>
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false" aria-label="Поиск по сайту">
+    <div id="searchResults" class="search-results" role="listbox" aria-live="polite" aria-label="Результаты поиска"></div>
     <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
   </div>
 </div>

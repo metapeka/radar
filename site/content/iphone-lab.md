@@ -51,7 +51,7 @@ sudo apt install libimobiledevice-utils ifuse
 
 **iOS 18.7.12 ставится только на iPhone XS, XS Max, XR и iPad 7-го поколения.** На iPhone X (A11) установка не пройдёт: ветка iOS 18 начинается с A12. Если обновление установилось — устройство XS/XR, а не X.
 
-В 18.7.12 закрыто шесть CVE: CoreUtils (спаривание Bluetooth без участия пользователя), AirPlay (обход лимита попыток кода), rapportd, Bluetooth use-after-free, MediaRemote (подключение к AirPlay с экрана блокировки). Эксплуатации в дикой природе Apple не заявляла.
+В 18.7.12 закрыто шесть CVE: CoreUtils (две, включая спаривание Bluetooth без участия пользователя), AirPlay (обход лимита попыток кода), rapportd, Bluetooth use-after-free, MediaRemote (подключение к AirPlay с экрана блокировки). Эксплуатации в дикой природе Apple не заявляла.
 
 ## Кто где исполняет
 

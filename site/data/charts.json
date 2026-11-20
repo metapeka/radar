@@ -1,0 +1,340 @@
+{
+  "meta": {
+    "generated": "2026-11-21",
+    "sources": [
+      "site/content/whatsapp.md",
+      "site/content/ios.md",
+      "site/content/max.md",
+      "research-whatsapp-security-2026-11-20.md"
+    ],
+    "notes": [
+      "CVE берутся только из таблицы раздела 4.1 отчёта (research-whatsapp-security-2026-11-20.md, строки 217-229).",
+      "2024 год в таблице отсутствует; отчёт явно описывает его как год без вендорских CVE (строка 367), поэтому он вынесен в cve_missing_years, а не записан нулём.",
+      "CVE-2023-38537/38538 — одна строка таблицы с двумя номерами; в ids записаны оба, в счётчике года — 1 строка."
+    ]
+  },
+  "cve_by_year": [
+    {
+      "year": 2019,
+      "count": 3,
+      "ids": [
+        "CVE-2019-3568",
+        "CVE-2019-11931",
+        "CVE-2019-11932"
+      ]
+    },
+    {
+      "year": 2020,
+      "count": 2,
+      "ids": [
+        "CVE-2020-1894",
+        "CVE-2020-1910"
+      ]
+    },
+    {
+      "year": 2022,
+      "count": 2,
+      "ids": [
+        "CVE-2022-36934",
+        "CVE-2022-27492"
+      ]
+    },
+    {
+      "year": 2023,
+      "count": 1,
+      "ids": [
+        "CVE-2023-38537",
+        "CVE-2023-38538"
+      ]
+    },
+    {
+      "year": 2025,
+      "count": 3,
+      "ids": [
+        "CVE-2025-30401",
+        "CVE-2025-55177",
+        "CVE-2025-55179"
+      ]
+    },
+    {
+      "year": 2026,
+      "count": 2,
+      "ids": [
+        "CVE-2026-23863",
+        "CVE-2026-23866"
+      ]
+    }
+  ],
+  "cve_missing_years": [
+    {
+      "year": 2021,
+      "reason": "Года нет в таблице раздела 4.1; в разделе 2 упоминается только утечка Facebook 2021 (не WhatsApp). В отчёте не утверждается, что CVE за 2021 нет.",
+      "source": "research-whatsapp-security-2026-11-20.md:217-229, :115-117"
+    },
+    {
+      "year": 2024,
+      "reason": "Года нет в таблице раздела 4.1. Отчёт прямо указывает: «У WhatsApp не найдено ни одной вендорской CVE за 2024 год. Это отрицательный результат (полнота базы OpenCVE), а не подтверждение „нулевого года“».",
+      "source": "research-whatsapp-security-2026-11-20.md:367"
+    }
+  ],
+  "claims_check": [
+    {
+      "file": "research-whatsapp-security-2026-11-20.md",
+      "line": 231,
+      "claim": "За 2023–2026 у WhatsApp всего девять CVE, и ни одна не достигает критичности 2022 года.",
+      "by_table": "В таблице за 2023–2026 шесть номеров CVE: 2023 — 2 (CVE-2023-38537, CVE-2023-38538 в одной строке), 2024 — 0 строк, 2025 — 3, 2026 — 2. Итого 7 строк / 6 УНИКАЛЬНЫХ номеров (без 2024 года).",
+      "verdict": "mismatch",
+      "difference": "8 уникальных CVE (или 9 строк с 2024, не указанным в таблице) в расчёт не сходится: за 2023–2025 без 2024 получается 5 строк и 6 номеров, за 2023–2026 — 7 строк и 8 уникальных номеров. Цифра «девять» из таблицы не получается ни в одном варианте подсчёта."
+    },
+    {
+      "file": "research-whatsapp-security-2026-11-20.md",
+      "line": 231,
+      "claim": "«ни одна не достигает критичности 2022 года»",
+      "by_table": "Согласуется: в 2022 указан CVE-2022-36934 (CVSS 9.8); в 2023–2026 оценок критичности в таблице нет.",
+      "verdict": "consistent",
+      "difference": null
+    },
+    {
+      "file": "research-whatsapp-security-2026-11-20.md",
+      "line": 367,
+      "claim": "«2024 год без CVE» — у WhatsApp не найдено ни одной вендорской CVE за 2024 год.",
+      "by_table": "Согласуется: записей за 2024 в таблице нет.",
+      "verdict": "consistent",
+      "difference": null
+    },
+    {
+      "file": "site/content/whatsapp.md",
+      "line": 19,
+      "claim": "«Подтверждённых случаев взлома инфраструктуры WhatsApp с кражей переписки нет»",
+      "by_table": "Согласуется с разделом 2 отчёта: все события — атака на устройство, enumeration или чужая утечка.",
+      "verdict": "consistent",
+      "difference": null
+    },
+    {
+      "file": "site/content/whatsapp.md",
+      "line": 63,
+      "claim": "CVE-2025-55177 эксплуатировалась в дикой природе и закрыта патчем.",
+      "by_table": "Согласуется: в таблице «Да, в связке с Apple CVE-2025-43300; в CISA KEV».",
+      "verdict": "consistent",
+      "difference": null
+    }
+  ],
+  "timeline_whatsapp": [
+    {
+      "date": "2019-05",
+      "label": "Pegasus: эксплойт VoIP-стека, ~1 400 устройств",
+      "type": "attack"
+    },
+    {
+      "date": "2019-10",
+      "label": "Иск WhatsApp/Meta против NSO в суде США",
+      "type": "regulation"
+    },
+    {
+      "date": "2021-04",
+      "label": "Утечка 533 млн пользователей Facebook, не WhatsApp",
+      "type": "leak"
+    },
+    {
+      "date": "2022-11",
+      "label": "Продажа 487 млн номеров; WhatsApp утечку отрицал",
+      "type": "leak"
+    },
+    {
+      "date": "2022-11",
+      "label": "WSJ: захваты аккаунтов через инструмент Meta «Oops»",
+      "type": "leak"
+    },
+    {
+      "date": "2023-01",
+      "label": "Citizen Lab/TAG: iOS-цепочка Intellexa для Египта",
+      "type": "attack"
+    },
+    {
+      "date": "2024-12",
+      "label": "WhatsApp пресёк серверный 0-day Paragon без присвоения CVE",
+      "type": "attack"
+    },
+    {
+      "date": "2024-12",
+      "label": "Суд США: ответственность NSO по иску WhatsApp",
+      "type": "regulation"
+    },
+    {
+      "date": "2025-01",
+      "label": "Уведомлены ~90 жертв Paragon; cease-and-desist Paragon",
+      "type": "attack"
+    },
+    {
+      "date": "2025-03",
+      "label": "Citizen Lab описала инфраструктуру Graphite и заказчиков",
+      "type": "attack"
+    },
+    {
+      "date": "2025-05",
+      "label": "Присяжные: $167,25 млн штрафных и $444 719 NSO",
+      "type": "regulation"
+    },
+    {
+      "date": "2025-06",
+      "label": "Первое форензическое подтверждение Graphite на iPhone",
+      "type": "attack"
+    },
+    {
+      "date": "2025-08",
+      "label": "Роскомнадзор ограничивает звонки в WhatsApp и Telegram",
+      "type": "regulation"
+    },
+    {
+      "date": "2025-10",
+      "label": "Штрафные снижены до ~$4 млн; запрет NSO атаковать",
+      "type": "regulation"
+    },
+    {
+      "date": "2025-10",
+      "label": "Роскомнадзор подтвердил частичное ограничение работы сервиса",
+      "type": "regulation"
+    },
+    {
+      "date": "2025-11",
+      "label": "Перечислено 3,5 млрд аккаунтов; Meta отрицала утечку",
+      "type": "leak"
+    },
+    {
+      "date": "2025-11",
+      "label": "Апелляция NSO в Девятом округе",
+      "type": "regulation"
+    },
+    {
+      "date": "2025-12",
+      "label": "«Intellexa Leaks»; GTIG: 15 zero-day с 2021 года",
+      "type": "attack"
+    },
+    {
+      "date": "2026-03",
+      "label": "Четвёртый обход View Once; Meta патчить отказалась",
+      "type": "leak"
+    },
+    {
+      "date": "2026-06",
+      "label": "Новая NSO-кампания; ходатайство о неуважении (23)",
+      "type": "attack"
+    },
+    {
+      "date": "2026-08",
+      "label": "С 25 августа PIN двухшаговой проверки заменяется паролем",
+      "type": "release"
+    },
+    {
+      "date": "2026-10",
+      "label": "Суд отклонил ходатайство о неуважении: стандарт не достигнут",
+      "type": "regulation"
+    }
+  ],
+  "ios_matrix": [
+    {
+      "feature": "Lockdown Mode",
+      "min_version": "16.0",
+      "v16": "yes",
+      "v18": "yes",
+      "v26": "not_guaranteed"
+    },
+    {
+      "feature": "Advanced Data Protection (iCloud)",
+      "min_version": "16.2",
+      "v16": "yes",
+      "v18": "yes",
+      "v26": "not_guaranteed"
+    },
+    {
+      "feature": "USB Restricted Mode",
+      "min_version": "11.4.1",
+      "v16": "yes",
+      "v18": "yes",
+      "v26": "not_guaranteed"
+    },
+    {
+      "feature": "Stolen Device Protection",
+      "min_version": "17.3",
+      "v16": "no",
+      "v18": "yes",
+      "v26": "not_guaranteed"
+    },
+    {
+      "feature": "Apple Threat Notifications",
+      "min_version": "17.6+/18",
+      "v16": "not_guaranteed",
+      "v18": "yes",
+      "v26": "not_guaranteed"
+    },
+    {
+      "feature": "Background Security Improvements",
+      "min_version": "26.1",
+      "v16": "no",
+      "v18": "no",
+      "v26": "not_guaranteed"
+    }
+  ],
+  "max_events": [
+    {
+      "date": "2025-03",
+      "label": "Запуск (бета)",
+      "status": "stated"
+    },
+    {
+      "date": "2025-08",
+      "label": "Статический разбор APK: Signal/Axolotl/Matrix не найдены",
+      "status": "stated"
+    },
+    {
+      "date": "2025-09",
+      "label": "Предустановка с 1 сентября 2025 по 156-ФЗ от 24.06.2025",
+      "status": "confirmed"
+    },
+    {
+      "date": "2025-09",
+      "label": "Пассивный анализ трафика 30 дней: трекеров не выявлено",
+      "status": "stated"
+    },
+    {
+      "date": "2025-10",
+      "label": "Заявление об утечке 46 млн строк опровергнуто",
+      "status": "unconfirmed"
+    },
+    {
+      "date": "2026-03",
+      "label": "Аудитория: 100 млн зарегистрированных, 70 млн DAU",
+      "status": "stated"
+    },
+    {
+      "date": "2026-04",
+      "label": "Позиция компании по классификации Cloudflare",
+      "status": "stated"
+    },
+    {
+      "date": "2026-05",
+      "label": "Разбор APK: MyTracker, фингерпринт, скрытый SDK",
+      "status": "stated"
+    },
+    {
+      "date": "2026-05",
+      "label": "Найдена отключённая проверка сертификата в звонках",
+      "status": "stated"
+    },
+    {
+      "date": "2026-06",
+      "label": "Удаление из App Store (до 04.06.2026)",
+      "status": "confirmed"
+    },
+    {
+      "date": "2026-06",
+      "label": "Удаление из AppGallery (до 09.06.2026)",
+      "status": "confirmed"
+    },
+    {
+      "date": "2026-09",
+      "label": "Политика конфиденциальности (редакция 25.09.2026)",
+      "status": "confirmed"
+    }
+  ]
+}

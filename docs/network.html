@@ -7,47 +7,49 @@
 <meta name="description" content="Пока устройство в чужой сети, половина локальных настроек не имеет значения: трафик можно перехватить, а DNS — подменить.">
 <meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="assets/style.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
 <a class="skip" href="#main">К содержанию</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
 <header class="topbar">
-  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span></button>
   <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
   <div class="topbar-right">
-    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd aria-hidden="true">/</kbd></button>
     <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
   </div>
 </header>
 
 <div class="shell">
   <aside class="sidebar" id="sidebar">
-    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a></div>
 <div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a></div>
 <div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
 <div class="nav-group"><div class="nav-title">Практика</div><a href="network.html" class="active" aria-current="page">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
-    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+    <div class="sidebar-foot">Версия 0.3 · 21.11.2026</div>
   </aside>
 
   <main id="main" class="content">
     <article>
+      <div class="crumbs"><a href="index.html">Главная</a><span class="sep">/</span><span>Практика</span><span class="sep">/</span><span class="here">Сеть и периметр</span></div>
       <h1>Сеть и периметр</h1>
       <blockquote>
 <p>Пока устройство в чужой сети, половина локальных настроек не имеет значения: трафик можно перехватить, а DNS — подменить.</p>
 </blockquote>
 <h2 id="что-защищаем">Что защищаем</h2>
-<table>
+<table tabindex="0" aria-label="Что защищаем">
 <colgroup>
 <col style="width: 33%" />
 <col style="width: 33%" />
 <col style="width: 33%" />
 </colgroup>
-<thead>
+<th scope="col"ead>
 <tr class="header">
-<th>Угроза</th>
-<th>Пример</th>
-<th>Что помогает</th>
+<th scope="col">Угроза</th>
+<th scope="col">Пример</th>
+<th scope="col">Что помогает</th>
 </tr>
 </thead>
 <tbody>
@@ -91,17 +93,17 @@
 </ul>
 <h2 id="dns">DNS</h2>
 <p>DNS видит, к каким доменам вы обращаетесь, — даже если трафик зашифрован. Варианты:</p>
-<table>
+<table tabindex="0" aria-label="DNS">
 <colgroup>
 <col style="width: 33%" />
 <col style="width: 33%" />
 <col style="width: 33%" />
 </colgroup>
-<thead>
+<th scope="col"ead>
 <tr class="header">
-<th>Вариант</th>
-<th>Плюс</th>
-<th>Минус</th>
+<th scope="col">Вариант</th>
+<th scope="col">Плюс</th>
+<th scope="col">Минус</th>
 </tr>
 </thead>
 <tbody>
@@ -131,15 +133,15 @@
 <li>VPN уместен, но он не защищает от фишинга — только от перехвата канала.</li>
 </ul>
 <h2 id="vpn-что-реально-даёт">VPN: что реально даёт</h2>
-<table>
+<table tabindex="0" aria-label="VPN: что реально даёт">
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
 </colgroup>
-<thead>
+<th scope="col"ead>
 <tr class="header">
-<th>Защищает</th>
-<th>Не защищает</th>
+<th scope="col">Защищает</th>
+<th scope="col">Не защищает</th>
 </tr>
 </thead>
 <tbody>
@@ -185,7 +187,7 @@
     </footer>
   </main>
 
-  <aside class="toc" aria-label="Содержание страницы">
+  <nav class="toc" aria-label="Содержание страницы">
     <div class="toc-title">На странице</div>
     <a class="d2" href="#что-защищаем">Что защищаем</a>
 <a class="d2" href="#роутер">Роутер</a>
@@ -196,13 +198,13 @@
 <a class="d3" href="#p0">P0</a>
 <a class="d3" href="#p1">P1</a>
 <a class="d3" href="#p2">P2</a>
-  </aside>
+  </nav>
 </div>
 
 <div class="search-modal" id="searchModal" hidden>
   <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
-    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
-    <div id="searchResults" class="search-results"></div>
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false" aria-label="Поиск по сайту">
+    <div id="searchResults" class="search-results" role="listbox" aria-live="polite" aria-label="Результаты поиска"></div>
     <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
   </div>
 </div>

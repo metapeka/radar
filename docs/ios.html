@@ -7,44 +7,49 @@
 <meta name="description" content="На iPhone почти нет «вирусного» вектора — зато есть кража кода-пароля, подглядывание и профили конфигурации. И есть жёсткая привязка защиты к версии iOS.">
 <meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="assets/style.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
 <a class="skip" href="#main">К содержанию</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
 <header class="topbar">
-  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span></button>
   <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
   <div class="topbar-right">
-    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd aria-hidden="true">/</kbd></button>
     <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
   </div>
 </header>
 
 <div class="shell">
   <aside class="sidebar" id="sidebar">
-    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a></div>
 <div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a></div>
 <div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html" class="active" aria-current="page">iOS</a><a href="android.html">Android</a></div>
 <div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
-    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+    <div class="sidebar-foot">Версия 0.3 · 21.11.2026</div>
   </aside>
 
   <main id="main" class="content">
     <article>
+      <div class="crumbs"><a href="index.html">Главная</a><span class="sep">/</span><span>Платформы</span><span class="sep">/</span><span class="here">iOS</span></div>
       <h1>iOS</h1>
       <blockquote>
 <p>На iPhone почти нет «вирусного» вектора — зато есть кража кода-пароля, подглядывание и профили конфигурации. И есть жёсткая привязка защиты к версии iOS.</p>
 </blockquote>
+<div class="callout warning"><span class="callout-title">Важно</span>
+<p>Функции безопасности привязаны к версии системы, а не к модели. Один и тот же пункт меню может отсутствовать на старом устройстве — и это не ошибка, а граница поддержки. Сверяйтесь с таблицей ниже до того, как искать настройку.</p>
+</div>
 <h2 id="версии-и-возможности">Версии и возможности</h2>
 <p>Поддержка функций зависит не от модели, а от версии системы. Это первое, что надо проверить.</p>
-<table>
-<thead>
+<table tabindex="0" aria-label="Версии и возможности">
+<th scope="col"ead>
 <tr class="header">
-<th>Функция</th>
-<th>С какой версии</th>
-<th>На iOS 18.7.x</th>
-<th>На iOS 16.7.x</th>
+<th scope="col">Функция</th>
+<th scope="col">С какой версии</th>
+<th scope="col">На iOS 18.7.x</th>
+<th scope="col">На iOS 16.7.x</th>
 </tr>
 </thead>
 <tbody>
@@ -87,21 +92,21 @@
 </tbody>
 </table>
 <p>Важно про модели: <strong>iOS 18 поддерживают iPhone XS, XS Max и XR и новее.</strong> iPhone X (A11) на iOS 18 не обновляется — его последняя версия 16.7.16 (11 мая 2026). Если на устройстве «iPhone X» установилась 18.7.12, это XS/XR, а не X.</p>
-<p>Актуальная ветка 18.7 на ноябрь 2026 — <strong>18.7.12 (сборка 22H390, 9 ноября 2026)</strong>: шесть CVE в Bluetooth, AirPlay, CoreUtils, MediaRemote и rapportd, включая спаривание Bluetooth без участия пользователя. Эксплуатации в дикой природе Apple не заявляла.</p>
+<p>Актуальная ветка 18.7 на ноябрь 2026 — <strong>18.7.12 (сборка 22H390, 9 ноября 2026)</strong>: шесть CVE в Bluetooth, AirPlay, CoreUtils (две), MediaRemote и rapportd, включая спаривание Bluetooth без участия пользователя. Эксплуатации в дикой природе Apple не заявляла.</p>
 <h2 id="ключевые-механизмы">Ключевые механизмы</h2>
-<table>
+<table tabindex="0" aria-label="Ключевые механизмы">
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
 <col style="width: 25%" />
 <col style="width: 25%" />
 </colgroup>
-<thead>
+<th scope="col"ead>
 <tr class="header">
-<th>Механизм</th>
-<th>Где</th>
-<th>Что даёт</th>
-<th>Приоритет</th>
+<th scope="col">Механизм</th>
+<th scope="col">Где</th>
+<th scope="col">Что даёт</th>
+<th scope="col">Приоритет</th>
 </tr>
 </thead>
 <tbody>
@@ -109,7 +114,7 @@
 <td>Код-пароль 6+</td>
 <td>Face ID и код-пароль</td>
 <td>Базовая защита; 4 цифры — плохая идея</td>
-<td>P0</td>
+<td><span class="badge p0">P0</span></td>
 </tr>
 <tr class="even">
 <td>Stolen Device Protection</td>
@@ -121,31 +126,31 @@
 <td>Advanced Data Protection</td>
 <td>Apple Account → iCloud</td>
 <td>E2EE для бэкапа, фото, заметок</td>
-<td>P0</td>
+<td><span class="badge p0">P0</span></td>
 </tr>
 <tr class="even">
 <td>Lockdown Mode</td>
 <td>Конфиденциальность и безопасность</td>
 <td>Режет поверхность атаки: вложения, сложный веб, профили</td>
-<td>P1</td>
+<td><span class="badge p1">P1</span></td>
 </tr>
 <tr class="odd">
 <td>USB Restricted Mode</td>
 <td>Автоматически</td>
 <td>Через час блокировки порт не передаёт данные</td>
-<td>P1</td>
+<td><span class="badge p1">P1</span></td>
 </tr>
 <tr class="even">
 <td>Профили конфигурации</td>
 <td>Основные → VPN и управление устройством</td>
 <td>Должно быть пусто</td>
-<td>P0</td>
+<td><span class="badge p0">P0</span></td>
 </tr>
 <tr class="odd">
 <td>Сертификаты</td>
 <td>Основные → Об этом устройстве</td>
 <td>Пользовательский корневой CA = MITM</td>
-<td>P0</td>
+<td><span class="badge p0">P0</span></td>
 </tr>
 </tbody>
 </table>
@@ -156,17 +161,17 @@
 <li><strong>Установленный корневой сертификат</strong> с полным доверием позволяет перехватывать TLS в приложениях, которые доверяют системным CA. Мессенджеры с pinning обычно защищены, браузер — нет.</li>
 </ul>
 <h2 id="обнаружение-компрометации">Обнаружение компрометации</h2>
-<table>
+<table tabindex="0" aria-label="Обнаружение компрометации">
 <colgroup>
 <col style="width: 33%" />
 <col style="width: 33%" />
 <col style="width: 33%" />
 </colgroup>
-<thead>
+<th scope="col"ead>
 <tr class="header">
-<th>Инструмент</th>
-<th>Как работает</th>
-<th>Ограничение</th>
+<th scope="col">Инструмент</th>
+<th scope="col">Как работает</th>
+<th scope="col">Ограничение</th>
 </tr>
 </thead>
 <tbody>
@@ -241,7 +246,7 @@ mvt-ios check-backup --iocs malware.stix2 ./decrypted</code></pre>
     </footer>
   </main>
 
-  <aside class="toc" aria-label="Содержание страницы">
+  <nav class="toc" aria-label="Содержание страницы">
     <div class="toc-title">На странице</div>
     <a class="d2" href="#версии-и-возможности">Версии и возможности</a>
 <a class="d2" href="#ключевые-механизмы">Ключевые механизмы</a>
@@ -253,13 +258,13 @@ mvt-ios check-backup --iocs malware.stix2 ./decrypted</code></pre>
 <a class="d3" href="#p2">P2</a>
 <a class="d2" href="#мессенджеры-на-ios">Мессенджеры на iOS</a>
 <a class="d2" href="#пределы">Пределы</a>
-  </aside>
+  </nav>
 </div>
 
 <div class="search-modal" id="searchModal" hidden>
   <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
-    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
-    <div id="searchResults" class="search-results"></div>
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false" aria-label="Поиск по сайту">
+    <div id="searchResults" class="search-results" role="listbox" aria-live="polite" aria-label="Результаты поиска"></div>
     <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
   </div>
 </div>

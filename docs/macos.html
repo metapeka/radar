@@ -7,49 +7,51 @@
 <meta name="description" content="Основной риск на Mac — не «вирус», а выданные когда-то разрешения и автозагрузка, о которой вы забыли.">
 <meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="assets/style.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
 <a class="skip" href="#main">К содержанию</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
 <header class="topbar">
-  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span></button>
   <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
   <div class="topbar-right">
-    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd aria-hidden="true">/</kbd></button>
     <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
   </div>
 </header>
 
 <div class="shell">
   <aside class="sidebar" id="sidebar">
-    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a></div>
 <div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a></div>
 <div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html" class="active" aria-current="page">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
 <div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
-    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+    <div class="sidebar-foot">Версия 0.3 · 21.11.2026</div>
   </aside>
 
   <main id="main" class="content">
     <article>
+      <div class="crumbs"><a href="index.html">Главная</a><span class="sep">/</span><span>Платформы</span><span class="sep">/</span><span class="here">macOS</span></div>
       <h1>macOS</h1>
       <blockquote>
 <p>Основной риск на Mac — не «вирус», а выданные когда-то разрешения и автозагрузка, о которой вы забыли.</p>
 </blockquote>
 <h2 id="механизмы">Механизмы</h2>
-<table>
+<table tabindex="0" aria-label="Механизмы">
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
 <col style="width: 25%" />
 <col style="width: 25%" />
 </colgroup>
-<thead>
+<th scope="col"ead>
 <tr class="header">
-<th>Механизм</th>
-<th>Где включить</th>
-<th>Что даёт</th>
-<th>Приоритет</th>
+<th scope="col">Механизм</th>
+<th scope="col">Где включить</th>
+<th scope="col">Что даёт</th>
+<th scope="col">Приоритет</th>
 </tr>
 </thead>
 <tbody>
@@ -57,19 +59,19 @@
 <td>FileVault</td>
 <td>Privacy &amp; Security → FileVault</td>
 <td>Шифрование тома; без пароля данные не читаются</td>
-<td>P0</td>
+<td><span class="badge p0">P0</span></td>
 </tr>
 <tr class="even">
 <td>Gatekeeper</td>
 <td>Privacy &amp; Security → Allow applications from</td>
 <td>Проверка подписи и нотаризации при первом запуске</td>
-<td>P0</td>
+<td><span class="badge p0">P0</span></td>
 </tr>
 <tr class="odd">
 <td>SIP</td>
 <td>Включён по умолчанию, <code>csrutil status</code></td>
 <td>Защита системных путей от подмены</td>
-<td>P0</td>
+<td><span class="badge p0">P0</span></td>
 </tr>
 <tr class="even">
 <td>XProtect</td>
@@ -87,25 +89,25 @@
 <td>Lockdown Mode</td>
 <td>Privacy &amp; Security → Lockdown Mode</td>
 <td>Сокращает поверхность атаки; ломает часть функций</td>
-<td>P1</td>
+<td><span class="badge p1">P1</span></td>
 </tr>
 <tr class="odd">
 <td>Advanced Data Protection</td>
 <td>Apple Account → iCloud</td>
 <td>E2EE для бэкапа iCloud, включая бэкап WhatsApp</td>
-<td>P1</td>
+<td><span class="badge p1">P1</span></td>
 </tr>
 <tr class="even">
 <td>Application Firewall</td>
 <td>Network → Firewall</td>
 <td>Блокировка входящих, скрытый режим</td>
-<td>P1</td>
+<td><span class="badge p1">P1</span></td>
 </tr>
 <tr class="odd">
 <td>Background Task Management</td>
 <td>Автоматически (macOS 26)</td>
 <td>Спрашивает разрешение на фоновые задачи</td>
-<td>P1</td>
+<td><span class="badge p1">P1</span></td>
 </tr>
 </tbody>
 </table>
@@ -120,15 +122,15 @@
 </ul>
 <p>Проверка: <code>Privacy &amp; Security → Privacy</code>. Правило: если приложение не делает ничего, что требует этого разрешения, — выключить. «На всякий случай» здесь не работает.</p>
 <h2 id="автозагрузка-и-постоянные-механизмы">Автозагрузка и постоянные механизмы</h2>
-<table>
+<table tabindex="0" aria-label="Автозагрузка и постоянные механизмы">
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
 </colgroup>
-<thead>
+<th scope="col"ead>
 <tr class="header">
-<th>Место</th>
-<th>Что смотреть</th>
+<th scope="col">Место</th>
+<th scope="col">Что смотреть</th>
 </tr>
 </thead>
 <tbody>
@@ -164,15 +166,15 @@
 </table>
 <p>Расширения ядра и системные расширения — <code>kmutil showloaded</code> и раздел Extensions. На Apple silicon кекст-расширения почти вышли из употребления, и их наличие — повод для вопроса.</p>
 <h2 id="инструменты">Инструменты</h2>
-<table>
+<table tabindex="0" aria-label="Инструменты">
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
 </colgroup>
-<thead>
+<th scope="col"ead>
 <tr class="header">
-<th>Инструмент</th>
-<th>Что делает</th>
+<th scope="col">Инструмент</th>
+<th scope="col">Что делает</th>
 </tr>
 </thead>
 <tbody>
@@ -207,17 +209,17 @@
 </tbody>
 </table>
 <h2 id="мессенджеры-на-mac">Мессенджеры на Mac</h2>
-<table>
+<table tabindex="0" aria-label="Мессенджеры на Mac">
 <colgroup>
 <col style="width: 33%" />
 <col style="width: 33%" />
 <col style="width: 33%" />
 </colgroup>
-<thead>
+<th scope="col"ead>
 <tr class="header">
-<th>Приложение</th>
-<th>Где данные</th>
-<th>Чем защищать</th>
+<th scope="col">Приложение</th>
+<th scope="col">Где данные</th>
+<th scope="col">Чем защищать</th>
 </tr>
 </thead>
 <tbody>
@@ -280,7 +282,7 @@
     </footer>
   </main>
 
-  <aside class="toc" aria-label="Содержание страницы">
+  <nav class="toc" aria-label="Содержание страницы">
     <div class="toc-title">На странице</div>
     <a class="d2" href="#механизмы">Механизмы</a>
 <a class="d2" href="#разрешения-которые-надо-перечитать">Разрешения, которые надо перечитать</a>
@@ -292,13 +294,13 @@
 <a class="d3" href="#p1">P1</a>
 <a class="d3" href="#p2">P2</a>
 <a class="d2" href="#пределы">Пределы</a>
-  </aside>
+  </nav>
 </div>
 
 <div class="search-modal" id="searchModal" hidden>
   <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
-    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
-    <div id="searchResults" class="search-results"></div>
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false" aria-label="Поиск по сайту">
+    <div id="searchResults" class="search-results" role="listbox" aria-live="polite" aria-label="Результаты поиска"></div>
     <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
   </div>
 </div>
