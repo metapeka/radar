@@ -13,10 +13,12 @@ DATE = "21.11.2026"
 
 NAV = [
     ("Начало", [("index", "Обзор"), ("threat-model", "Модель угроз"), ("methodology", "Методика")]),
-    ("Мессенджеры", [("whatsapp", "WhatsApp"), ("telegram", "Telegram"), ("signal", "Signal")]),
+    ("Мессенджеры", [("whatsapp", "WhatsApp"), ("telegram", "Telegram"), ("signal", "Signal"),
+                     ("max", "MAX")]),
     ("Платформы", [("macos", "macOS"), ("windows", "Windows"), ("linux", "Linux"),
                    ("ios", "iOS"), ("android", "Android")]),
     ("Практика", [("network", "Сеть и периметр"), ("monitoring", "Мониторинг"),
+                  ("app-analysis", "Анализ приложений"), ("lab-bench", "Стенд для анализа"),
                   ("incident-response", "Реагирование"), ("diagnostics-ai", "Диагностика с AI"),
                   ("iphone-lab", "iPhone как стенд")]),
 ]

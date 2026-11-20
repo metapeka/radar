@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MAX — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Российский мессенджер-суперапп. Ключевое отличие от WhatsApp и Signal: сквозное шифрование официально не заявлено, а часть данных по политике передаётся по запросу госорганов.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html" class="active" aria-current="page">MAX</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <h1>MAX</h1>
+      <blockquote>
+<p>Российский мессенджер-суперапп. Ключевое отличие от WhatsApp и Signal: сквозное шифрование официально не заявлено, а часть данных по политике передаётся по запросу госорганов.</p>
+</blockquote>
+<h2 id="что-это">Что это</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Параметр</th>
+<th>Значение</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Оператор</td>
+<td>ООО «МАХ» (ИНН 9714058267), разработка — VK</td>
+</tr>
+<tr class="even">
+<td>Запуск (бета)</td>
+<td>26 марта 2025</td>
+</tr>
+<tr class="odd">
+<td>Платформы</td>
+<td>Android, iOS, Windows, macOS, Linux, веб</td>
+</tr>
+<tr class="even">
+<td>Распространение</td>
+<td>RuStore, сайт, AppGallery (до 09.06.2026), App Store (до 04.06.2026)</td>
+</tr>
+<tr class="odd">
+<td>Предустановка</td>
+<td>С 1 сентября 2025, ФЗ № 156-ФЗ от 24.06.2025</td>
+</tr>
+<tr class="even">
+<td>Аудитория</td>
+<td>100 млн зарегистрированных, 70 млн DAU — данные компании, март 2026</td>
+</tr>
+</tbody>
+</table>
+<p>Аудитория и цифры — заявление оператора, независимого аудита нет.</p>
+<h2 id="шифрование">Шифрование</h2>
+<p>Что важно понимать до разговора о приватности:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Утверждение</th>
+<th>Статус</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>«E2EE есть»</td>
+<td><strong>Официально не заявлено</strong>: в соглашении и политике слова «шифрование» нет</td>
+</tr>
+<tr class="even">
+<td>Транспортное шифрование TLS</td>
+<td>Есть, это минимум для любого клиента</td>
+</tr>
+<tr class="odd">
+<td>Signal/Axolotl/Matrix</td>
+<td>Не найдены при статическом разборе APK (август 2025)</td>
+</tr>
+<tr class="even">
+<td>Звонки</td>
+<td>WebRTC; в кастомной реализации находили отключённую проверку сертификата сервера (май 2026)</td>
+</tr>
+</tbody>
+</table>
+<p>Вывод: по состоянию на ноябрь 2026 MAX ближе к облачному мессенджеру без E2EE, чем к Signal. Для сравнения: в Telegram E2EE есть хотя бы в секретных чатах, здесь публично не заявлено вообще.</p>
+<h2 id="какие-данные-собираются">Какие данные собираются</h2>
+<p>По политике конфиденциальности (редакция 25.09.2026):</p>
+<ul>
+<li>имя, номер телефона, внутренний ID;</li>
+<li>IP-адрес, ОС, браузер, <strong>местоположение</strong>, оператор связи;</li>
+<li>данные адресной книги;</li>
+<li>активность в интерфейсе (клики), cookies;</li>
+<li>данные ЕСИА при подтверждении аккаунта;</li>
+<li>данные ГИС для Цифрового ID (статус совершеннолетия, льготные категории).</li>
+</ul>
+<p>Отдельно, и это главное:</p>
+<ul>
+<li><strong>Передача госорганам</strong> прямо предусмотрена: «исполнительные и судебные органы… по официальному и законному требованию».</li>
+<li><strong>Автоматическое сканирование</strong> сообщений фильтрами допускается соглашением (п. 5.5) — на спам и незаконный контент.</li>
+<li>Сроки хранения конкретных категорий не названы: «до достижения целей, а после — в течение срока, установленного законодательством».</li>
+<li>Трансграничная передача не осуществляется, хранение — в РФ.</li>
+</ul>
+<p>Это не «утечка» и не «взлом». Это описанная модель обработки, с которой пользователь соглашается при регистрации.</p>
+<h2 id="телеметрия-два-разных-результата">Телеметрия: два разных результата</h2>
+<p>Публичные исследования дают несовпадающую картину — и это важно показать честно.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Исследование</th>
+<th>Метод</th>
+<th>Результат</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Август 2025</td>
+<td>Статический разбор APK</td>
+<td>Стандартный набор разрешений мессенджера; Firebase нет, есть Huawei HMS</td>
+</tr>
+<tr class="even">
+<td>Сентябрь 2025</td>
+<td>Пассивный анализ трафика 30 дней через AdGuard</td>
+<td>Трекеров не выявлено</td>
+</tr>
+<tr class="odd">
+<td>Май 2026</td>
+<td>Статический разбор APK</td>
+<td>MyTracker SDK, отправка списка установленных приложений, фингерпринт устройства, скрытый SDK с отправкой IP и флага VPN, проверка доступности хостов Telegram/WhatsApp</td>
+</tr>
+</tbody>
+</table>
+<p>Разные методики и разные версии приложения. Пассивный анализ видит только то, что прошло через сеть и не зашифровано на уровне приложения; статический — только то, что не обфусцировано. Ни один из них не даёт полной картины.</p>
+<p>Позиция компании (апрель 2026): классификация Cloudflare вызвана «неверной интерпретацией заголовков веб-аналитики», приложение проходит аудиты, работает bug bounty. По пунктам выводы исследования публично не опровергнуты.</p>
+<p><strong>Как это читать:</strong> относитесь к обоим результатам как к гипотезам с датой, а не как к приговору или оправданию. Проверить на своей версии можно методикой из <a href="app-analysis.html">анализа приложений</a>.</p>
+<h2 id="разрешения">Разрешения</h2>
+<p>Android-манифест (по публичному разбору): контакты (чтение и запись), камера, микрофон, точная геолокация (включая фоновую), доступ к медиа. Для мессенджера это ожидаемо, но каждое разрешение стоит проверить: геолокация в фоне нужна далеко не всегда.</p>
+<p>iOS: отдельного публичного разбора разрешений не найдено.</p>
+<h2 id="почему-это-важно-для-вашей-переписки">Почему это важно для вашей переписки</h2>
+<ol type="1">
+<li><strong>Нет E2EE</strong> — значит, содержимое технически доступно серверу, а не только участникам.</li>
+<li><strong>Сканирование фильтрами</strong> разрешено соглашением.</li>
+<li><strong>Передача по запросу</strong> описана прямо, без оговорок про «только по решению суда» в узком смысле.</li>
+<li><strong>Установка на iOS вне App Store</strong> (после удаления 04.06.2026) означает доверие стороннему сертификату или профилю — проверяйте источник установки.</li>
+</ol>
+<p>Если переписка чувствительная, MAX — не тот канал. Если нужен именно он (работа, госуслуги, окружение), — минимизируйте то, что туда попадает.</p>
+<h2 id="чек-лист">Чек-лист</h2>
+<h3 id="p0">P0</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Отдельный номер для MAX, не совпадающий с банковским и основным.</label></li>
+<li><label><input type="checkbox" />Двухфакторная защита на почте и Apple/Google-аккаунте, к которым привязан номер.</label></li>
+<li><label><input type="checkbox" />Проверить разрешения: геолокация — «только при использовании» или выключить; контакты — по необходимости.</label></li>
+<li><label><input type="checkbox" />Не отправлять в MAX коды, документы, фото документов, финансовые данные.</label></li>
+<li><label><input type="checkbox" />Установка только из официального источника, указанного оператором; на iOS — проверить профиль/сертификат.</label></li>
+</ul>
+<h3 id="p1">P1</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Настройки приватности профиля: кто видит номер, фото, последнюю активность.</label></li>
+<li><label><input type="checkbox" />Отключить автозагрузку медиа в мобильной сети.</label></li>
+<li><label><input type="checkbox" />Скрыть превью уведомлений на экране блокировки (настройки ОС).</label></li>
+<li><label><input type="checkbox" />Проверить список активных устройств/сеансов, если функция доступна.</label></li>
+<li><label><input type="checkbox" />Отдельный профиль ОС или отдельное устройство, если MAX нужен только для работы.</label></li>
+</ul>
+<h3 id="p2">P2</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Периодически проверять, какие приложения имеют доступ к аккаунту через ЕСИА/Цифровой ID.</label></li>
+<li><label><input type="checkbox" />Держать чувствительные обсуждения в канале с E2EE (Signal), а в MAX — только организационное.</label></li>
+</ul>
+<h2 id="открытые-вопросы">Открытые вопросы</h2>
+<ul>
+<li>Есть ли E2EE в новых версиях: официальных заявлений нет, независимых подтверждений тоже.</li>
+<li>Точные сроки хранения сообщений и метаданных не раскрыты.</li>
+<li>Публичных CVE по MAX не найдено; заявленные уязвимости (в том числе ZipSlip с оценкой 7.0–9.8) независимо не подтверждены.</li>
+<li>Заявление об утечке 46 млн строк (октябрь 2025) официально опровергнуто; подтверждённой утечки не установлено.</li>
+</ul>
+<h2 id="что-делать-если-max-обязателен">Что делать, если MAX обязателен</h2>
+<p>Это распространённая ситуация: сервис предустановлен, используется для рабочих чатов и уведомлений. Разумная стратегия:</p>
+<ol type="1">
+<li>Разделить контуры: MAX — для организационного, Signal — для чувствительного.</li>
+<li>Не смешивать номера: рабочий MAX на отдельном номере.</li>
+<li>Считать, что всё отправленное может быть прочитано не только адресатом.</li>
+<li>Проверять, что именно приложение просит при обновлениях: новые разрешения — повод отказаться от обновления до выяснения.</li>
+</ol>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="signal.html"><span class="dir">Назад</span>Signal</a><a class="next" href="macos.html"><span class="dir">Дальше</span>macOS</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <aside class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#что-это">Что это</a>
+<a class="d2" href="#шифрование">Шифрование</a>
+<a class="d2" href="#какие-данные-собираются">Какие данные собираются</a>
+<a class="d2" href="#телеметрия-два-разных-результата">Телеметрия: два разных результата</a>
+<a class="d2" href="#разрешения">Разрешения</a>
+<a class="d2" href="#почему-это-важно-для-вашей-переписки">Почему это важно для вашей переписки</a>
+<a class="d2" href="#чек-лист">Чек-лист</a>
+<a class="d3" href="#p0">P0</a>
+<a class="d3" href="#p1">P1</a>
+<a class="d3" href="#p2">P2</a>
+<a class="d2" href="#открытые-вопросы">Открытые вопросы</a>
+<a class="d2" href="#что-делать-если-max-обязателен">Что делать, если MAX обязателен</a>
+  </aside>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
+    <div id="searchResults" class="search-results"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

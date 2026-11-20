@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Анализ приложений — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Как понять, что приложение реально собирает и куда отправляет, не веря ни маркетингу, ни чужим разборам. Методика для Android и iOS на собственном устройстве.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html" class="active" aria-current="page">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <h1>Анализ приложений</h1>
+      <blockquote>
+<p>Как понять, что приложение реально собирает и куда отправляет, не веря ни маркетингу, ни чужим разборам. Методика для Android и iOS на собственном устройстве.</p>
+</blockquote>
+<h2 id="рамка">Рамка</h2>
+<p>Анализируется <strong>свой</strong> экземпляр приложения на <strong>своём</strong> устройстве с <strong>своей</strong> учётной записью. Цель — понять сбор данных, а не обойти защиту чужого сервиса. Юридические границы — в конце страницы.</p>
+<h2 id="android-пайплайн">Android: пайплайн</h2>
+<h3 id="шаг-0.-идентификация-артефакта">Шаг 0. Идентификация артефакта</h3>
+<pre><code>sha256sum app.apk
+aapt2 dump badging app.apk | head -20
+aapt2 dump permissions app.apk
+apksigner verify --print-certs app.apk</code></pre>
+<p>Фиксируем: package, versionName, versionCode, targetSdk, источник (RuStore / Play / APKPure), хеш, отпечаток сертификата. Без этого результат невоспроизводим.</p>
+<h3 id="шаг-1.-статика">Шаг 1. Статика</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Этап</th>
+<th>Инструмент</th>
+<th>Что получаем</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Манифест</td>
+<td>apktool 3.x</td>
+<td>Точный XML: разрешения, <code>exported</code>, <code>networkSecurityConfig</code>, <code>debuggable</code></td>
+</tr>
+<tr class="even">
+<td>Код</td>
+<td>jadx 1.5.x</td>
+<td>Java/Kotlin, поиск SDK, URL, ключей</td>
+</tr>
+<tr class="odd">
+<td>Обзор</td>
+<td>MobSF 4.6.x</td>
+<td>Сводный отчёт, SBOM, список трекеров</td>
+</tr>
+<tr class="even">
+<td>Трекеры</td>
+<td>Exodus Privacy</td>
+<td>Сопоставление классов с каталогом трекеров</td>
+</tr>
+<tr class="odd">
+<td>Нативные</td>
+<td>Ghidra 12.x</td>
+<td><code>.so</code>, JNI, кастомный pinning</td>
+</tr>
+</tbody>
+</table>
+<p>Что искать в коде: <code>okhttp3</code>, <code>Retrofit</code>, <code>Firebase</code>, <code>appsflyer</code>, <code>myTracker</code>, <code>com.yandex.*</code>, <code>ru.*</code> SDK, <code>Settings.Secure.ANDROID_ID</code>, <code>getInstalledPackages</code>, <code>QUERY_ALL_PACKAGES</code>.</p>
+<h3 id="шаг-2.-динамика-без-root">Шаг 2. Динамика без root</h3>
+<pre><code>adb shell dumpsys package &lt;pkg&gt; | grep -E &#39;userId|versionName&#39;
+adb shell dumpsys netstats detail | grep -A2 &quot;uid=&lt;uid&gt;&quot;
+adb shell dumpsys activity services &lt;pkg&gt;
+adb shell dumpsys jobscheduler | grep &lt;pkg&gt;
+adb logcat --uid=&lt;uid&gt; -v threadtime &gt; logcat.txt</code></pre>
+<p><code>netstats</code> — самый быстрый способ ответить «ходит приложение в сеть или нет»: сравниваем <code>txBytes</code> до и после 5 минут фона. Если растёт, а перехват пуст — трафик идёт мимо.</p>
+<h3 id="шаг-3.-перехват">Шаг 3. Перехват</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Инструмент</th>
+<th>Режим</th>
+<th>Ограничение</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PCAPdroid</td>
+<td>VpnService, без root</td>
+<td>Даёт pcap + привязку «пакет → UID приложения»; QUIC не расшифровывает</td>
+</tr>
+<tr class="even">
+<td>mitmproxy 12.x</td>
+<td><code>--mode wireguard</code></td>
+<td>UDP поддерживается, root не нужен</td>
+</tr>
+<tr class="odd">
+<td>mitmproxy</td>
+<td><code>--mode regular</code></td>
+<td>Приложения часто игнорируют системный прокси</td>
+</tr>
+<tr class="even">
+<td>mitmproxy</td>
+<td><code>--mode transparent</code></td>
+<td>Только TCP, сложная настройка</td>
+</tr>
+</tbody>
+</table>
+<p>Ключевая развилка — определяется за пять минут:</p>
+<ol type="1">
+<li><code>netstats</code> не растёт → приложение не ходит в сеть.</li>
+<li>Растёт, PCAPdroid пуст → трафик мимо захвата (другой интерфейс, VPN внутри).</li>
+<li>PCAPdroid видит, mitmproxy нет → приложение не использует системный прокси: переходить на WireGuard-режим.</li>
+<li>mitmproxy видит, но TLS-ошибка → user CA не доверяется (Android 7+), нужен системный CA или pinning-обход на своём устройстве.</li>
+<li>Видит и расшифровывает → собрали то, что нужно.</li>
+</ol>
+<h3 id="шаг-4.-хуки-только-при-необходимости">Шаг 4. Хуки — только при необходимости</h3>
+<p>Frida + objection требуют либо root, либо пересборки APK с Gadget. Пересборка меняет подпись, а значит ломает Play Integrity и любые проверки целостности — это не «недостаток метода», а его цена.</p>
+<h2 id="ios-что-реально-возможно">iOS: что реально возможно</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Возможность</th>
+<th>Без джейлбрейка</th>
+<th>С джейлбрейком</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Info.plist, Privacy Manifest, entitlements</td>
+<td>да</td>
+<td>да</td>
+</tr>
+<tr class="even">
+<td>Список фреймворков и SDK</td>
+<td>да</td>
+<td>да</td>
+</tr>
+<tr class="odd">
+<td>Чтение кода (Mach-O <code>__TEXT</code>)</td>
+<td>нет: FairPlay-шифрование</td>
+<td>да, после расшифровки</td>
+</tr>
+<tr class="even">
+<td>Прокси и TLS</td>
+<td>да, где нет pinning</td>
+<td>да</td>
+</tr>
+<tr class="odd">
+<td>Frida/objection</td>
+<td>только своя debug-сборка</td>
+<td>да</td>
+</tr>
+<tr class="even">
+<td>Дамп памяти, sandbox</td>
+<td>нет</td>
+<td>да</td>
+</tr>
+</tbody>
+</table>
+<p>Практический вывод: без джейлбрейка вы всё равно получаете 80% ответа — Privacy Manifest, entitlements, список SDK, домены из App Privacy Report и трафик там, где нет pinning.</p>
+<h3 id="инструменты">Инструменты</h3>
+<pre><code>plutil -convert xml1 -o - Payload/App.app/Info.plist
+plutil -convert xml1 -o - Payload/App.app/PrivacyInfo.xcprivacy
+codesign -d --entitlements :- Payload/App.app
+otool -l Payload/App.app/App | grep -A5 LC_ENCRYPTION
+strings -a -n 6 Payload/App.app/App | grep -E &#39;https?://&#39;</code></pre>
+<p><code>cryptid=1</code> в <code>LC_ENCRYPTION_INFO_64</code> означает, что код зашифрован. Это не «нет данных» — это граница метода.</p>
+<h3 id="apple-как-источник">Apple как источник</h3>
+<ul>
+<li><strong>App Privacy Report</strong> (Настройки → Конфиденциальность и безопасность): домены по приложениям за 7 дней и доступ к датчикам. Карта, но без payload.</li>
+<li><strong>Privacy Manifest</strong> — декларация разработчика. Ценность в сверке: заявлено одно, в трафике другое.</li>
+</ul>
+<h2 id="что-фиксировать-в-отчёте">Что фиксировать в отчёте</h2>
+<pre><code>Приложение, версия, платформа, ОС:
+Источник и SHA-256:
+Разрешения (все / опасные / избыточные):
+Компоненты: exported, networkSecurityConfig, debuggable
+Домены: список, протокол, частота, размер
+Телеметрия: поля, идентификаторы, заголовки
+Фон: WorkManager/JobScheduler/services, периодичность
+Что не удалось увидеть и почему (QUIC / pinning / native):</code></pre>
+<p>Последняя строка — самая важная. Отчёт без списка слепых зон вводит в заблуждение.</p>
+<h2 id="пределы-метода">Пределы метода</h2>
+<ul>
+<li><strong>QUIC/HTTP3</strong>: TLS-прокси не видит; блокировка UDP/443 заставляет приложение уйти на TCP, но меняет наблюдаемую картину.</li>
+<li><strong>Certificate pinning</strong>: без модификации приложения или root не обходится; на iOS — только джейлбрейк.</li>
+<li><strong>Собственная криптография поверх TLS</strong> (WhatsApp, Telegram): видны метаданные, не содержимое.</li>
+<li><strong>Обфускация и RASP</strong>: имена классов и строки могут быть скрыты; детекторы Frida ломают динамику.</li>
+<li><strong>Play Integrity / App Attest</strong>: пересобранный клиент виден серверу по дизайну.</li>
+<li><strong>Серверная сторона</strong> не анализируется вообще: вы видите только то, что клиент отправил.</li>
+</ul>
+<h2 id="правовые-границы">Правовые границы</h2>
+<ul>
+<li>Только свои устройства и аккаунты; перехват чужого трафика — вне рамок.</li>
+<li>Перехваченный трафик может содержать персональные данные третьих лиц → 152-ФЗ, минимизация и обезличивание.</li>
+<li>Модификация чужого приложения и распространение сборки — отдельная история с отдельными рисками.</li>
+<li>ToS приложений и магазинов может запрещать реверс-инжиниринг; для собственного экземпляра риск иной, чем для публикации.</li>
+<li>Не публикуйте device ID, IP, токены и содержимое переписки.</li>
+</ul>
+<p>Это не юридическая консультация. При корпоративном использовании — согласование с юристом и службой безопасности.</p>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="monitoring.html"><span class="dir">Назад</span>Мониторинг</a><a class="next" href="lab-bench.html"><span class="dir">Дальше</span>Стенд для анализа</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <aside class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#рамка">Рамка</a>
+<a class="d2" href="#android-пайплайн">Android: пайплайн</a>
+<a class="d3" href="#шаг-0.-идентификация-артефакта">Шаг 0. Идентификация артефакта</a>
+<a class="d3" href="#шаг-1.-статика">Шаг 1. Статика</a>
+<a class="d3" href="#шаг-2.-динамика-без-root">Шаг 2. Динамика без root</a>
+<a class="d3" href="#шаг-3.-перехват">Шаг 3. Перехват</a>
+<a class="d3" href="#шаг-4.-хуки-только-при-необходимости">Шаг 4. Хуки — только при необходимости</a>
+<a class="d2" href="#ios-что-реально-возможно">iOS: что реально возможно</a>
+<a class="d3" href="#инструменты">Инструменты</a>
+<a class="d3" href="#apple-как-источник">Apple как источник</a>
+<a class="d2" href="#что-фиксировать-в-отчёте">Что фиксировать в отчёте</a>
+<a class="d2" href="#пределы-метода">Пределы метода</a>
+<a class="d2" href="#правовые-границы">Правовые границы</a>
+  </aside>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
+    <div id="searchResults" class="search-results"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

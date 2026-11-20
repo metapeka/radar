@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Стенд для анализа — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Отдельная сеть, тестовое устройство, прокси и логи. Задача — видеть, что приложение делает, и повторять это воспроизводимо.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html" class="active" aria-current="page">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <h1>Стенд для анализа</h1>
+      <blockquote>
+<p>Отдельная сеть, тестовое устройство, прокси и логи. Задача — видеть, что приложение делает, и повторять это воспроизводимо.</p>
+</blockquote>
+<h2 id="архитектура">Архитектура</h2>
+<pre><code>        [ Интернет ]
+             |
+   [ Роутер: гостевая сеть / VLAN ]
+             |
+   ┌─────────┴──────────┐
+   |                    |
+[ Телефон ]        [ Ноутбук / Pi ]
+ тестовый          mitmproxy (WireGuard)
+ аккаунт           DNS с логами
+ PCAPdroid         Suricata / Zeek
+   |                    |
+   └───────┬────────────┘
+           |
+   [ Хранилище: pcap, логи, отчёты ]</code></pre>
+<p>Три принципа:</p>
+<ol type="1">
+<li><strong>Изоляция.</strong> Тестовое устройство не должно видеть домашнюю сеть.</li>
+<li><strong>Один вход.</strong> Весь трафик идёт через прокси или как минимум через логируемый DNS.</li>
+<li><strong>Воспроизводимость.</strong> Версия, хеш, конфиг и время фиксируются в манифесте сессии.</li>
+</ol>
+<h2 id="компоненты">Компоненты</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Компонент</th>
+<th>Зачем</th>
+<th>Варианты</th>
+<th>Сложность</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Изоляция</td>
+<td>Не пустить устройство в LAN</td>
+<td>Гостевая сеть + client isolation; OpenWrt-зона с <code>forward: REJECT</code>; VLAN</td>
+<td>низкая / средняя</td>
+</tr>
+<tr class="even">
+<td>Прокси</td>
+<td>Расшифровка HTTP(S)</td>
+<td>mitmproxy <code>--mode wireguard</code>; regular; transparent</td>
+<td>низкая / средняя</td>
+</tr>
+<tr class="odd">
+<td>Захват на устройстве</td>
+<td>Привязка «пакет → приложение»</td>
+<td>PCAPdroid (VpnService, без root)</td>
+<td>низкая</td>
+</tr>
+<tr class="even">
+<td>DNS с логами</td>
+<td>Домены, время, корреляция</td>
+<td>Pi-hole, AdGuard Home, Unbound</td>
+<td>низкая</td>
+</tr>
+<tr class="odd">
+<td>IDS</td>
+<td>Сигнатуры и аномалии</td>
+<td>Suricata, Zeek</td>
+<td>средняя</td>
+</tr>
+<tr class="even">
+<td>Форензика</td>
+<td>Проверка на компрометацию</td>
+<td>MVT, iVerify</td>
+<td>низкая / высокая</td>
+</tr>
+<tr class="odd">
+<td>Хранение</td>
+<td>Единый таймлайн</td>
+<td>Loki + Grafana, ELK</td>
+<td>средняя</td>
+</tr>
+</tbody>
+</table>
+<h2 id="минимальный-стенд">Минимальный стенд</h2>
+<p>Достаточно, чтобы получить первые реальные данные:</p>
+<ol type="1">
+<li>Гостевая сеть на роутере, отдельная подсеть, изоляция клиентов, запрет доступа в LAN.</li>
+<li>Проверка: с телефона домашний ПК не пингуется, шлюз и прокси-хост доступны.</li>
+<li>mitmproxy на ноутбуке: <code>mitmweb --mode wireguard</code>.</li>
+<li>WireGuard-клиент на тестовом телефоне, конфиг из mitmproxy.</li>
+<li>Сертификат mitmproxy: на Android — системный (root) либо понимание, что часть трафика не расшифруется; на iOS — профиль и явное доверие.</li>
+<li>PCAPdroid на телефоне: pcap + фильтр по целевому приложению.</li>
+<li>DNS с логами, выдаваемый по DHCP.</li>
+<li><code>adb logcat</code> в файл на всё время сессии.</li>
+</ol>
+<p>Проверка работоспособности: открыть <code>https://mitm.it</code> с телефона — должна открыться страница установки сертификата.</p>
+<h2 id="методика-эксперимента">Методика эксперимента</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Шаг</th>
+<th>Что делаем</th>
+<th>Что фиксируем</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Чистое устройство, тестовый аккаунт</td>
+<td>Версия ОС, модель, дата</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Установка приложения</td>
+<td>Источник, версия, SHA-256</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Первый запуск без входа</td>
+<td>Домены, запросы, разрешения</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Регистрация</td>
+<td>Новые домены и поля</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Отправка сообщения</td>
+<td>Что уходит помимо текста</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Простой 15 минут, экран выключен</td>
+<td>Фоновые запросы</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Перезагрузка</td>
+<td>Автозапуск, повторные запросы</td>
+</tr>
+</tbody>
+</table>
+<p>Правила:</p>
+<ul>
+<li>минимум <strong>три прогона</strong> на сценарий;</li>
+<li>baseline — отдельная серия, отклонения считаем относительно неё;</li>
+<li>один сценарий — одна переменная;</li>
+<li>всё, что не удалось увидеть, записываем как слепую зону, а не как «ничего не найдено».</li>
+</ul>
+<h2 id="что-считать-аномалией">Что считать аномалией</h2>
+<ul>
+<li>Новый домен, которого не было в baseline.</li>
+<li>Соединение в фоне при выключенном экране.</li>
+<li>Передача данных в простое.</li>
+<li>Обращение к нестандартным портам.</li>
+<li>Падение приложения при включённом прокси — это сигнал pinning, а не «сеть сломалась».</li>
+</ul>
+<h2 id="что-стенд-не-покажет">Что стенд не покажет</h2>
+<ul>
+<li>Содержимое E2EE-мессенджеров: видны только метаданные.</li>
+<li>Трафик через QUIC, если приложение не уходит на TCP.</li>
+<li>Соединения с pinning без модификации клиента.</li>
+<li>Поведение на мобильном интернете, если устройство уходит с Wi-Fi.</li>
+<li>Серверную часть и то, что приложение хранит на диске.</li>
+<li>Наличие шпионского ПО: сетевые метрики этого не доказывают.</li>
+</ul>
+<h2 id="уровни">Уровни</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Уровень</th>
+<th>Железо</th>
+<th>Что появляется</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Минимальный</td>
+<td>Роутер + ноутбук + телефон</td>
+<td>Изоляция, прокси, PCAPdroid, DNS-логи</td>
+</tr>
+<tr class="even">
+<td>Средний</td>
+<td>+ Raspberry Pi или мини-ПК</td>
+<td>Постоянные DNS-логи, pcap на зеркале, adb-пайплайн</td>
+</tr>
+<tr class="odd">
+<td>Продвинутый</td>
+<td>+ коммутатор с зеркалом, NAS</td>
+<td>VLAN, IDS, единое хранилище, длинный baseline</td>
+</tr>
+</tbody>
+</table>
+<p>Начинать с минимального: большинство выводов делается на нём, а продвинутый уровень без методики даёт только красивые дашборды.</p>
+<h2 id="хранение-и-приватность">Хранение и приватность</h2>
+<ul>
+<li>Тестовый аккаунт без персональных данных; в идеале — без реальных контактов.</li>
+<li>В логах минимизировать: тела сообщений не нужны, нужны поля и домены.</li>
+<li>Срок хранения 30–90 дней, затем удаление.</li>
+<li>Архивы pcap — шифровать (<code>age</code>, GPG), хранить с контрольной суммой.</li>
+<li>Не выгружать дампы в облачные сервисы.</li>
+<li>152-ФЗ: если в трафике есть данные третьих лиц, вы — оператор, со всеми обязанностями.</li>
+</ul>
+<h2 id="границы">Границы</h2>
+<p>Стенд — только для своих устройств и аккаунтов. Перехват чужого трафика не является «расширением методики»: это другое действие с другими правовыми последствиями.</p>
+<p>И отдельно: стенд не заменяет EDR. Он отвечает на вопрос «куда приложение ходит», а не «заражено ли устройство». Для второго — MVT и проверка артефактов.</p>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="app-analysis.html"><span class="dir">Назад</span>Анализ приложений</a><a class="next" href="incident-response.html"><span class="dir">Дальше</span>Реагирование</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <aside class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#архитектура">Архитектура</a>
+<a class="d2" href="#компоненты">Компоненты</a>
+<a class="d2" href="#минимальный-стенд">Минимальный стенд</a>
+<a class="d2" href="#методика-эксперимента">Методика эксперимента</a>
+<a class="d2" href="#что-считать-аномалией">Что считать аномалией</a>
+<a class="d2" href="#что-стенд-не-покажет">Что стенд не покажет</a>
+<a class="d2" href="#уровни">Уровни</a>
+<a class="d2" href="#хранение-и-приватность">Хранение и приватность</a>
+<a class="d2" href="#границы">Границы</a>
+  </aside>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
+    <div id="searchResults" class="search-results"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
