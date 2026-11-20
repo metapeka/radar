@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iPhone как стенд — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Телефон по проводу к Debian: наблюдать и собирать данные — да. Нажимать за вас в обычных приложениях — нет.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html" class="active" aria-current="page">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <h1>iPhone как стенд</h1>
+      <blockquote>
+<p>Телефон по проводу к Debian: наблюдать и собирать данные — да. Нажимать за вас в обычных приложениях — нет.</p>
+</blockquote>
+<h2 id="что-это-значит-технически">Что это значит технически</h2>
+<p>iPhone не имеет аналога <code>adb shell</code>, который управлял бы чужим приложением. Всё, что доступно по кабелю, — это сервисы, которые Apple разрешает хосту: резервное копирование, логи, crash-отчёты, установка подписанных приложений, отладка <strong>своих</strong> сборок.</p>
+<h2 id="требования">Требования</h2>
+<p>На Debian нужны <code>usbmuxd</code> (демон, обычно уже стоит) и утилиты:</p>
+<pre><code>sudo apt install libimobiledevice-utils ifuse</code></pre>
+<p>На телефоне: «Доверять этому компьютеру» и ввод код-пароля. Для установки и отладки приложений — включённый Developer Mode.</p>
+<h2 id="что-работает">Что работает</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Задача</th>
+<th>Инструмент</th>
+<th>Оговорка</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Определить устройство и версию</td>
+<td><code>idevice_id -l</code>, <code>ideviceinfo</code></td>
+<td>Требует доверия</td>
+</tr>
+<tr class="even">
+<td>Полный бэкап</td>
+<td><code>idevicebackup2 backup --full --udid &lt;UDID&gt; ./backup</code></td>
+<td>Шифрованный бэкап полнее</td>
+</tr>
+<tr class="odd">
+<td>Поток системных логов</td>
+<td><code>idevicesyslog</code></td>
+<td>Логов приложений мало</td>
+</tr>
+<tr class="even">
+<td>Crash-отчёты</td>
+<td><code>idevicecrashreport -u ./crashes</code></td>
+<td>Хороший источник аномалий</td>
+</tr>
+<tr class="odd">
+<td>Скриншот</td>
+<td><code>idevicescreenshot</code></td>
+<td>Нужен developer disk image; на новых iOS может не работать</td>
+</tr>
+<tr class="even">
+<td>Установка приложения</td>
+<td><code>ideviceinstaller -i app.ipa</code></td>
+<td>Только подписанное вами; free-аккаунт — 7 дней</td>
+</tr>
+<tr class="odd">
+<td>Отладка приложения</td>
+<td><code>idevicedebug</code></td>
+<td>Только для собственных сборок</td>
+</tr>
+</tbody>
+</table>
+<h2 id="что-не-работает">Что не работает</h2>
+<ul>
+<li>Чтение контейнера WhatsApp и его базы.</li>
+<li>Список чужих процессов и доступ к их памяти.</li>
+<li>Нажатия и ввод в приложениях App Store.</li>
+<li>Запуск sysdiagnose командой: он снимается кнопками на устройстве.</li>
+</ul>
+<h2 id="два-обходных-пути">Два обходных пути</h2>
+<p><strong>WebDriverAgent / Appium.</strong> Единственный легальный способ автоматизировать интерфейс: тапы, ввод, запуск приложений. Требует подписанной сборки, Developer Mode и разблокированного экрана. Данные внутри приложений всё равно недоступны.</p>
+<p><strong>Jailbreak.</strong> Для iPhone X (чип A11) уязвимость checkm8 позволяет <code>palera1n</code> до iOS 16.7: появляется root и SSH по USB, включая доступ к контейнерам. Цена: это демонтаж модели безопасности, ради которой всё делается; мессенджеры и банки могут отказаться работать. Для A12 и новее (XS/XR и позже) этот путь не работает.</p>
+<h2 id="про-версии-важно">Про версии — важно</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Устройство</th>
+<th>Максимальная iOS</th>
+<th>Что это значит</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>iPhone X (A11)</td>
+<td>16.7.16 (11.05.2026)</td>
+<td>Нет Stolen Device Protection (17.3+), нет Background Security Improvements (26.1+)</td>
+</tr>
+<tr class="even">
+<td>iPhone XS / XS Max / XR</td>
+<td>18.7.12 (22H390, 09.11.2026)</td>
+<td>Есть SDP и ADP; нет BSI</td>
+</tr>
+<tr class="odd">
+<td>iPhone 11 и новее</td>
+<td>18.7.x и 26.x</td>
+<td>Полный набор, включая BSI</td>
+</tr>
+</tbody>
+</table>
+<p><strong>iOS 18.7.12 ставится только на iPhone XS, XS Max, XR и iPad 7-го поколения.</strong> На iPhone X (A11) установка не пройдёт: ветка iOS 18 начинается с A12. Если обновление установилось — устройство XS/XR, а не X.</p>
+<p>В 18.7.12 закрыто шесть CVE: CoreUtils (спаривание Bluetooth без участия пользователя), AirPlay (обход лимита попыток кода), rapportd, Bluetooth use-after-free, MediaRemote (подключение к AirPlay с экрана блокировки). Эксплуатации в дикой природе Apple не заявляла.</p>
+<h2 id="кто-где-исполняет">Кто где исполняет</h2>
+<ul>
+<li>Я работаю на этой Debian-машине. Если телефон подключён к ней — команды запускаю я.</li>
+<li>Если телефон на другом компьютере — нужен SSH-доступ к тому компьютеру либо вы присылаете вывод команд.</li>
+<li>USB-канала «напрямую в модель» не существует: физический порт есть только у машины, к которой подключён кабель.</li>
+</ul>
+<h2 id="рекомендуемый-порядок">Рекомендуемый порядок</h2>
+<ol type="1">
+<li>Доверие и код-пароль на телефоне.</li>
+<li>Шифрованный бэкап на Debian.</li>
+<li>Прогон <code>mvt-ios check-backup</code> с актуальными индикаторами.</li>
+<li>Разбор находок: что подтверждено, что похоже на ложное срабатывание.</li>
+<li>Если индикаторов нет — зафиксировать это как «не нашли», а не как «чисто».</li>
+</ol>
+<h2 id="приватность">Приватность</h2>
+<p>Бэкап содержит переписку, медиа и идентификаторы. Хранить его только в зашифрованном виде, не отправлять в облачные сервисы и удалять после разбора. Для чужого устройства — письменное согласие владельца.</p>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="diagnostics-ai.html"><span class="dir">Назад</span>Диагностика с AI</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <aside class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#что-это-значит-технически">Что это значит технически</a>
+<a class="d2" href="#требования">Требования</a>
+<a class="d2" href="#что-работает">Что работает</a>
+<a class="d2" href="#что-не-работает">Что не работает</a>
+<a class="d2" href="#два-обходных-пути">Два обходных пути</a>
+<a class="d2" href="#про-версии-важно">Про версии — важно</a>
+<a class="d2" href="#кто-где-исполняет">Кто где исполняет</a>
+<a class="d2" href="#рекомендуемый-порядок">Рекомендуемый порядок</a>
+<a class="d2" href="#приватность">Приватность</a>
+  </aside>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
+    <div id="searchResults" class="search-results"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Методика — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Как собраны факты, что означает «проверено» и где заканчивается достоверность.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html" class="active" aria-current="page">Методика</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <h1>Методика</h1>
+      <blockquote>
+<p>Как собраны факты, что означает «проверено» и где заканчивается достоверность.</p>
+</blockquote>
+<h2 id="уровни-уверенности">Уровни уверенности</h2>
+<p>Утверждения в вики размечены неявно, но по строгому правилу:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Уровень</th>
+<th>Что значит</th>
+<th>Пример</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Подтверждено</strong></td>
+<td>Два и более независимых источника, либо официальная документация вендора</td>
+<td>«E2EE-бэкап WhatsApp по умолчанию выключен»</td>
+</tr>
+<tr class="even">
+<td><strong>Один источник</strong></td>
+<td>Есть ссылка, но независимого подтверждения нет</td>
+<td>«Срок 120 дней неактивности»</td>
+</tr>
+<tr class="odd">
+<td><strong>Оценка</strong></td>
+<td>Вывод из фактов, а не цитата</td>
+<td>«Для обычного пользователя вероятность zero-click низкая»</td>
+</tr>
+<tr class="even">
+<td><strong>Отрицательный результат</strong></td>
+<td>Искали и не нашли; это тоже факт</td>
+<td>«Случаев взлома серверов WhatsApp не зафиксировано»</td>
+</tr>
+</tbody>
+</table>
+<p>Если формулировка звучит как факт, а источника нет — это ошибка, и её надо править.</p>
+<h2 id="откуда-данные">Откуда данные</h2>
+<p>Приоритет источников:</p>
+<ol type="1">
+<li><strong>Первичные:</strong> документация вендоров (Apple Platform Security, Microsoft Learn, Google, WhatsApp FAQ), NVD/CVE, CISA KEV, судебные документы, отчёты Citizen Lab и Amnesty.</li>
+<li><strong>Вторичные:</strong> Reuters, TechCrunch, The Record, BleepingComputer, SecurityLab, «Коммерсантъ».</li>
+<li><strong>Агрегаторы:</strong> обзоры и подборки — только как наводка, не как доказательство.</li>
+</ol>
+<p>Правило: если факт принадлежит вендору, ссылка должна вести к вендору, а не к статье о нём.</p>
+<h2 id="ограничения-этого-исследования">Ограничения этого исследования</h2>
+<ul>
+<li>Домены <code>whatsapp.com</code>, <code>faq.whatsapp.com</code>, <code>blog.whatsapp.com</code>, <code>transparency.meta.com</code> были недоступны на момент сбора (transport error / HTTP 451). Официальные формулировки приводятся по поисковым выдержкам и цитирующим материалам — это отмечено в соответствующих разделах.</li>
+<li>Названия пунктов меню проверялись по официальной документации там, где она открывалась; иначе помечены как «проверить».</li>
+<li>Числа по государствам и запросам правоохранителей часто агрегированы Meta по всем платформам; отдельной статистики по WhatsApp не существует.</li>
+</ul>
+<h2 id="как-поддерживать-актуальность">Как поддерживать актуальность</h2>
+<p>Настройки и названия пунктов меняются между релизами. Практический порядок:</p>
+<ol type="1">
+<li>Раз в квартал — пройти чек-лист своей платформы и своей версии мессенджера.</li>
+<li>После крупного обновления ОС — проверить, что защитные функции не отключились (обновления иногда сбрасывают разрешения).</li>
+<li>После инцидента — пересмотреть профиль риска, а не только «поменять пароль».</li>
+</ol>
+<p>Версия, на которой проверялось, указывается рядом с действием. Если ваша версия новее — считайте, что путь мог измениться.</p>
+<h2 id="правовая-рамка">Правовая рамка</h2>
+<p>Материал носит защитный характер и описывает меры, а не атаки. При работе с чужими устройствами и данными:</p>
+<ul>
+<li>нужно согласие владельца устройства и данных;</li>
+<li>артефакты (бэкапы, дампы, переписка) могут содержать персональные данные — по 152-ФЗ это регулируемая категория;</li>
+<li>передача таких артефактов третьим лицам, включая облачные сервисы за пределами РФ, — отдельный риск трансграничной передачи;</li>
+<li>корпоративные устройства — только в рамках политики организации.</li>
+</ul>
+<p>Это не юридическая консультация: при реальном инциденте с данными других людей нужен юрист.</p>
+<h2 id="что-осталось-открытым">Что осталось открытым</h2>
+<ul>
+<li>Точная статистика угонов именно WhatsApp в России: официальных данных нет ни у ЦБ, ни у МВД, только оценки вендоров.</li>
+<li>Порог iOS для Apple Threat Notifications официально не подтверждён.</li>
+<li>Статус постквантового PQXDH в WhatsApp на ноябрь 2026 — отрицательный результат поиска, а не подтверждённое отсутствие.</li>
+<li>Доля пользователей с включённой двухшаговой проверкой не публикуется.</li>
+</ul>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="threat-model.html"><span class="dir">Назад</span>Модель угроз</a><a class="next" href="whatsapp.html"><span class="dir">Дальше</span>WhatsApp</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <aside class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#уровни-уверенности">Уровни уверенности</a>
+<a class="d2" href="#откуда-данные">Откуда данные</a>
+<a class="d2" href="#ограничения-этого-исследования">Ограничения этого исследования</a>
+<a class="d2" href="#как-поддерживать-актуальность">Как поддерживать актуальность</a>
+<a class="d2" href="#правовая-рамка">Правовая рамка</a>
+<a class="d2" href="#что-осталось-открытым">Что осталось открытым</a>
+  </aside>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
+    <div id="searchResults" class="search-results"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

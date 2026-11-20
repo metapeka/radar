@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Реагирование — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Три сценария, которые случаются чаще всего. Действия — по таймеру, а не «когда дойдут руки».">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="incident-response.html" class="active" aria-current="page">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <h1>Реагирование</h1>
+      <blockquote>
+<p>Три сценария, которые случаются чаще всего. Действия — по таймеру, а не «когда дойдут руки».</p>
+</blockquote>
+<h2 id="плейбук-1-угнали-аккаунт-мессенджера">Плейбук 1: угнали аккаунт мессенджера</h2>
+<p><strong>Первые 30 минут</strong></p>
+<ol type="1">
+<li>Позвонить оператору: проверить, не перевыпущена ли SIM или eSIM, нет ли переадресации. При необходимости — заблокировать номер.</li>
+<li>Написать в поддержку мессенджера с другого устройства: запрос на блокировку аккаунта. Для WhatsApp — форма поддержки, для Telegram — через бота поддержки.</li>
+<li>Предупредить контакты: от вашего имени могут просить деньги. Один пост в другом канале быстрее, чем объяснения каждому.</li>
+<li>Проверить банковские приложения и последние переводы.</li>
+</ol>
+<p><strong>Первые сутки</strong></p>
+<ol start="5" type="1">
+<li>Восстановить доступ: у WhatsApp это повторная регистрация номера; если злоумышленник включил свою двухшаговую проверку — ожидание до 7 дней.</li>
+<li>После входа: «Связанные устройства» / «Активные сеансы» — завершить всё незнакомое.</li>
+<li>Включить пароль 2SV и passkey, проверить резервную почту.</li>
+<li>Сменить пароли почты и критичных сервисов — с чистого устройства.</li>
+</ol>
+<p><strong>Чего не делать</strong></p>
+<ul>
+<li>Не удалять приложение в надежде «сбросить»: это не возвращает аккаунт.</li>
+<li>Не платить «за разблокировку» — это вторая волна мошенничества.</li>
+<li>Не пересылать никому новые коды «для подтверждения личности».</li>
+</ul>
+<h2 id="плейбук-2-подозрение-на-заражение-устройства">Плейбук 2: подозрение на заражение устройства</h2>
+<p><strong>Порядок важнее скорости</strong></p>
+<ol type="1">
+<li><strong>Изолировать, не чистить.</strong> Отключить сеть (или вынуть кабель), не удалять файлы: они нужны как артефакты.</li>
+<li><strong>Собрать артефакты.</strong> macOS/Windows — Autoruns и логи; Linux — <code>journalctl</code>, <code>systemctl --user</code>, <code>~/.config/autostart</code>; iOS — шифрованный бэкап и sysdiagnose; Android — androidqf.</li>
+<li><strong>Проанализировать офлайн</strong> на другом устройстве: MVT, просмотр автозагрузки, проверка подписей.</li>
+<li><strong>Решить по фактам.</strong> При подтверждённой компрометации уровня ОС — переустановка с чистого носителя, а не «вычищение».</li>
+<li><strong>Ротировать всё.</strong> Сессии мессенджеров, пароли, токены, ключи SSH. Смена пароля без завершения сессий бесполезна.</li>
+</ol>
+<p><strong>Что сохранить до переустановки</strong></p>
+<ul>
+<li>Список установленных программ и расширений.</li>
+<li>Экспорт автозагрузки (Autoruns <code>.arn</code>, <code>systemctl list-unit-files</code>).</li>
+<li>Логи за период подозрения.</li>
+<li>Хеши подозрительных файлов (сами файлы — в архив, если допустимо).</li>
+</ul>
+<h2 id="плейбук-3-утечка-переписки">Плейбук 3: утечка переписки</h2>
+<ol type="1">
+<li><strong>Определить масштаб.</strong> Что именно утекло: тексты, медиа, метаданные, бэкап целиком.</li>
+<li><strong>Закрыть канал.</strong> Завершить сессии, сменить пароли, отозвать токены, выключить бэкап или перевыпустить его ключ.</li>
+<li><strong>Оценить последствия.</strong> Кто из контактов затронут, есть ли в переписке данные третьих лиц.</li>
+<li><strong>Сообщить.</strong> Контактам — если их сообщения тоже утекли; работодателю — если затронуты рабочие данные; в банк — при финансовых рисках.</li>
+<li><strong>Зафиксировать.</strong> Дата, что сделано, какие логи сохранены. Это понадобится и для полиции, и для страховки, и просто чтобы не повторять.</li>
+</ol>
+<h2 id="если-устройство-изъяли-или-заставили-разблокировать">Если устройство изъяли или заставили разблокировать</h2>
+<p>Технические меры здесь почти не работают. Что имеет смысл заранее:</p>
+<ul>
+<li>понимать, какие аккаунты завязаны на это устройство, и иметь план их отзыва;</li>
+<li>держать резервный канал связи и резервную копию, не привязанную к устройству;</li>
+<li>не хранить на телефоне то, что не готовы показать.</li>
+</ul>
+<p>Это не про паранойю, а про то, что «потом» в таких ситуациях не наступает.</p>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="monitoring.html"><span class="dir">Назад</span>Мониторинг</a><a class="next" href="diagnostics-ai.html"><span class="dir">Дальше</span>Диагностика с AI</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <aside class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#плейбук-1-угнали-аккаунт-мессенджера">Плейбук 1: угнали аккаунт мессенджера</a>
+<a class="d2" href="#плейбук-2-подозрение-на-заражение-устройства">Плейбук 2: подозрение на заражение устройства</a>
+<a class="d2" href="#плейбук-3-утечка-переписки">Плейбук 3: утечка переписки</a>
+<a class="d2" href="#если-устройство-изъяли-или-заставили-разблокировать">Если устройство изъяли или заставили разблокировать</a>
+  </aside>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
+    <div id="searchResults" class="search-results"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

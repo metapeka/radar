@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linux — Личная безопасность и мессенджеры</title>
+<meta name="description" content="На настольном Linux главный вектор — не руткит, а кража сессионных данных из домашнего каталога: tdata, профиль Signal, IndexedDB WhatsApp Web.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html" class="active" aria-current="page">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <h1>Linux</h1>
+      <blockquote>
+<p>На настольном Linux главный вектор — не руткит, а кража сессионных данных из домашнего каталога: <code>tdata</code>, профиль Signal, IndexedDB WhatsApp Web.</p>
+</blockquote>
+<h2 id="механизмы">Механизмы</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Механизм</th>
+<th>Команда / место</th>
+<th>Что даёт</th>
+<th>Приоритет</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>LUKS2</td>
+<td><code>cryptsetup luksDump /dev/nvme0n1p3</code></td>
+<td>Шифрование диска</td>
+<td>P0</td>
+</tr>
+<tr class="even">
+<td>Secure Boot</td>
+<td><code>mokutil --sb-state</code>, <code>bootctl status</code></td>
+<td>Подпись загрузчика и ядра</td>
+<td>P1</td>
+</tr>
+<tr class="odd">
+<td>Автообновления</td>
+<td><code>unattended-upgrades</code> / <code>dnf-automatic</code></td>
+<td>Патчи безопасности без ручных действий</td>
+<td>P0</td>
+</tr>
+<tr class="even">
+<td>Брандмауэр</td>
+<td><code>ufw</code>, <code>nftables</code>, <code>firewalld</code></td>
+<td>Закрытые входящие</td>
+<td>P1</td>
+</tr>
+<tr class="odd">
+<td>Блокировка экрана</td>
+<td><code>gsettings ... idle-delay</code>, <code>loginctl lock-session</code></td>
+<td>Физическая защита</td>
+<td>P0</td>
+</tr>
+<tr class="even">
+<td>AppArmor / SELinux</td>
+<td><code>aa-status</code> / <code>getenforce</code></td>
+<td>MAC-профили приложений</td>
+<td>P1</td>
+</tr>
+<tr class="odd">
+<td>USBGuard</td>
+<td><code>usbguard list-devices</code></td>
+<td>Защита от BadUSB</td>
+<td>P2</td>
+</tr>
+</tbody>
+</table>
+<h2 id="изоляция-приложений">Изоляция приложений</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Механизм</th>
+<th>Команда</th>
+<th>Что даёт</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Flatpak</td>
+<td><code>flatpak info --show-permissions org.telegram.desktop</code></td>
+<td>Песочница: нет доступа к <code>$HOME</code>, кроме своего каталога</td>
+</tr>
+<tr class="even">
+<td>Override прав</td>
+<td><code>flatpak override --user --nofilesystem=home --nosocket=x11 &lt;app&gt;</code></td>
+<td>Убирает лишние доступы</td>
+</tr>
+<tr class="odd">
+<td>Flatseal</td>
+<td>GUI к тем же правилам</td>
+<td>Удобная ревизия</td>
+</tr>
+<tr class="even">
+<td>firejail</td>
+<td><code>firejail --private firefox</code></td>
+<td>Профили для нативных сборок</td>
+</tr>
+<tr class="odd">
+<td>Wayland</td>
+<td><code>echo $XDG_SESSION_TYPE</code></td>
+<td>На X11 любой клиент читает чужие нажатия и экран</td>
+</tr>
+</tbody>
+</table>
+<p>Практика: мессенджеры и браузер — в Flatpak с урезанными правами; веб-WhatsApp — в отдельном профиле браузера без расширений.</p>
+<h2 id="аудит-и-обнаружение">Аудит и обнаружение</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Механизм</th>
+<th>Команда</th>
+<th>Что даёт</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>journald постоянно</td>
+<td><code>Storage=persistent</code> в <code>journald.conf.d</code></td>
+<td>Логи переживают перезагрузку</td>
+</tr>
+<tr class="even">
+<td>auditd</td>
+<td><code>augenrules --load</code>, <code>ausearch -k key</code></td>
+<td>События доступа и исполнения</td>
+</tr>
+<tr class="odd">
+<td>AIDE</td>
+<td><code>aide --check</code></td>
+<td>Целостность файлов относительно базы</td>
+</tr>
+<tr class="even">
+<td>Проверка пакетов</td>
+<td><code>dpkg --verify</code>, <code>rpm -Va</code>, <code>pacman -Qkk</code></td>
+<td>Подмена файлов пакетов</td>
+</tr>
+<tr class="odd">
+<td>osquery</td>
+<td><code>osqueryi 'select * from startup_items;'</code></td>
+<td>SQL-инвентарь</td>
+</tr>
+<tr class="even">
+<td>bpftrace</td>
+<td><code>bpftrace -e 'tracepoint:syscalls:sys_enter_execve {...}'</code></td>
+<td>Живое наблюдение за запуском процессов</td>
+</tr>
+</tbody>
+</table>
+<h2 id="автозагрузка-и-постоянные-механизмы">Автозагрузка и постоянные механизмы</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Место</th>
+<th>Команда</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>systemd (system)</td>
+<td><code>systemctl list-unit-files --state=enabled</code></td>
+</tr>
+<tr class="even">
+<td>systemd (user)</td>
+<td><code>systemctl --user list-unit-files --state=enabled</code></td>
+</tr>
+<tr class="odd">
+<td>XDG autostart</td>
+<td><code>ls ~/.config/autostart /etc/xdg/autostart</code></td>
+</tr>
+<tr class="even">
+<td>cron / at</td>
+<td><code>crontab -l</code>, <code>ls /etc/cron.*</code>, <code>atq</code>, <code>systemctl list-timers --all</code></td>
+</tr>
+<tr class="odd">
+<td>Shell-хуки</td>
+<td><code>grep -nE '^[^#]' ~/.bashrc ~/.profile /etc/profile</code></td>
+</tr>
+<tr class="even">
+<td>Преload</td>
+<td><code>cat /etc/ld.so.preload</code>, <code>grep -rn LD_PRELOAD ~ /etc 2&gt;/dev/null</code></td>
+</tr>
+<tr class="odd">
+<td>SSH</td>
+<td><code>cat ~/.ssh/authorized_keys</code></td>
+</tr>
+<tr class="even">
+<td>sudo</td>
+<td><code>sudo visudo -c</code>, <code>ls -la /etc/sudoers.d/</code></td>
+</tr>
+<tr class="odd">
+<td>Модули ядра</td>
+<td><code>lsmod</code>, <code>/etc/modprobe.d/</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="мессенджеры-на-linux">Мессенджеры на Linux</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Приложение</th>
+<th>Где данные</th>
+<th>Чем защищать</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Telegram Desktop</td>
+<td><code>~/.local/share/TelegramDesktop/tdata</code></td>
+<td>Локальный код-пароль + LUKS</td>
+</tr>
+<tr class="even">
+<td>Signal Desktop</td>
+<td><code>~/.config/Signal</code> (ключ в keyring)</td>
+<td>LUKS + заблокированный keyring</td>
+</tr>
+<tr class="odd">
+<td>WhatsApp Desktop</td>
+<td><code>~/.config/&lt;app&gt;</code> или Flatpak-каталог</td>
+<td>LUKS + изоляция профиля</td>
+</tr>
+<tr class="even">
+<td>WhatsApp Web</td>
+<td><code>&lt;profile&gt;/Default/IndexedDB/https_web.whatsapp.com_*</code></td>
+<td>Отдельный профиль браузера</td>
+</tr>
+</tbody>
+</table>
+<p>Права: <code>chmod 700 ~/.config/Signal ~/.local/share/TelegramDesktop</code>, <code>umask 0077</code>.</p>
+<h2 id="чек-лист">Чек-лист</h2>
+<h3 id="p0">P0</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />LUKS2 на корневом разделе (и на домашнем, если отдельный).</label></li>
+<li><label><input type="checkbox" />Автообновления безопасности включены.</label></li>
+<li><label><input type="checkbox" />Автоблокировка экрана ≤ 5 минут.</label></li>
+<li><label><input type="checkbox" />Мессенджеры не запускаются от root и не хранят данные в общедоступных каталогах.</label></li>
+<li><label><input type="checkbox" /><code>~/.ssh/authorized_keys</code> и <code>sudoers.d</code> проверены.</label></li>
+</ul>
+<h3 id="p1">P1</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Wayland вместо X11.</label></li>
+<li><label><input type="checkbox" />Flatpak с урезанными правами для мессенджеров и браузера.</label></li>
+<li><label><input type="checkbox" />journald в persistent-режиме.</label></li>
+<li><label><input type="checkbox" />auditd с базовыми правилами и <code>-e 2</code>.</label></li>
+<li><label><input type="checkbox" />AIDE или хеш-базлайн.</label></li>
+<li><label><input type="checkbox" />Брандмауэр включён.</label></li>
+</ul>
+<h3 id="p2">P2</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />USBGuard.</label></li>
+<li><label><input type="checkbox" />Secure Boot с MOK.</label></li>
+<li><label><input type="checkbox" />osquery для регулярного инвентаря.</label></li>
+<li><label><input type="checkbox" />Отдельный пользователь для экспериментов.</label></li>
+</ul>
+<h2 id="пределы">Пределы</h2>
+<ul>
+<li><code>rkhunter</code> и <code>chkrootkit</code> знают только старые сигнатуры и проверяют систему штатными утилитами, которые руткит может подменять. «Чисто» от них ничего не доказывает.</li>
+<li>ClamAV полезен для чужих файлов (Windows-образцы, почта), но не для свежего JS-стилера в npm.</li>
+<li>Прошивка, Intel ME и AMD PSP — вне досягаемости из ОС.</li>
+<li>Компрометация уровня root не «лечится»: правильный ответ — переустановка с чистого носителя и ротация всех сессий.</li>
+</ul>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="windows.html"><span class="dir">Назад</span>Windows</a><a class="next" href="ios.html"><span class="dir">Дальше</span>iOS</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <aside class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#механизмы">Механизмы</a>
+<a class="d2" href="#изоляция-приложений">Изоляция приложений</a>
+<a class="d2" href="#аудит-и-обнаружение">Аудит и обнаружение</a>
+<a class="d2" href="#автозагрузка-и-постоянные-механизмы">Автозагрузка и постоянные механизмы</a>
+<a class="d2" href="#мессенджеры-на-linux">Мессенджеры на Linux</a>
+<a class="d2" href="#чек-лист">Чек-лист</a>
+<a class="d3" href="#p0">P0</a>
+<a class="d3" href="#p1">P1</a>
+<a class="d3" href="#p2">P2</a>
+<a class="d2" href="#пределы">Пределы</a>
+  </aside>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
+    <div id="searchResults" class="search-results"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

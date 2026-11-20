@@ -16,7 +16,16 @@
 - Российская специфика: статистика ЦБ и МВД, схемы, eSIM, Fake Boss
 - Разногласия, открытые вопросы и ограничения исследования
 
-## Файл
+## Вики (GitHub Pages)
+
+Многостраничная версия с навигацией и поиском: **https://metapeka.github.io/whatsapp-security-research/**
+
+- `site/content/*.md` — исходники страниц
+- `site/assets/` — стили и поиск
+- `tools/build_site.py` — сборка (`python3 tools/build_site.py`)
+- `docs/` — собранный сайт, публикуется из ветки `master`, папка `/docs`
+
+## Файлы
 
 - [`research-whatsapp-security-2026-11-20.md`](research-whatsapp-security-2026-11-20.md)
 

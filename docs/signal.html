@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signal — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Наименьшая поверхность атаки из трёх мессенджеров. Но привязка устройств остаётся реальным вектором.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html" class="active" aria-current="page">Signal</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <h1>Signal</h1>
+      <blockquote>
+<p>Наименьшая поверхность атаки из трёх мессенджеров. Но привязка устройств остаётся реальным вектором.</p>
+</blockquote>
+<h2 id="что-даёт">Что даёт</h2>
+<ul>
+<li>E2EE по умолчанию для всех чатов и групп, без «включить в настройках».</li>
+<li>Минимум метаданных: сервер знает, когда вы зарегистрировались и когда заходили, но не кто с кем общается.</li>
+<li>Открытый протокол и открытый клиент.</li>
+<li>Нет облачного бэкапа по умолчанию: история живёт на устройстве (на Android есть локальный экспорт).</li>
+</ul>
+<h2 id="главный-вектор">Главный вектор</h2>
+<p>Связанные устройства. Схема та же, что в WhatsApp: жертву убеждают отсканировать QR «для приглашения в группу» или «для проверки безопасности» — и получают вторую сессию, которая видит новые сообщения в реальном времени.</p>
+<p>В 2025 году эту технику использовали против Signal и WhatsApp в целевых кампаниях. Защита не в криптографии, а в привычке проверять список устройств.</p>
+<h2 id="чек-лист">Чек-лист</h2>
+<h3 id="p0">P0</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Registration Lock (PIN).</strong> <code>Настройки → Приватность → Registration Lock</code>. Без PIN при переоформлении номера аккаунт можно перехватить.</label></li>
+<li><label><input type="checkbox" /><strong>Ревизия связанных устройств.</strong> <code>Настройки → Связанные устройства</code> — удалить всё незнакомое.</label></li>
+<li><label><input type="checkbox" /><strong>PIN-код приложения и автоблокировка</strong> — на уровне ОС или самого Signal.</label></li>
+<li><label><input type="checkbox" /><strong>Обновления.</strong> Signal обновляется часто, в том числе по безопасности.</label></li>
+</ul>
+<h3 id="p1">P1</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Safety Number</strong> для чувствительных контактов — сверить лично или по другому каналу.</label></li>
+<li><label><input type="checkbox" /><strong>Исчезающие сообщения</strong> для чатов, где история не нужна.</label></li>
+<li><label><input type="checkbox" /><strong>Отключить превью</strong> в уведомлениях ОС.</label></li>
+<li><label><input type="checkbox" /><strong>Проверка «Кто может найти меня по номеру»</strong> — по потребности.</label></li>
+</ul>
+<h3 id="p2">P2</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Отдельный номер для Signal, не совпадающий с публичным.</label></li>
+<li><label><input type="checkbox" />Регулярный экспорт истории на защищённый носитель, если она нужна.</label></li>
+</ul>
+<h2 id="ограничения">Ограничения</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Ограничение</th>
+<th>Следствие</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Привязка к номеру телефона</td>
+<td>SIM-swap и перевыпуск номера остаются риском</td>
+</tr>
+<tr class="even">
+<td>Нет облачного бэкапа</td>
+<td>Потеря телефона = потеря истории (если нет экспорта)</td>
+</tr>
+<tr class="odd">
+<td>Связанные устройства видят новые сообщения</td>
+<td>Компрометация сессии = чтение в реальном времени</td>
+</tr>
+<tr class="even">
+<td>Нет «облачной» синхронизации</td>
+<td>Меньше удобства, но и меньше точек утечки</td>
+</tr>
+</tbody>
+</table>
+<h2 id="почему-signal-а-не-просто-мессенджер">Почему Signal, а не «просто мессенджер»</h2>
+<p>Если задача — минимизировать доверие к серверу, Signal выигрывает: нет облачной истории, нет рекламного профиля, минимум метаданных. Если задача — быть там, где все, это не аргумент, и тогда важнее гигиена аккаунта в WhatsApp и Telegram.</p>
+<p>Реалистичная стратегия: <strong>Signal для чувствительного, WhatsApp для бытового, Telegram для сообществ</strong> — и в каждом свой набор настроек, а не «один пароль на всё».</p>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="telegram.html"><span class="dir">Назад</span>Telegram</a><a class="next" href="macos.html"><span class="dir">Дальше</span>macOS</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <aside class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#что-даёт">Что даёт</a>
+<a class="d2" href="#главный-вектор">Главный вектор</a>
+<a class="d2" href="#чек-лист">Чек-лист</a>
+<a class="d3" href="#p0">P0</a>
+<a class="d3" href="#p1">P1</a>
+<a class="d3" href="#p2">P2</a>
+<a class="d2" href="#ограничения">Ограничения</a>
+<a class="d2" href="#почему-signal-а-не-просто-мессенджер">Почему Signal, а не «просто мессенджер»</a>
+  </aside>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
+    <div id="searchResults" class="search-results"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

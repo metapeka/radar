@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Модель угроз — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Прежде чем что-то настраивать, нужно понять, от кого защищаемся. Иначе получается «включил всё» — и не работает ни привычный сценарий, ни защита.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html" class="active" aria-current="page">Модель угроз</a><a href="methodology.html">Методика</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <h1>Модель угроз</h1>
+      <blockquote>
+<p>Прежде чем что-то настраивать, нужно понять, от кого защищаемся. Иначе получается «включил всё» — и не работает ни привычный сценарий, ни защита.</p>
+</blockquote>
+<h2 id="семь-слоёв">Семь слоёв</h2>
+<pre><code>[6] Реагирование      что делать, когда уже случилось
+[5] Мониторинг        базовая линия, обнаружение изменений
+[4] Сеть              Wi-Fi, DNS, VPN, роутер, captive portal
+[3] Приложение        мессенджер: аккаунт, сессии, бэкапы
+[2] ОС                права, песочница, шифрование, обновления
+[1] Устройство        загрузка, прошивка, физический доступ
+[0] Аккаунт           номер, почта, 2FA, восстановление</code></pre>
+<p>Слои не равнозначны. <strong>Слой 0 и слой 3 закрывают большинство реальных инцидентов</strong>, слой 1 — почти никогда. Поэтому начинать надо не с проверки прошивки, а с двухшаговой проверки и ревизии сессий.</p>
+<h2 id="принципы">Принципы</h2>
+<ol type="1">
+<li><strong>Два независимых фактора.</strong> Пароль плюс passkey или аппаратный ключ. SMS — резерв, а не основа: его перехватывают.</li>
+<li><strong>Разделение идентичностей.</strong> Личное, рабочее и «для регистраций» — разные профили, разные номера, разные браузерные профили.</li>
+<li><strong>Минимум прав.</strong> Приложению не нужен Full Disk Access или Accessibility, если оно не делает того, что без этого невозможно.</li>
+<li><strong>Шифрование в покое по умолчанию.</strong> Диск, бэкапы, архивы артефактов.</li>
+<li><strong>Не доверять зелёной галочке.</strong> Отсутствие индикаторов компрометации не равно отсутствию компрометации.</li>
+<li><strong>Один канал — не канал.</strong> Любая просьба о деньгах или коде проверяется по второму каналу.</li>
+<li><strong>Сбор отдельно, анализ отдельно.</strong> Артефакты собираются локально и разбираются офлайн.</li>
+</ol>
+<h2 id="двенадцать-угроз">Двенадцать угроз</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Угроза</th>
+<th>Куда бьёт</th>
+<th>Ключевой контроль</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>T1</td>
+<td>Выманивание кода / 2FA-фишинг</td>
+<td>аккаунт</td>
+<td>пароль 2SV + passkey, правило «код не диктуем»</td>
+</tr>
+<tr class="even">
+<td>T2</td>
+<td>Подсунутый QR или код привязки</td>
+<td>сессия</td>
+<td>ревизия «Связанных устройств»</td>
+</tr>
+<tr class="odd">
+<td>T3</td>
+<td>Кража сессии на ПК (стилер)</td>
+<td>ОС → сессия</td>
+<td>шифрование диска, изоляция, блокировка экрана</td>
+</tr>
+<tr class="even">
+<td>T4</td>
+<td>SIM-swap / eSIM</td>
+<td>аккаунт</td>
+<td>PIN на SIM, пароль кабинета оператора</td>
+</tr>
+<tr class="odd">
+<td>T5</td>
+<td>Незашифрованный облачный бэкап</td>
+<td>данные</td>
+<td>E2EE-бэкап, ключ офлайн</td>
+</tr>
+<tr class="even">
+<td>T6</td>
+<td>Вредоносный мод или фейк-клиент</td>
+<td>устройство</td>
+<td>только официальные сборки</td>
+</tr>
+<tr class="odd">
+<td>T7</td>
+<td>Android-банкер с Accessibility</td>
+<td>устройство</td>
+<td>запрет Accessibility сторонним приложениям</td>
+</tr>
+<tr class="even">
+<td>T8</td>
+<td>Профиль конфигурации / MDM</td>
+<td>устройство</td>
+<td>аудит профилей, Lockdown Mode</td>
+</tr>
+<tr class="odd">
+<td>T9</td>
+<td>Zero-click шпионское ПО</td>
+<td>устройство</td>
+<td>обновления, Lockdown / Advanced Protection</td>
+</tr>
+<tr class="even">
+<td>T10</td>
+<td>Общий или рабочий ПК</td>
+<td>сессия</td>
+<td>отдельный профиль, выход из Web</td>
+</tr>
+<tr class="odd">
+<td>T11</td>
+<td>ClickFix («вставьте команду»)</td>
+<td>ОС</td>
+<td>не вставлять команды из чата и с сайтов</td>
+</tr>
+<tr class="even">
+<td>T12</td>
+<td>Скомпрометированный роутер или DNS</td>
+<td>сеть</td>
+<td>прошивка, DNS, гостевая сеть</td>
+</tr>
+</tbody>
+</table>
+<h2 id="три-профиля-риска">Три профиля риска</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Профиль</th>
+<th>Кто</th>
+<th>Что добавляется</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Обычный</strong></td>
+<td>Личные переписки, банк, работа</td>
+<td>База: 2SV, passkey, E2EE-бэкап, обновления, ревизия сессий</td>
+</tr>
+<tr class="even">
+<td><strong>Повышенный</strong></td>
+<td>Руководитель, бухгалтер, HR, активист</td>
+<td>Отдельный профиль ОС, Lockdown Mode, отказ от облачных бэкапов, второй канал для денег</td>
+</tr>
+<tr class="odd">
+<td><strong>Целевой</strong></td>
+<td>Журналист, правозащитник, чиновник</td>
+<td>Всё выше плюс: отдельное устройство, MVT-проверки, отказ от SMS, физическая гигиена</td>
+</tr>
+</tbody>
+</table>
+<p>Профиль выбирается не по самоощущению, а по вопросу: «если мою переписку прочитают, кто от этого пострадает и насколько». Если ответ «неприятно, но переживу» — это обычный профиль, и не надо превращать жизнь в осадное положение.</p>
+<h2 id="почему-аккаунт-важнее-железа">Почему аккаунт важнее железа</h2>
+<p>Типичная атака 2024–2026 стоит от нуля до нескольких сотен долларов и не требует ни одной уязвимости в WhatsApp:</p>
+<ul>
+<li>позвонить и попросить код, представившись другом или поддержкой;</li>
+<li>прислать QR-код «для голосования» — и получить полноценную сессию;</li>
+<li>заразить компьютер стилером, который выгребает профиль браузера вместе с сессией WhatsApp Web;</li>
+<li>перевыпустить eSIM через взломанный кабинет оператора.</li>
+</ul>
+<p>Zero-click-эксплойт для сравнения стоит миллионы долларов и живёт до первого патча. Поэтому защита строится вокруг аккаунта и устройства, а не вокруг поиска «закладок в прошивке».</p>
+<h2 id="чего-эта-модель-не-покрывает">Чего эта модель не покрывает</h2>
+<ul>
+<li><strong>Государственные атаки уровня инфраструктуры.</strong> Перехват на стороне оператора, принудительный доступ к облаку, целевое шпионское ПО — здесь работают организационные меры, а не настройки телефона.</li>
+<li><strong>Физический доступ и принуждение.</strong> Если устройство изъяли или заставили разблокировать, технические меры почти не помогают.</li>
+<li><strong>Инсайдеры в сервисах.</strong> Утечки через поддержку и подрядчиков случаются, и пользователь на них не влияет.</li>
+<li><strong>Аппаратные закладки.</strong> Не обнаруживаются программно; вне области этой вики.</li>
+</ul>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="index.html"><span class="dir">Назад</span>Обзор</a><a class="next" href="methodology.html"><span class="dir">Дальше</span>Методика</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <aside class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#семь-слоёв">Семь слоёв</a>
+<a class="d2" href="#принципы">Принципы</a>
+<a class="d2" href="#двенадцать-угроз">Двенадцать угроз</a>
+<a class="d2" href="#три-профиля-риска">Три профиля риска</a>
+<a class="d2" href="#почему-аккаунт-важнее-железа">Почему аккаунт важнее железа</a>
+<a class="d2" href="#чего-эта-модель-не-покрывает">Чего эта модель не покрывает</a>
+  </aside>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
+    <div id="searchResults" class="search-results"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Мониторинг — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Без базовой линии любое изменение выглядит либо нормой, либо паникой. Снимаем «снимок здоровья» и сравниваем.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html" class="active" aria-current="page">Мониторинг</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <h1>Мониторинг</h1>
+      <blockquote>
+<p>Без базовой линии любое изменение выглядит либо нормой, либо паникой. Снимаем «снимок здоровья» и сравниваем.</p>
+</blockquote>
+<h2 id="что-такое-базовая-линия">Что такое базовая линия</h2>
+<p>Набор артефактов, снятых на заведомо чистой системе: список автозагрузки, расширения, сертификаты, слушающие порты, учётные записи, хеши критичных файлов. Дальше всё сводится к сравнению.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Платформа</th>
+<th>Что снять</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>macOS</td>
+<td>Login Items, LaunchAgents/Daemons, профили, TCC-разрешения, расширения, <code>sfltool dumpbtm</code></td>
+</tr>
+<tr class="even">
+<td>Windows</td>
+<td>Autoruns (полный экспорт), задачи планировщика, службы, расширения браузеров, сертификаты</td>
+</tr>
+<tr class="odd">
+<td>Linux</td>
+<td>systemd units, XDG autostart, cron, <code>authorized_keys</code>, sudoers, <code>lsmod</code>, <code>dpkg --verify</code></td>
+</tr>
+<tr class="even">
+<td>iOS</td>
+<td>Список приложений, профили, сертификаты, доверенные устройства</td>
+</tr>
+<tr class="odd">
+<td>Android</td>
+<td>Список пакетов, администраторы, Accessibility, доступ к уведомлениям</td>
+</tr>
+</tbody>
+</table>
+<h2 id="периодичность">Периодичность</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Событие</th>
+<th>Что делать</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Раз в квартал</td>
+<td>Полная ревизия по чек-листу платформы</td>
+</tr>
+<tr class="even">
+<td>После крупного обновления ОС</td>
+<td>Проверить, что защитные настройки не сбросились</td>
+</tr>
+<tr class="odd">
+<td>После установки «полезной утилиты»</td>
+<td>Проверить автозагрузку и разрешения</td>
+</tr>
+<tr class="even">
+<td>После инцидента</td>
+<td>Полный цикл: сбор → анализ → переустановка при необходимости</td>
+</tr>
+</tbody>
+</table>
+<p>Разовая настройка без ревизии деградирует: обновления сбрасывают разрешения, новые приложения просят доступ, старые настройки устаревают.</p>
+<h2 id="хеш-базлайн-без-специальных-средств">Хеш-базлайн без специальных средств</h2>
+<p>Дешёвый вариант для Linux и macOS:</p>
+<pre><code>find /etc ~/.config ~/.local/share -type f -exec sha256sum {} + 2&gt;/dev/null | sort -k2 &gt; baseline-$(date +%F).txt
+sha256sum -c baseline-2026-11-21.txt --quiet</code></pre>
+<p>Это не заменяет AIDE или osquery, но даёт быстрый ответ «что изменилось» без установки агентов.</p>
+<h2 id="как-отличить-дрейф-от-компрометации">Как отличить дрейф от компрометации</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Признак</th>
+<th>Скорее дрейф</th>
+<th>Скорее проблема</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Новый автозапуск</td>
+<td>Появился после установки приложения</td>
+<td>Появился без установки</td>
+</tr>
+<tr class="even">
+<td>Подпись файла</td>
+<td>Валидная, известный разработчик</td>
+<td>Нет подписи или подпись отозвана</td>
+</tr>
+<tr class="odd">
+<td>Сетевое соединение</td>
+<td>К известному сервису</td>
+<td>К неизвестному IP по расписанию</td>
+</tr>
+<tr class="even">
+<td>Разрешение</td>
+<td>Выдано вами осознанно</td>
+<td>Выдано «само» или после «обновления»</td>
+</tr>
+<tr class="odd">
+<td>Время появления</td>
+<td>Совпадает с апдейтом</td>
+<td>Ночью, без ваших действий</td>
+</tr>
+</tbody>
+</table>
+<p>Правило: один признак — не вывод. Нужны два-три совпадающих, иначе это шум.</p>
+<h2 id="что-мониторить-не-надо">Что мониторить не надо</h2>
+<ul>
+<li>«Перегрев и разряд» как индикатор шпионского ПО: слишком много ложных срабатываний.</li>
+<li>Антивирусные логи как основной источник: они не видят стилеры в пользовательском профиле.</li>
+<li>Сетевой трафик вручную без базовой линии: без нормы аномалию не отличить.</li>
+</ul>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="network.html"><span class="dir">Назад</span>Сеть и периметр</a><a class="next" href="incident-response.html"><span class="dir">Дальше</span>Реагирование</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <aside class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#что-такое-базовая-линия">Что такое базовая линия</a>
+<a class="d2" href="#периодичность">Периодичность</a>
+<a class="d2" href="#хеш-базлайн-без-специальных-средств">Хеш-базлайн без специальных средств</a>
+<a class="d2" href="#как-отличить-дрейф-от-компрометации">Как отличить дрейф от компрометации</a>
+<a class="d2" href="#что-мониторить-не-надо">Что мониторить не надо</a>
+  </aside>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
+    <div id="searchResults" class="search-results"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

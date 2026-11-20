@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Диагностика с помощью AI — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Устройство не подключается к AI. К AI подключается результат сбора с устройства. Всё остальное — либо агент с заранее выданными правами, либо удалённый шелл.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html" class="active" aria-current="page">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <h1>Диагностика с помощью AI</h1>
+      <blockquote>
+<p>Устройство не подключается к AI. К AI подключается результат сбора с устройства. Всё остальное — либо агент с заранее выданными правами, либо удалённый шелл.</p>
+</blockquote>
+<h2 id="четыре-модели">Четыре модели</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Модель</th>
+<th>Что реально возможно</th>
+<th>Что нужно от вас</th>
+<th>Риск</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>(c) Офлайн-анализ артефактов</strong></td>
+<td>Разбор бэкапов, sysdiagnose, androidqf, osquery-выгрузок без устройства</td>
+<td>Извлечь и передать архив</td>
+<td>Архив целиком чувствителен</td>
+</tr>
+<tr class="even">
+<td><strong>(a) Скрипты, запуск локально</strong></td>
+<td>Полный сбор, но модель видит только вывод</td>
+<td>Запустить, отфильтровать лишнее</td>
+<td>Утечка того, что попало в вывод</td>
+</tr>
+<tr class="odd">
+<td><strong>(b) Read-only агент</strong></td>
+<td>Чтение состояния в песочнице по allowlist</td>
+<td>Настроить правила и sandbox</td>
+<td>Ограничен правами пользователя</td>
+</tr>
+<tr class="even">
+<td><strong>(d) Полный remote shell</strong></td>
+<td>Всё, что позволяет ОС</td>
+<td>Админ-доступ и доверие каналу</td>
+<td>Максимальная экспозиция</td>
+</tr>
+</tbody>
+</table>
+<p>По соотношению «польза / риск» для личного устройства порядок такой: <strong>(c) → (a) → (b) → (d)</strong>.</p>
+<h2 id="что-реально-можно">Что реально можно</h2>
+<ul>
+<li>Составить инвентарь автозагрузки и объяснить, что в нём лишнее.</li>
+<li>Разобрать бэкап iOS или androidqf-архив и сопоставить с индикаторами MVT.</li>
+<li>Собрать хронологию: когда появился профиль, когда подключилось устройство, когда менялись разрешения.</li>
+<li>Написать скрипт проверки под конкретную ОС и разобрать его вывод.</li>
+<li>Проверить конфигурацию (например, права Flatpak или правила ASR) и указать расхождения с ожидаемой.</li>
+</ul>
+<h2 id="что-невозможно">Что невозможно</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Ожидание</th>
+<th>Почему нет</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>«Прочитать TCC.db, Keychain, реестр удалённо»</td>
+<td>Требует прав на самом устройстве</td>
+</tr>
+<tr class="even">
+<td>«Посмотреть память чужого процесса»</td>
+<td>Запрещено архитектурой современных ОС</td>
+</tr>
+<tr class="odd">
+<td>«Найти имплант ниже ОС»</td>
+<td>Программа в юзерспейсе видит только то, что показывает ядро</td>
+</tr>
+<tr class="even">
+<td>«Найти закладку в прошивке»</td>
+<td>Не обнаруживается программно</td>
+</tr>
+<tr class="odd">
+<td>«Доказать, что заражения нет»</td>
+<td>Отсутствие индикаторов ничего не доказывает</td>
+</tr>
+<tr class="even">
+<td>«Определить шпиона по нагреву и разряду»</td>
+<td>Неспецифичные признаки, масса ложных срабатываний</td>
+</tr>
+</tbody>
+</table>
+<h2 id="что-нужно-от-пользователя">Что нужно от пользователя</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Сценарий</th>
+<th>Действия</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Проверка iPhone</td>
+<td>Кабель, «Доверять», код-пароль, шифрованный бэкап, передача архива</td>
+</tr>
+<tr class="even">
+<td>Проверка Android</td>
+<td>Отладка по USB, подтверждение на экране, архив androidqf</td>
+</tr>
+<tr class="odd">
+<td>Проверка macOS</td>
+<td>Full Disk Access для сборщика, выгрузка Autoruns-аналога (<code>sfltool</code>, KnockKnock)</td>
+</tr>
+<tr class="even">
+<td>Проверка Windows</td>
+<td>Права администратора, экспорт Autoruns, журналы</td>
+</tr>
+<tr class="odd">
+<td>Проверка Linux</td>
+<td>sudo для части команд, выгрузка <code>journalctl</code> и списка юнитов</td>
+</tr>
+</tbody>
+</table>
+<h2 id="правовая-рамка">Правовая рамка</h2>
+<ul>
+<li>Нужно согласие владельца устройства и данных. Для рабочего устройства — политика организации.</li>
+<li>Артефакты содержат персональные данные. По 152-ФЗ это регулируемая категория; передача за пределы РФ — отдельный риск.</li>
+<li>Не отправлять в облачные сервисы дампы памяти, ключи и переписку. Минимум — агрегаты и хеши.</li>
+<li>Хранить архивы в зашифрованном виде (<code>age</code>, GPG) и ограниченное время.</li>
+</ul>
+<h2 id="протокол-сбора">Протокол сбора</h2>
+<p>Шаблон, который стоит заполнять при любом разборе:</p>
+<pre><code>Дата и время:
+Устройство (модель, ОС, сборка):
+Владелец и согласие:
+Что собрано (список артефактов):
+Хеши архивов (SHA-256):
+Где хранится:
+Кто имел доступ:
+Выводы и что осталось непроверенным:</code></pre>
+<p>Без этого через месяц невозможно ответить ни на вопрос «что мы тогда проверяли», ни на вопрос «куда делся архив».</p>
+<h2 id="практическое-правило">Практическое правило</h2>
+<p>Лучший результат даёт связка: <strong>локальный сбор проверенным инструментом → офлайн-анализ → человек принимает решение</strong>. Модель ускоряет разбор и объясняет, но не заменяет ни сбор, ни решение о переустановке.</p>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="incident-response.html"><span class="dir">Назад</span>Реагирование</a><a class="next" href="iphone-lab.html"><span class="dir">Дальше</span>iPhone как стенд</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <aside class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#четыре-модели">Четыре модели</a>
+<a class="d2" href="#что-реально-можно">Что реально можно</a>
+<a class="d2" href="#что-невозможно">Что невозможно</a>
+<a class="d2" href="#что-нужно-от-пользователя">Что нужно от пользователя</a>
+<a class="d2" href="#правовая-рамка">Правовая рамка</a>
+<a class="d2" href="#протокол-сбора">Протокол сбора</a>
+<a class="d2" href="#практическое-правило">Практическое правило</a>
+  </aside>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
+    <div id="searchResults" class="search-results"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сеть и периметр — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Пока устройство в чужой сети, половина локальных настроек не имеет значения: трафик можно перехватить, а DNS — подменить.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html" class="active" aria-current="page">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <h1>Сеть и периметр</h1>
+      <blockquote>
+<p>Пока устройство в чужой сети, половина локальных настроек не имеет значения: трафик можно перехватить, а DNS — подменить.</p>
+</blockquote>
+<h2 id="что-защищаем">Что защищаем</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Угроза</th>
+<th>Пример</th>
+<th>Что помогает</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Подмена DNS</td>
+<td>Роутер или провайдер отдаёт чужой адрес</td>
+<td>Шифрованный DNS, проверка резолвера</td>
+</tr>
+<tr class="even">
+<td>Перехват в публичной сети</td>
+<td>Открытый Wi-Fi в кафе, аэропорту</td>
+<td>HTTPS, VPN, не входить в банк</td>
+</tr>
+<tr class="odd">
+<td>Захват роутера</td>
+<td>Слабый пароль администратора, старая прошивка</td>
+<td>Обновление, смена пароля, отключение WPS</td>
+</tr>
+<tr class="even">
+<td>Соседство с IoT</td>
+<td>Умные лампы и камеры в одной сети с ноутбуком</td>
+<td>Гостевая сеть</td>
+</tr>
+<tr class="odd">
+<td>Captive portal</td>
+<td>«Войдите через Facebook» на странице входа</td>
+<td>Не вводить пароли на странице авторизации</td>
+</tr>
+</tbody>
+</table>
+<h2 id="роутер">Роутер</h2>
+<p>Это устройство, которое чаще всего настроено один раз и забыто на годы.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />Прошивка обновлена, автопроувepка включена.</label></li>
+<li><label><input type="checkbox" />Пароль администратора сменён (не заводской).</label></li>
+<li><label><input type="checkbox" />WPS отключён.</label></li>
+<li><label><input type="checkbox" />UPnP отключён, если не нужен.</label></li>
+<li><label><input type="checkbox" />Удалённое администрирование из интернета выключено.</label></li>
+<li><label><input type="checkbox" />Гостевая сеть для IoT и гостей.</label></li>
+<li><label><input type="checkbox" />Список подключённых устройств проверен.</label></li>
+</ul>
+<h2 id="dns">DNS</h2>
+<p>DNS видит, к каким доменам вы обращаетесь, — даже если трафик зашифрован. Варианты:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Вариант</th>
+<th>Плюс</th>
+<th>Минус</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DNS провайдера</td>
+<td>Быстро, ничего не надо</td>
+<td>Виден провайдеру, возможна подмена</td>
+</tr>
+<tr class="even">
+<td>Публичный резолвер</td>
+<td>Предсказуемо</td>
+<td>Виден резолверу</td>
+</tr>
+<tr class="odd">
+<td>DoH / DoT</td>
+<td>Шифрование запроса</td>
+<td>Виден провайдеру DoH</td>
+</tr>
+</tbody>
+</table>
+<p>Практика: включить DoH в браузере и в системе, если это поддерживается; не ставить «бесплатный VPN» ради DNS.</p>
+<h2 id="публичный-wi-fi">Публичный Wi-Fi</h2>
+<ul>
+<li>Не входить в банк и на госуслуги без крайней необходимости.</li>
+<li>Проверять адрес сайта, а не только замок в строке.</li>
+<li>Не устанавливать сертификаты и профили по просьбе страницы авторизации.</li>
+<li>VPN уместен, но он не защищает от фишинга — только от перехвата канала.</li>
+</ul>
+<h2 id="vpn-что-реально-даёт">VPN: что реально даёт</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Защищает</th>
+<th>Не защищает</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Канал до VPN-сервера от локального перехвата</td>
+<td>От фишинга и поддельных сайтов</td>
+</tr>
+<tr class="even">
+<td>IP от сайтов</td>
+<td>От угона аккаунта по коду</td>
+</tr>
+<tr class="odd">
+<td>Трафик от провайдера (частично)</td>
+<td>От вредоносного приложения на устройстве</td>
+</tr>
+</tbody>
+</table>
+<p>И отдельно: бесплатный VPN — это в первую очередь бизнес-модель на ваших данных. Прежде чем включать, ответьте, кто оплачивает серверы.</p>
+<h2 id="чек-лист">Чек-лист</h2>
+<h3 id="p0">P0</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Роутер: прошивка, пароль администратора, WPS и UPnP выключены.</label></li>
+<li><label><input type="checkbox" />Домашняя сеть != сеть для IoT.</label></li>
+<li><label><input type="checkbox" />На публичном Wi-Fi — никаких входов в критичные сервисы без VPN.</label></li>
+</ul>
+<h3 id="p1">P1</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />DoH/DoT в браузере и системе.</label></li>
+<li><label><input type="checkbox" />Проверка списка устройств в роутере раз в квартал.</label></li>
+<li><label><input type="checkbox" />Гостевая сеть для гостей.</label></li>
+</ul>
+<h3 id="p2">P2</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Локальный DNS с фильтрацией (Pi-hole и аналоги).</label></li>
+<li><label><input type="checkbox" />Отдельный VLAN для IoT, если роутер умеет.</label></li>
+</ul>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="android.html"><span class="dir">Назад</span>Android</a><a class="next" href="monitoring.html"><span class="dir">Дальше</span>Мониторинг</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <aside class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#что-защищаем">Что защищаем</a>
+<a class="d2" href="#роутер">Роутер</a>
+<a class="d2" href="#dns">DNS</a>
+<a class="d2" href="#публичный-wi-fi">Публичный Wi-Fi</a>
+<a class="d2" href="#vpn-что-реально-даёт">VPN: что реально даёт</a>
+<a class="d2" href="#чек-лист">Чек-лист</a>
+<a class="d3" href="#p0">P0</a>
+<a class="d3" href="#p1">P1</a>
+<a class="d3" href="#p2">P2</a>
+  </aside>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
+    <div id="searchResults" class="search-results"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

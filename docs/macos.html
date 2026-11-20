@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>macOS — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Основной риск на Mac — не «вирус», а выданные когда-то разрешения и автозагрузка, о которой вы забыли.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html" class="active" aria-current="page">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <h1>macOS</h1>
+      <blockquote>
+<p>Основной риск на Mac — не «вирус», а выданные когда-то разрешения и автозагрузка, о которой вы забыли.</p>
+</blockquote>
+<h2 id="механизмы">Механизмы</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Механизм</th>
+<th>Где включить</th>
+<th>Что даёт</th>
+<th>Приоритет</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FileVault</td>
+<td>Privacy &amp; Security → FileVault</td>
+<td>Шифрование тома; без пароля данные не читаются</td>
+<td>P0</td>
+</tr>
+<tr class="even">
+<td>Gatekeeper</td>
+<td>Privacy &amp; Security → Allow applications from</td>
+<td>Проверка подписи и нотаризации при первом запуске</td>
+<td>P0</td>
+</tr>
+<tr class="odd">
+<td>SIP</td>
+<td>Включён по умолчанию, <code>csrutil status</code></td>
+<td>Защита системных путей от подмены</td>
+<td>P0</td>
+</tr>
+<tr class="even">
+<td>XProtect</td>
+<td>Автоматически</td>
+<td>Сигнатуры известного вредоносного ПО</td>
+<td>P0 (фон)</td>
+</tr>
+<tr class="odd">
+<td>TCC</td>
+<td>Privacy &amp; Security → Privacy</td>
+<td>Явные разрешения на доступ к данным и вводу</td>
+<td>P0 (ревизия)</td>
+</tr>
+<tr class="even">
+<td>Lockdown Mode</td>
+<td>Privacy &amp; Security → Lockdown Mode</td>
+<td>Сокращает поверхность атаки; ломает часть функций</td>
+<td>P1</td>
+</tr>
+<tr class="odd">
+<td>Advanced Data Protection</td>
+<td>Apple Account → iCloud</td>
+<td>E2EE для бэкапа iCloud, включая бэкап WhatsApp</td>
+<td>P1</td>
+</tr>
+<tr class="even">
+<td>Application Firewall</td>
+<td>Network → Firewall</td>
+<td>Блокировка входящих, скрытый режим</td>
+<td>P1</td>
+</tr>
+<tr class="odd">
+<td>Background Task Management</td>
+<td>Автоматически (macOS 26)</td>
+<td>Спрашивает разрешение на фоновые задачи</td>
+<td>P1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="разрешения-которые-надо-перечитать">Разрешения, которые надо перечитать</h2>
+<p>TCC — главный механизм, и главный источник проблем. Пять разрешений фактически равны полному доступу:</p>
+<ul>
+<li><strong>Accessibility</strong> — управление другими приложениями, чтение ввода.</li>
+<li><strong>Full Disk Access</strong> — чтение почты, Messages, баз браузеров, бэкапов.</li>
+<li><strong>Screen Recording</strong> — запись экрана и системного аудио.</li>
+<li><strong>Input Monitoring</strong> — перехват нажатий.</li>
+<li><strong>Automation</strong> — управление другими приложениями через Apple Events.</li>
+</ul>
+<p>Проверка: <code>Privacy &amp; Security → Privacy</code>. Правило: если приложение не делает ничего, что требует этого разрешения, — выключить. «На всякий случай» здесь не работает.</p>
+<h2 id="автозагрузка-и-постоянные-механизмы">Автозагрузка и постоянные механизмы</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Место</th>
+<th>Что смотреть</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>System Settings → General → Login Items &amp; Extensions</td>
+<td>«Open at Login» и «Allow in the Background»</td>
+</tr>
+<tr class="even">
+<td><code>~/Library/LaunchAgents/</code></td>
+<td>Пользовательские агенты</td>
+</tr>
+<tr class="odd">
+<td><code>/Library/LaunchAgents/</code>, <code>/Library/LaunchDaemons/</code></td>
+<td>Системные агенты и демоны (root)</td>
+</tr>
+<tr class="even">
+<td><code>/System/Library/Launch*</code></td>
+<td>Только Apple; менять нельзя при SIP</td>
+</tr>
+<tr class="odd">
+<td><code>crontab -l</code>, <code>/etc/periodic/*</code></td>
+<td>Задачи по расписанию</td>
+</tr>
+<tr class="even">
+<td>Privacy &amp; Security → Profiles</td>
+<td>Профили конфигурации; если есть — разобраться, откуда</td>
+</tr>
+<tr class="odd">
+<td><code>sfltool dumpbtm</code></td>
+<td>Полный статус фоновых задач</td>
+</tr>
+</tbody>
+</table>
+<p>Расширения ядра и системные расширения — <code>kmutil showloaded</code> и раздел Extensions. На Apple silicon кекст-расширения почти вышли из употребления, и их наличие — повод для вопроса.</p>
+<h2 id="инструменты">Инструменты</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Инструмент</th>
+<th>Что делает</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>KnockKnock</td>
+<td>Инвентарь постоянных механизмов: агенты, демоны, расширения</td>
+</tr>
+<tr class="even">
+<td>BlockBlock</td>
+<td>Уведомляет об установке persistent-компонентов в реальном времени</td>
+</tr>
+<tr class="odd">
+<td>LuLu</td>
+<td>Открытый брандмауэр исходящих соединений</td>
+</tr>
+<tr class="even">
+<td>OverSight</td>
+<td>Контроль доступа к камере и микрофону</td>
+</tr>
+<tr class="odd">
+<td>WhatsYourSign</td>
+<td>Показывает подпись и нотаризацию файла</td>
+</tr>
+<tr class="even">
+<td><code>spctl --assess --verbose</code>, <code>codesign -dv</code></td>
+<td>Проверка подписи из терминала</td>
+</tr>
+<tr class="odd">
+<td><code>csrutil status</code></td>
+<td>Состояние SIP</td>
+</tr>
+</tbody>
+</table>
+<h2 id="мессенджеры-на-mac">Мессенджеры на Mac</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Приложение</th>
+<th>Где данные</th>
+<th>Чем защищать</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Signal Desktop</td>
+<td><code>~/Library/Application Support/Signal</code></td>
+<td>Шифрование диска; ключ в Keychain</td>
+</tr>
+<tr class="even">
+<td>Telegram Desktop</td>
+<td><code>~/Library/Application Support/Telegram Desktop/tdata</code></td>
+<td>Локальный код-пароль + FileVault</td>
+</tr>
+<tr class="odd">
+<td>WhatsApp Desktop</td>
+<td>Контейнер приложения в <code>~/Library/Containers</code></td>
+<td>FileVault; отдельного пароля приложения нет</td>
+</tr>
+</tbody>
+</table>
+<p>Общее правило: при разблокированном Mac и разблокированном Keychain данные мессенджеров доступны любому процессу с нужными правами. Поэтому FileVault и блокировка экрана важнее, чем «пароль на приложение», которого у WhatsApp на Mac всё равно нет.</p>
+<h2 id="чек-лист">Чек-лист</h2>
+<h3 id="p0">P0</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />FileVault включён, recovery key сохранён вне Mac.</label></li>
+<li><label><input type="checkbox" />Gatekeeper не в режиме «Anywhere».</label></li>
+<li><label><input type="checkbox" /><code>csrutil status</code> → enabled.</label></li>
+<li><label><input type="checkbox" />Автообновления ОС включены.</label></li>
+<li><label><input type="checkbox" />Ревизия TCC: Accessibility, Full Disk Access, Screen Recording, Input Monitoring — только известные приложения.</label></li>
+<li><label><input type="checkbox" />Login Items: ничего незнакомого.</label></li>
+<li><label><input type="checkbox" />Профили конфигурации отсутствуют (или объяснимы).</label></li>
+</ul>
+<h3 id="p1">P1</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Lockdown Mode — если профиль риска повышенный.</label></li>
+<li><label><input type="checkbox" />Advanced Data Protection для iCloud.</label></li>
+<li><label><input type="checkbox" />Брандмауэр включён, скрытый режим.</label></li>
+<li><label><input type="checkbox" />Пароль на экранную заставку, блокировка по горячей клавише.</label></li>
+<li><label><input type="checkbox" />Обновления приложений не только из App Store.</label></li>
+</ul>
+<h3 id="p2">P2</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />LuLu или аналог для контроля исходящих.</label></li>
+<li><label><input type="checkbox" />Отдельный стандартный пользователь для работы с сомнительными файлами.</label></li>
+<li><label><input type="checkbox" />Проверка <code>sfltool dumpbtm</code> раз в квартал.</label></li>
+</ul>
+<h2 id="пределы">Пределы</h2>
+<ul>
+<li>Прошивка, iBoot и изменения ниже ядра программно не проверяются. Косвенный признак — attestation и настройки Secure Boot, но это подтверждение ожидаемого состояния, а не доказательство чистоты.</li>
+<li>Стилер, уже отработавший под вашим пользователем, не оставляет надёжных следов: данные ушли, логов нет.</li>
+<li>ClickFix («вставьте команду в Terminal») обходил Gatekeeper, потому что запуск шёл не через Finder. С macOS 26.4 появилась блокировка вставки подозрительных команд, но привычка важнее патча.</li>
+<li>Антивирус не видит обфусцированный AppleScript и расширения браузера в памяти.</li>
+</ul>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="signal.html"><span class="dir">Назад</span>Signal</a><a class="next" href="windows.html"><span class="dir">Дальше</span>Windows</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <aside class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#механизмы">Механизмы</a>
+<a class="d2" href="#разрешения-которые-надо-перечитать">Разрешения, которые надо перечитать</a>
+<a class="d2" href="#автозагрузка-и-постоянные-механизмы">Автозагрузка и постоянные механизмы</a>
+<a class="d2" href="#инструменты">Инструменты</a>
+<a class="d2" href="#мессенджеры-на-mac">Мессенджеры на Mac</a>
+<a class="d2" href="#чек-лист">Чек-лист</a>
+<a class="d3" href="#p0">P0</a>
+<a class="d3" href="#p1">P1</a>
+<a class="d3" href="#p2">P2</a>
+<a class="d2" href="#пределы">Пределы</a>
+  </aside>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
+    <div id="searchResults" class="search-results"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

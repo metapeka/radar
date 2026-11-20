@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WhatsApp — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Сквозное шифрование защищает текст сообщения. Оно не защищает аккаунт, не защищает бэкап и не скрывает метаданные.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html" class="active" aria-current="page">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <h1>WhatsApp</h1>
+      <blockquote>
+<p>Сквозное шифрование защищает текст сообщения. Оно не защищает аккаунт, не защищает бэкап и не скрывает метаданные.</p>
+</blockquote>
+<h2 id="что-защищено-а-что-нет">Что защищено, а что нет</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Объект</th>
+<th>Защита</th>
+<th>Комментарий</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Текст и медиа в пути</td>
+<td>E2EE (Signal Protocol)</td>
+<td>Сервер видит только шифротекст</td>
+</tr>
+<tr class="even">
+<td>Доставленные сообщения на сервере</td>
+<td>Не хранятся</td>
+<td>Удаляются после доставки</td>
+</tr>
+<tr class="odd">
+<td>Недоставленные сообщения</td>
+<td>Хранятся в шифрованном виде</td>
+<td>До 30 дней, затем удаление</td>
+</tr>
+<tr class="even">
+<td>Метаданные (кто, кому, когда, IP, модель)</td>
+<td>Не защищены</td>
+<td>Основа анализа и судебных запросов</td>
+</tr>
+<tr class="odd">
+<td>Облачный бэкап</td>
+<td><strong>Зависит от вас</strong></td>
+<td>E2EE-бэкап по умолчанию <strong>выключен</strong></td>
+</tr>
+<tr class="even">
+<td>Локальная база на телефоне</td>
+<td>Шифрование ОС</td>
+<td>При разблокированном устройстве читается</td>
+</tr>
+<tr class="odd">
+<td>Превью уведомлений</td>
+<td>Не защищены</td>
+<td>Отключаются в настройках ОС</td>
+</tr>
+</tbody>
+</table>
+<h2 id="взламывали-ли-серверы">Взламывали ли серверы</h2>
+<p>Подтверждённых случаев взлома инфраструктуры WhatsApp с кражей переписки нет. Что происходило на самом деле:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Год</th>
+<th>Событие</th>
+<th>Что это было</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2019</td>
+<td>NSO Pegasus</td>
+<td>Эксплойт в VoIP-стеке (CVE-2019-3568), ~1 400 устройств. Атака на телефон после расшифровки, не на сервер</td>
+</tr>
+<tr class="even">
+<td>2021</td>
+<td>«533 млн пользователей»</td>
+<td>Утечка Facebook, не WhatsApp</td>
+</tr>
+<tr class="odd">
+<td>2022</td>
+<td>«487–500 млн номеров»</td>
+<td>Перечисление номеров; WhatsApp отрицал утечку</td>
+</tr>
+<tr class="even">
+<td>2022</td>
+<td>Инсайдеры Meta</td>
+<td>Захват аккаунтов через инструмент поддержки; о WhatsApp не сообщалось</td>
+</tr>
+<tr class="odd">
+<td>2025</td>
+<td>«3,5 млрд аккаунтов»</td>
+<td>Уязвимость контроля частоты в поиске контактов, не переписка</td>
+</tr>
+</tbody>
+</table>
+<p>Вывод: сервер не является целью. Дешевле получить код, привязать устройство или прочитать бэкап.</p>
+<h2 id="шесть-векторов-угона">Шесть векторов угона</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Вектор</th>
+<th>Как выглядит</th>
+<th>Что даёт</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Код подтверждения</td>
+<td>«Проголосуй за ребёнка», «я ошибся номером», «поддержка»</td>
+<td>Аккаунт и новые сообщения</td>
+</tr>
+<tr class="even">
+<td>QR / код привязки</td>
+<td>«Отсканируй для входа», 8-значный код на сайте</td>
+<td>Полная сессия и синхронизированная история</td>
+</tr>
+<tr class="odd">
+<td>Кража сессии на ПК</td>
+<td>Инфостилер забирает профиль браузера</td>
+<td>Сессия WhatsApp Web</td>
+</tr>
+<tr class="even">
+<td>SIM-swap / eSIM</td>
+<td>Перевыпуск номера через оператора</td>
+<td>Код, затем аккаунт</td>
+</tr>
+<tr class="odd">
+<td>Поддельный клиент</td>
+<td>«WhatsApp Plus», фейковое приложение</td>
+<td>Устройство целиком</td>
+</tr>
+<tr class="even">
+<td>Zero-click</td>
+<td>Целевой эксплойт (Paragon, NSO)</td>
+<td>Всё устройство</td>
+</tr>
+</tbody>
+</table>
+<p>Массовый вектор — первый. Самый недооценённый — второй: сессию привязывают к чужому компьютеру, и жертва об этом не узнаёт, пока не зайдёт в список устройств.</p>
+<h2 id="что-получает-атакующий">Что получает атакующий</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Способ</th>
+<th>Новые сообщения</th>
+<th>История</th>
+<th>Медиа</th>
+<th>Писать от вашего имени</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Повторная регистрация номера</td>
+<td>да</td>
+<td>нет</td>
+<td>новые</td>
+<td>да</td>
+</tr>
+<tr class="even">
+<td>То же + облачный бэкап</td>
+<td>да</td>
+<td>да</td>
+<td>да</td>
+<td>да</td>
+</tr>
+<tr class="odd">
+<td>Привязанное устройство</td>
+<td>да</td>
+<td>синхронизированная часть</td>
+<td>да</td>
+<td>да</td>
+</tr>
+<tr class="even">
+<td>Заражение устройства</td>
+<td>да</td>
+<td>локальная</td>
+<td>да</td>
+<td>да</td>
+</tr>
+</tbody>
+</table>
+<p>Разница принципиальная: «угнали аккаунт» и «прочитали всю переписку» — не одно и то же.</p>
+<h2 id="чек-лист">Чек-лист</h2>
+<h3 id="p0-без-этого-остального-мало">P0 — без этого остального мало</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Двухшаговая проверка.</strong> <code>Настройки → Аккаунт → Двухшаговая проверка</code>. С 25 августа 2026 PIN заменяется полноценным паролем — используйте его, а не шесть цифр.</label></li>
+<li><label><input type="checkbox" /><strong>Резервная почта.</strong> <code>Настройки → Аккаунт → Адрес электронной почты</code>. Без неё сброс только через 7 дней ожидания.</label></li>
+<li><label><input type="checkbox" /><strong>E2EE-бэкап.</strong> <code>Настройки → Чаты → Резервная копия → Резервная копия со сквозным шифрованием</code>. Пароль или 64-значный ключ — сохранить <strong>вне телефона</strong>. Ключ невосстановим.</label></li>
+<li><label><input type="checkbox" /><strong>Ревизия устройств.</strong> <code>Настройки → Связанные устройства</code>. Всё незнакомое — «Выйти». Лимит: 4 устройства плюс телефон.</label></li>
+<li><label><input type="checkbox" /><strong>Обновления.</strong> ОС и приложения. CVE-2025-55177 эксплуатировалась в дикой природе и закрыта патчем.</label></li>
+</ul>
+<h3 id="p1-гигиена">P1 — гигиена</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Passkey.</strong> <code>Настройки → Аккаунт → Passkeys</code>. Фишинг на passkey не работает.</label></li>
+<li><label><input type="checkbox" /><strong>Уведомления безопасности.</strong> <code>Настройки → Аккаунт → Уведомления безопасности</code> — по умолчанию выключены.</label></li>
+<li><label><input type="checkbox" /><strong>Блокировка приложения.</strong> <code>Настройки → Приватность → Блокировка приложения</code>, «через 1 минуту».</label></li>
+<li><label><input type="checkbox" /><strong>Превью уведомлений</strong> — выключить в настройках ОС, не в WhatsApp.</label></li>
+<li><label><input type="checkbox" /><strong>Защита IP в звонках.</strong> <code>Приватность → Расширенные</code>.</label></li>
+<li><label><input type="checkbox" /><strong>Молча отклонять неизвестные звонки.</strong> <code>Приватность → Звонки</code>.</label></li>
+<li><label><input type="checkbox" /><strong>Advanced Chat Privacy</strong> — на чувствительные чаты, по умолчанию выключено. Блокирует экспорт и автозагрузку, но <strong>не скриншоты</strong>.</label></li>
+</ul>
+<h3 id="p2-по-ситуации">P2 — по ситуации</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Chat Lock и секретный код на отдельные чаты.</label></li>
+<li><label><input type="checkbox" />Исчезающие сообщения по умолчанию для новых чатов.</label></li>
+<li><label><input type="checkbox" />Отказ от облачного бэкапа целиком, если история не нужна.</label></li>
+</ul>
+<h2 id="мифы">Мифы</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Миф</th>
+<th>Реальность</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>«Переустановить приложение»</td>
+<td>Не возвращает аккаунт; нужна повторная регистрация номера</td>
+</tr>
+<tr class="even">
+<td>«Сменить пароль»</td>
+<td>Если злоумышленник включил свою 2SV — сброс через 7 дней</td>
+</tr>
+<tr class="odd">
+<td>«Антивирус остановит zero-click»</td>
+<td>Paragon заражал полностью пропатченные устройства</td>
+</tr>
+<tr class="even">
+<td>«VPN защитит от угона»</td>
+<td>Угон идёт через номер и социнженерию, VPN не участвует</td>
+</tr>
+<tr class="odd">
+<td>«Меня прослушивают через сервер»</td>
+<td>В судах фигурируют метаданные и бэкапы, не серверный перехват</td>
+</tr>
+</tbody>
+</table>
+<h2 id="полный-отчёт">Полный отчёт</h2>
+<p>Расширенная версия с источниками, CVE-таблицей и разбором инцидентов — в репозитории: <code>research-whatsapp-security-2026-11-20.md</code>.</p>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="methodology.html"><span class="dir">Назад</span>Методика</a><a class="next" href="telegram.html"><span class="dir">Дальше</span>Telegram</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <aside class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#что-защищено-а-что-нет">Что защищено, а что нет</a>
+<a class="d2" href="#взламывали-ли-серверы">Взламывали ли серверы</a>
+<a class="d2" href="#шесть-векторов-угона">Шесть векторов угона</a>
+<a class="d2" href="#что-получает-атакующий">Что получает атакующий</a>
+<a class="d2" href="#чек-лист">Чек-лист</a>
+<a class="d3" href="#p0-без-этого-остального-мало">P0 — без этого остального мало</a>
+<a class="d3" href="#p1-гигиена">P1 — гигиена</a>
+<a class="d3" href="#p2-по-ситуации">P2 — по ситуации</a>
+<a class="d2" href="#мифы">Мифы</a>
+<a class="d2" href="#полный-отчёт">Полный отчёт</a>
+  </aside>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
+    <div id="searchResults" class="search-results"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

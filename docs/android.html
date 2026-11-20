@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Android — Личная безопасность и мессенджеры</title>
+<meta name="description" content="На Android главный риск — не «вирус из Play Market», а разрешения, которые выдали вручную: Accessibility, доступ к уведомлениям, администратор устройства.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html" class="active" aria-current="page">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <h1>Android</h1>
+      <blockquote>
+<p>На Android главный риск — не «вирус из Play Market», а разрешения, которые выдали вручную: Accessibility, доступ к уведомлениям, администратор устройства.</p>
+</blockquote>
+<h2 id="механизмы">Механизмы</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Механизм</th>
+<th>Где</th>
+<th>Что даёт</th>
+<th>Приоритет</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Блокировка экрана 6+</td>
+<td>Безопасность и конфиденциальность</td>
+<td>Базовая защита; графический ключ слабее</td>
+<td>P0</td>
+</tr>
+<tr class="even">
+<td>Play Protect</td>
+<td>Play Store → Play Protect</td>
+<td>Сканирование всех приложений, включая сторонние</td>
+<td>P0</td>
+</tr>
+<tr class="odd">
+<td>Запрет неизвестных источников</td>
+<td>Приложения → Специальный доступ</td>
+<td>Блокировка sideloading</td>
+<td>P0</td>
+</tr>
+<tr class="even">
+<td>Advanced Protection</td>
+<td>Безопасность → Advanced Protection</td>
+<td>Запрет sideload, USB-защита, ограничение Accessibility, Intrusion Logs</td>
+<td>P0 (где есть)</td>
+</tr>
+<tr class="odd">
+<td>Администраторы устройства</td>
+<td>Безопасность → Дополнительно</td>
+<td>Список приложений с правом блокировки удаления</td>
+<td>P0</td>
+</tr>
+<tr class="even">
+<td>Private Space</td>
+<td>Безопасность → Приватное пространство</td>
+<td>Изолированный профиль со скрытыми приложениями</td>
+<td>P1</td>
+</tr>
+<tr class="odd">
+<td>Google 2FA / passkeys</td>
+<td>myaccount.google.com</td>
+<td>Защита аккаунта, а через него — устройства</td>
+<td>P0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="опасные-разрешения">Опасные разрешения</h2>
+<p>Пять списков, которые надо проверять вручную:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Разрешение</th>
+<th>Что позволяет</th>
+<th>Почему опасно</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Accessibility</strong></td>
+<td>Читать экран, нажимать, автозаполнять</td>
+<td>Главный API банковских троянов</td>
+</tr>
+<tr class="even">
+<td><strong>Notification access</strong></td>
+<td>Читать все уведомления</td>
+<td>Перехват кодов и push-подтверждений</td>
+</tr>
+<tr class="odd">
+<td><strong>Device admin</strong></td>
+<td>Блокировать удаление, сбрасывать</td>
+<td>Самозащита сталкерского ПО</td>
+</tr>
+<tr class="even">
+<td><strong>Usage access</strong></td>
+<td>Видеть, что и когда запускалось</td>
+<td>Разведка перед атакой</td>
+</tr>
+<tr class="odd">
+<td><strong>Display over other apps</strong></td>
+<td>Рисовать поверх интерфейса</td>
+<td>Подмена окон и вводов</td>
+</tr>
+</tbody>
+</table>
+<p>Правило: любое приложение в этих списках, которое не является системным или специализированным инструментом, — повод удалить. «Сканер», «клинер», «ускоритель» с Accessibility — почти всегда вредоносное.</p>
+<h2 id="банкеры-и-accessibility">Банкеры и Accessibility</h2>
+<p>Массовая угроза 2025–2026 в России — Android-банкеры, которые ставят Accessibility и читают SMS и push. Они приходят не из магазина, а из чатов: «исправленная версия Telegram», «трекинг посылки», «резюме», «капча». Отличие от шпионского ПО: цель — деньги, а не переписка. Но результат для аккаунта мессенджера тот же — перехват кода.</p>
+<p>Что помогает: запрет установки из неизвестных источников, Play Protect, проверка Accessibility раз в месяц, Advanced Protection там, где доступно.</p>
+<h2 id="обнаружение">Обнаружение</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Инструмент</th>
+<th>Как работает</th>
+<th>Ограничение</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>androidqf</td>
+<td>Собирает APK, APEX, логи, <code>dumpsys</code>, <code>getprop</code> по USB</td>
+<td>Нужна отладка по USB и подтверждение на экране</td>
+</tr>
+<tr class="even">
+<td>MVT</td>
+<td><code>mvt-android check-androidqf</code> — анализ архива офлайн</td>
+<td>Прямой ADB-анализ удалён из MVT</td>
+</tr>
+<tr class="odd">
+<td>Intrusion Logs</td>
+<td>Журналы вторжений при Advanced Protection</td>
+<td>Только Android 16+ и не на всех прошивках</td>
+</tr>
+</tbody>
+</table>
+<pre><code>androidqf -o ./case-01          # сбор
+mvt-android check-androidqf ./case-01</code></pre>
+<p>Архив содержит переписку и идентификаторы — хранить и передавать только в зашифрованном виде.</p>
+<h2 id="чек-лист">Чек-лист</h2>
+<h3 id="p0">P0</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Блокировка экрана 6+ цифр, отпечаток настроен.</label></li>
+<li><label><input type="checkbox" />Установка из неизвестных источников запрещена для всех приложений.</label></li>
+<li><label><input type="checkbox" />Play Protect: сканирование и «улучшить обнаружение» включены.</label></li>
+<li><label><input type="checkbox" />Администраторы устройства: только системное и Find Hub.</label></li>
+<li><label><input type="checkbox" />Accessibility: только системные и trusted-приложения.</label></li>
+<li><label><input type="checkbox" />Доступ к уведомлениям: незнакомых нет.</label></li>
+<li><label><input type="checkbox" />Google-аккаунт: 2FA и passkeys.</label></li>
+<li><label><input type="checkbox" />Обновления системы и приложений автоматические.</label></li>
+</ul>
+<h3 id="p1">P1</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Advanced Protection (Android 16+), если устройство поддерживает.</label></li>
+<li><label><input type="checkbox" />Private Space для чувствительных приложений.</label></li>
+<li><label><input type="checkbox" />E2EE-бэкап WhatsApp (Google Drive).</label></li>
+<li><label><input type="checkbox" />Проверка списка приложений на незнакомые пакеты.</label></li>
+<li><label><input type="checkbox" />Отключить установку из браузера и файлового менеджера.</label></li>
+</ul>
+<h3 id="p2">P2</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Intrusion Logs при Advanced Protection.</label></li>
+<li><label><input type="checkbox" />Ежемесячная проверка разрешений.</label></li>
+<li><label><input type="checkbox" />Отдельный профиль для рабочих приложений.</label></li>
+</ul>
+<h2 id="мессенджеры-на-android">Мессенджеры на Android</h2>
+<ul>
+<li><strong>WhatsApp:</strong> локальная база в приватном каталоге, E2EE-бэкап в Google Drive, «Связанные устройства», блокировка приложения.</li>
+<li><strong>Telegram:</strong> passcode, облачный пароль, активные сеансы.</li>
+<li><strong>Signal:</strong> Registration Lock.</li>
+</ul>
+<p>Отдельно: бэкап приложения в Google-аккаунте может включать данные, о которых вы не думали. Если история не нужна — отключите бэкап приложения, а не только чатов.</p>
+<h2 id="пределы">Пределы</h2>
+<ul>
+<li>Форензик-источников меньше, чем на iOS: <code>adb backup</code> с Android 12+ отдаёт почти ничего, а часть данных доступна только с root.</li>
+<li>Настоящий mercenary-имплант не оставляет индикаторов в интерфейсе; «перегрев и разряд» — не диагностический признак.</li>
+<li>Прошивки OEM отличаются: то, что есть на Pixel, может отсутствовать на Xiaomi или Samsung, и наоборот.</li>
+</ul>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="ios.html"><span class="dir">Назад</span>iOS</a><a class="next" href="network.html"><span class="dir">Дальше</span>Сеть и периметр</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <aside class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#механизмы">Механизмы</a>
+<a class="d2" href="#опасные-разрешения">Опасные разрешения</a>
+<a class="d2" href="#банкеры-и-accessibility">Банкеры и Accessibility</a>
+<a class="d2" href="#обнаружение">Обнаружение</a>
+<a class="d2" href="#чек-лист">Чек-лист</a>
+<a class="d3" href="#p0">P0</a>
+<a class="d3" href="#p1">P1</a>
+<a class="d3" href="#p2">P2</a>
+<a class="d2" href="#мессенджеры-на-android">Мессенджеры на Android</a>
+<a class="d2" href="#пределы">Пределы</a>
+  </aside>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
+    <div id="searchResults" class="search-results"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

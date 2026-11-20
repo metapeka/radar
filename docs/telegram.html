@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Telegram — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Облачные чаты Telegram не защищены сквозным шифрованием. Главный риск — не перехват, а угон аккаунта по коду из SMS.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6fed'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd>/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html" class="active" aria-current="page">Telegram</a><a href="signal.html">Signal</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.2 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <h1>Telegram</h1>
+      <blockquote>
+<p>Облачные чаты Telegram не защищены сквозным шифрованием. Главный риск — не перехват, а угон аккаунта по коду из SMS.</p>
+</blockquote>
+<h2 id="модель-шифрования">Модель шифрования</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Тип чата</th>
+<th>Шифрование</th>
+<th>Кто видит содержимое</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Облачный чат (личный, группа, канал)</td>
+<td>Клиент ↔︎ сервер</td>
+<td>Сервер Telegram</td>
+</tr>
+<tr class="even">
+<td>Секретный чат</td>
+<td>E2EE</td>
+<td>Только участники</td>
+</tr>
+<tr class="odd">
+<td>Группы и каналы</td>
+<td>Никогда не E2EE</td>
+<td>Сервер</td>
+</tr>
+</tbody>
+</table>
+<p>Это не недостаток реализации, а архитектурное решение: облачные чаты синхронизируются между устройствами именно потому, что сервер хранит их. Плата — доверие к серверу и юрисдикции размещения.</p>
+<p>Практический вывод: <strong>секретные чаты</strong> нужны там, где важна конфиденциальность; <strong>облачный пароль</strong> нужен всегда, потому что он защищает вход, а не переписку.</p>
+<h2 id="три-способа-потерять-аккаунт">Три способа потерять аккаунт</h2>
+<ol type="1">
+<li><strong>Код из SMS.</strong> Если не задан облачный пароль, одного кода достаточно. Схемы те же, что в WhatsApp: «проголосуй», «я ошибся номером», «поддержка».</li>
+<li><strong>Перехват сессии.</strong> Как и в WhatsApp, Telegram Web/Desktop хранит авторизацию локально; стилер забирает её вместе с профилем.</li>
+<li><strong>Подмена номера.</strong> SIM-swap и перевыпуск eSIM работают против Telegram так же, как против всего остального.</li>
+</ol>
+<p>Отдельная деталь: после входа нового устройства у владельца есть окно, чтобы завершить сессию, но не мгновенное — рассчитывать на «выкинет автоматически» не стоит.</p>
+<h2 id="чек-лист">Чек-лист</h2>
+<h3 id="p0">P0</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Облачный пароль.</strong> <code>Настройки → Конфиденциальность и безопасность → Облачный пароль</code>. Без него аккаунт угоняется одним кодом.</label></li>
+<li><label><input type="checkbox" /><strong>Почта для входа.</strong> Там же. Критично, если SMS не доходит.</label></li>
+<li><label><input type="checkbox" /><strong>Passcode.</strong> <code>Конфиденциальность и безопасность → Код-пароль</code> + автоблокировка. Защищает от «взял разблокированный телефон».</label></li>
+<li><label><input type="checkbox" /><strong>Активные сеансы.</strong> <code>Настройки → Устройства</code> — завершить всё незнакомое. Проверять и веб-сессии, не только десктоп.</label></li>
+<li><label><input type="checkbox" /><strong>Двухфакторная защита аккаунта</strong> (если используется вход по почте) — на самой почте.</label></li>
+</ul>
+<h3 id="p1">P1</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Passkeys</strong>, если доступны в вашей версии.</label></li>
+<li><label><input type="checkbox" /><strong>Скрытие превью</strong> в уведомлениях — на уровне ОС.</label></li>
+<li><label><input type="checkbox" /><strong>Ограничение «Кто может добавлять в группы»</strong> — «Мои контакты».</label></li>
+<li><label><input type="checkbox" /><strong>Проверка активных сессий раз в месяц</strong> — привычка, а не разовая акция.</label></li>
+</ul>
+<h3 id="p2">P2</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Секретные чаты для чувствительных разговоров, с явным пониманием, что они не синхронизируются.</label></li>
+<li><label><input type="checkbox" />Отдельный аккаунт для регистраций и сервисов.</label></li>
+</ul>
+<h2 id="локальные-данные">Локальные данные</h2>
+<p>Десктопная версия хранит авторизацию и кэш в каталоге <code>tdata</code>. Если задан локальный код-пароль, содержимое шифруется производным ключом; если нет — папка даёт доступ к аккаунту при копировании на другое устройство.</p>
+<p>Практика:</p>
+<ul>
+<li>не хранить <code>tdata</code> в облачных синхронизациях и на флешках;</li>
+<li>задавать код-пароль на десктопе, даже если кажется, что «компьютер домашний»;</li>
+<li>при продаже или передаче компьютера — завершать сессию из аккаунта, а не просто удалять папку.</li>
+</ul>
+<h2 id="что-не-защищает">Что не защищает</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Ожидание</th>
+<th>Реальность</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>«Telegram шифрует всё»</td>
+<td>Только секретные чаты</td>
+</tr>
+<tr class="even">
+<td>«Облачный пароль шифрует переписку»</td>
+<td>Он защищает вход, а не содержимое</td>
+</tr>
+<tr class="odd">
+<td>«Удалённое сообщение исчезло»</td>
+<td>У собеседника и в кэше может остаться</td>
+</tr>
+<tr class="even">
+<td>«Аккаунт привязан к номеру, значит безопасно»</td>
+<td>Номер — самый слабый фактор из всех</td>
+</tr>
+</tbody>
+</table>
+<h2 id="сравнение-с-whatsapp">Сравнение с WhatsApp</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Критерий</th>
+<th>WhatsApp</th>
+<th>Telegram</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>E2EE по умолчанию</td>
+<td>да</td>
+<td>нет (только секретные чаты)</td>
+</tr>
+<tr class="even">
+<td>Хранение истории</td>
+<td>на устройстве</td>
+<td>на сервере</td>
+</tr>
+<tr class="odd">
+<td>Восстановление истории</td>
+<td>из бэкапа</td>
+<td>автоматически при входе</td>
+</tr>
+<tr class="even">
+<td>Риск при угоне</td>
+<td>новые сообщения; история — из бэкапа</td>
+<td>вся облачная история</td>
+</tr>
+<tr class="odd">
+<td>Защита входа</td>
+<td>2SV-пароль + passkey</td>
+<td>облачный пароль + passcode</td>
+</tr>
+</tbody>
+</table>
+<p>Из этой таблицы следует неочевидное: угон Telegram <strong>больнее</strong> — потому что история приходит вместе с аккаунтом, а не остаётся на старом устройстве.</p>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="whatsapp.html"><span class="dir">Назад</span>WhatsApp</a><a class="next" href="signal.html"><span class="dir">Дальше</span>Signal</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <aside class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#модель-шифрования">Модель шифрования</a>
+<a class="d2" href="#три-способа-потерять-аккаунт">Три способа потерять аккаунт</a>
+<a class="d2" href="#чек-лист">Чек-лист</a>
+<a class="d3" href="#p0">P0</a>
+<a class="d3" href="#p1">P1</a>
+<a class="d3" href="#p2">P2</a>
+<a class="d2" href="#локальные-данные">Локальные данные</a>
+<a class="d2" href="#что-не-защищает">Что не защищает</a>
+<a class="d2" href="#сравнение-с-whatsapp">Сравнение с WhatsApp</a>
+  </aside>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false">
+    <div id="searchResults" class="search-results"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
