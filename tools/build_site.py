@@ -55,7 +55,7 @@ def transform(body: str) -> str:
     """Бейджи приоритетов, scope у th, подписи таблиц и заголовки callout."""
     body = re.sub(r"<td>\s*(?:<strong>)?P([012])(?:</strong>)?\s*</td>",
                   lambda m: f'<td><span class="badge p{m.group(1)}">P{m.group(1)}</span></td>', body)
-    body = re.sub(r"<th(?![^>]*\bscope=)", '<th scope="col"', body)
+    body = re.sub(r"<th(?=[\s>])(?![^>]*\bscope=)", '<th scope="col"', body)
     for cls, label in CALL_NOTES.items():
         body = body.replace(f'<div class="callout {cls}">',
                             f'<div class="callout {cls}"><span class="callout-title">{label}</span>')

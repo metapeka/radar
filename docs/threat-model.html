@@ -58,19 +58,29 @@
 <li><strong>Сбор отдельно, анализ отдельно.</strong> Артефакты собираются локально и разбираются офлайн.</li>
 </ol>
 <h2 id="двенадцать-угроз">Двенадцать угроз</h2>
-<table tabindex="0" aria-label="Двенадцать угроз">
+<table style="width:100%;">
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
 </colgroup>
-<th scope="col"ead>
+<thead>
 <tr class="header">
 <th scope="col">#</th>
 <th scope="col">Угроза</th>
 <th scope="col">Куда бьёт</th>
 <th scope="col">Ключевой контроль</th>
+<th scope="col">macOS</th>
+<th scope="col">Win</th>
+<th scope="col">Linux</th>
+<th scope="col">iOS</th>
+<th scope="col">Andr</th>
 </tr>
 </thead>
 <tbody>
@@ -79,75 +89,136 @@
 <td>Выманивание кода / 2FA-фишинг</td>
 <td>аккаунт</td>
 <td>пароль 2SV + passkey, правило «код не диктуем»</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
 </tr>
 <tr class="even">
 <td>T2</td>
 <td>Подсунутый QR или код привязки</td>
 <td>сессия</td>
 <td>ревизия «Связанных устройств»</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
 </tr>
 <tr class="odd">
 <td>T3</td>
 <td>Кража сессии на ПК (стилер)</td>
 <td>ОС → сессия</td>
 <td>шифрование диска, изоляция, блокировка экрана</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
+<td>—</td>
+<td>—</td>
 </tr>
 <tr class="even">
 <td>T4</td>
 <td>SIM-swap / eSIM</td>
 <td>аккаунт</td>
 <td>PIN на SIM, пароль кабинета оператора</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
 </tr>
 <tr class="odd">
 <td>T5</td>
 <td>Незашифрованный облачный бэкап</td>
 <td>данные</td>
 <td>E2EE-бэкап, ключ офлайн</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
 </tr>
 <tr class="even">
 <td>T6</td>
 <td>Вредоносный мод или фейк-клиент</td>
 <td>устройство</td>
 <td>только официальные сборки</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
 </tr>
 <tr class="odd">
 <td>T7</td>
 <td>Android-банкер с Accessibility</td>
 <td>устройство</td>
 <td>запрет Accessibility сторонним приложениям</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>○</td>
 </tr>
 <tr class="even">
 <td>T8</td>
 <td>Профиль конфигурации / MDM</td>
 <td>устройство</td>
 <td>аудит профилей, Lockdown Mode</td>
+<td>○</td>
+<td>○</td>
+<td>—</td>
+<td>○</td>
+<td>○</td>
 </tr>
 <tr class="odd">
 <td>T9</td>
 <td>Zero-click шпионское ПО</td>
 <td>устройство</td>
 <td>обновления, Lockdown / Advanced Protection</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
 </tr>
 <tr class="even">
 <td>T10</td>
 <td>Общий или рабочий ПК</td>
 <td>сессия</td>
 <td>отдельный профиль, выход из Web</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
+<td>—</td>
+<td>—</td>
 </tr>
 <tr class="odd">
 <td>T11</td>
 <td>ClickFix («вставьте команду»)</td>
 <td>ОС</td>
 <td>не вставлять команды из чата и с сайтов</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
+<td>—</td>
+<td>—</td>
 </tr>
 <tr class="even">
 <td>T12</td>
 <td>Скомпрометированный роутер или DNS</td>
 <td>сеть</td>
 <td>прошивка, DNS, гостевая сеть</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
+<td>○</td>
 </tr>
 </tbody>
 </table>
+<p>○ — угроза применима, — — неприменима. Кнопки над таблицей скрывают строки, где для выбранной платформы стоит «—».</p>
 <h2 id="три-профиля-риска">Три профиля риска</h2>
 <table tabindex="0" aria-label="Три профиля риска">
 <colgroup>
@@ -155,7 +226,7 @@
 <col style="width: 33%" />
 <col style="width: 33%" />
 </colgroup>
-<th scope="col"ead>
+<thead>
 <tr class="header">
 <th scope="col">Профиль</th>
 <th scope="col">Кто</th>

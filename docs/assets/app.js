@@ -215,3 +215,77 @@
     });
   }
 })();
+
+/* ---------- фильтр таблиц по платформам ---------- */
+(function () {
+  var MAP = [
+    { key: "mac", re: /mac\s*os/i, label: "macOS" },
+    { key: "win", re: /^win/i, label: "Windows" },
+    { key: "linux", re: /linux/i, label: "Linux" },
+    { key: "ios", re: /^ios/i, label: "iOS" },
+    { key: "android", re: /^andr/i, label: "Android" }
+  ];
+
+  function textOf(el) { return (el.textContent || "").trim(); }
+
+  document.querySelectorAll("article table").forEach(function (table) {
+    var headCells = table.querySelectorAll("thead th");
+    if (!headCells.length) headCells = table.querySelectorAll("tr:first-child th");
+    if (!headCells.length) return;
+
+    var cols = {};
+    headCells.forEach(function (th, i) {
+      var t = textOf(th);
+      MAP.forEach(function (p) { if (p.re.test(t)) cols[p.key] = i; });
+    });
+    if (Object.keys(cols).length < 3) return;
+
+    var bodyRows = Array.prototype.slice.call(table.querySelectorAll("tbody tr"));
+    if (!bodyRows.length) return;
+
+    var box = document.createElement("div");
+    box.className = "table-filter";
+    box.setAttribute("role", "group");
+    box.setAttribute("aria-label", "Фильтр по платформе");
+
+    var status = document.createElement("span");
+    status.className = "table-filter-count";
+    status.setAttribute("aria-live", "polite");
+
+    function apply(key) {
+      var shown = 0;
+      bodyRows.forEach(function (row) {
+        var cells = row.children;
+        var hide = false;
+        if (key && cells[cols[key]] !== undefined) {
+          var v = textOf(cells[cols[key]]);
+          hide = (v === "—" || v === "-" || v === "");
+        }
+        row.hidden = hide;
+        if (!hide) shown++;
+      });
+      status.textContent = "показано " + shown + " из " + bodyRows.length;
+      box.querySelectorAll("button").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.dataset.key === key));
+      });
+    }
+
+    function addButton(key, label) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.dataset.key = key;
+      b.textContent = label;
+      b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", function () {
+        apply(b.getAttribute("aria-pressed") === "true" || key === "" ? "" : key);
+      });
+      box.appendChild(b);
+    }
+
+    addButton("", "Все");
+    MAP.forEach(function (p) { if (cols[p.key] !== undefined) addButton(p.key, p.label); });
+    box.appendChild(status);
+    table.parentNode.insertBefore(box, table);
+    apply("");
+  });
+})();

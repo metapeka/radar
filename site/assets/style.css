@@ -236,3 +236,13 @@ h2:hover .anchor, h3:hover .anchor, .anchor:focus-visible{opacity:1}
   article th{white-space:normal}
   figure{break-inside:avoid}
 }
+
+/* table filter */
+.table-filter{display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin:0 0 10px}
+.table-filter button{font:inherit; font-size:12.5px; padding:4px 10px; border:1px solid var(--line);
+  border-radius:999px; background:var(--bg); color:var(--muted); cursor:pointer}
+.table-filter button:hover{border-color:var(--accent); color:var(--fg)}
+.table-filter button[aria-pressed="true"]{background:var(--accent-soft); border-color:var(--accent);
+  color:var(--accent-ink); font-weight:600}
+.table-filter-count{font-size:12px; color:var(--muted); margin-left:4px}
+@media print{ .table-filter{display:none} }
