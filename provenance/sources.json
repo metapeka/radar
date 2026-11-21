@@ -1,0 +1,214 @@
+{
+  "schema": 1,
+  "updated": "2026-11-21",
+  "note": "Публичный манифест источников. Полные снапшоты лежат в provenance/.private/ и не коммитятся. Хеш фиксирует, что именно мы видели; он не доказывает авторство источника.",
+  "sources": [
+    {
+      "id": "habr-barredeue-2025-08-19",
+      "url": "https://habr.com/ru/articles/938518/",
+      "title": "Технический разбор Max: что внутри APK",
+      "author": "Максим Гришутин (BarredEwe)",
+      "publisher": "Хабр",
+      "published": "2025-08-19",
+      "kind": "article",
+      "lang": "ru",
+      "note": "Статический разбор APK: стек, отсутствие E2EE, Room/SQLite без SQLCipher.",
+      "snapshots": [
+        {
+          "retrieved": "2026-11-21T16:28:37Z",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "etag": "W/\"1c9a8-4ZMBQsTXlkRep6ozEInxOkU4EPE\"",
+          "last_modified": null,
+          "bytes": 117160,
+          "sha256": "3332b7c1fd2ccb66686d0cc402fd8b2634506e02bbd0e4956900f132fa1ea497",
+          "path": "provenance/.private/habr-barredeue-2025-08-19-20261121T162837Z.html"
+        }
+      ]
+    },
+    {
+      "id": "rks-max-test-2025-09-26",
+      "url": "https://rks.global/research/max/",
+      "title": "Тестирование слежки в MAX на Android и iPhone",
+      "author": "RKS Global",
+      "publisher": "RKS Global",
+      "published": "2025-09-26",
+      "kind": "report",
+      "lang": "ru",
+      "note": "48 часов наблюдения за Android 25.9.2 и iOS 25.9.5; трафик не расшифрован.",
+      "snapshots": [
+        {
+          "retrieved": "2026-11-21T16:28:42Z",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "etag": null,
+          "last_modified": "Mon, 09 Nov 2026 12:22:29 GMT",
+          "bytes": 13337,
+          "sha256": "a1a50099e6ccd0a699fa4fe28cef0e9ac67eb285604b0d7cf2796bcd1ecd9dfb",
+          "path": "provenance/.private/rks-max-test-2025-09-26-20261121T162842Z.html"
+        }
+      ]
+    },
+    {
+      "id": "xakep-max-leak-2025-10-20",
+      "url": "https://xakep.ru/2025/10/20/max-leak",
+      "title": "Минцифры и разработчики Max назвали ложью информацию об утечке данных пользователей мессенджера",
+      "author": null,
+      "publisher": "Xakep",
+      "published": "2025-10-20",
+      "kind": "news",
+      "lang": "ru",
+      "note": "Заявление о «дампе 46,2 млн строк» и его опровержение.",
+      "snapshots": [
+        {
+          "retrieved": "2026-11-21T16:28:43Z",
+          "status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "etag": null,
+          "last_modified": null,
+          "bytes": 126914,
+          "sha256": "2953cd61f334a424f1904cea3eeca1a925f044685e2bf7b8abc2479246940e1f",
+          "path": "provenance/.private/xakep-max-leak-2025-10-20-20261121T162843Z.html"
+        }
+      ]
+    },
+    {
+      "id": "habr-runetfreedom-2026-03-05",
+      "url": "https://habr.com/ru/articles/1006666/",
+      "title": "Месседжер MAX следит за пользователями VPN? Реверс инжиниринг говорит — да",
+      "author": "runetfreedom",
+      "publisher": "Хабр",
+      "published": "2026-03-05",
+      "kind": "article",
+      "lang": "ru",
+      "note": "Перехват трафика, разбор протокола, модуль GET_HOST_REACHABILITY.",
+      "snapshots": [
+        {
+          "retrieved": "2026-11-21T16:28:44Z",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "etag": "W/\"2b9b2-JZntRBR8sNed95pUgqWq5LAtydg\"",
+          "last_modified": null,
+          "bytes": 178610,
+          "sha256": "17dd6c9ab737120ed4994645166bf61a237c866b9178c822314bebbd047c00bc",
+          "path": "provenance/.private/habr-runetfreedom-2026-03-05-20261121T162844Z.html"
+        }
+      ]
+    },
+    {
+      "id": "xakep-max-response-2026-03-06",
+      "url": "https://xakep.ru/2026/03/06/max-reverse/",
+      "title": "Разработчики мессенджера Max заявляют, что он не отслеживает использование VPN",
+      "author": "Мария Нефёдова",
+      "publisher": "Xakep",
+      "published": "2026-03-06",
+      "kind": "news",
+      "lang": "ru",
+      "note": "Ответ пресс-службы MAX на публикацию runetfreedom.",
+      "snapshots": [
+        {
+          "retrieved": "2026-11-21T16:28:45Z",
+          "status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "etag": null,
+          "last_modified": null,
+          "bytes": 131140,
+          "sha256": "b05de10f74c15672352af59c294c53341da500ef75ed0c06c99a780cd8314f88",
+          "path": "provenance/.private/xakep-max-response-2026-03-06-20261121T162845Z.html"
+        }
+      ]
+    },
+    {
+      "id": "habr-zarazaexe-2026-05-18",
+      "url": "https://habr.com/ru/articles/1036222/",
+      "title": "15 вещей, которые вы бы не хотели знать о мессенджере MAX: тайная запись звука с микрофона в звонках и много чего еще",
+      "author": "zarazaexe (owenewans)",
+      "publisher": "Хабр",
+      "published": "2026-05-18",
+      "kind": "article",
+      "lang": "ru",
+      "note": "Большой реверс APK: MyTracker, VPN, адресная книга, KWS, ZipSlip.",
+      "snapshots": [
+        {
+          "retrieved": "2026-11-21T16:28:45Z",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "etag": "W/\"33de4-rsAqgJuFP9/2qifCgsy2Zrj/5nY\"",
+          "last_modified": null,
+          "bytes": 212452,
+          "sha256": "c074e11d828ba459ed489388fa61908f33b29e941dda7c87b094642861a6a72d",
+          "path": "provenance/.private/habr-zarazaexe-2026-05-18-20261121T162845Z.html"
+        }
+      ]
+    },
+    {
+      "id": "anti-malware-zarazaexe-2026-05-18",
+      "url": "https://www.anti-malware.ru/news/2026-05-18-111332/50054",
+      "title": "МАКС на прослушке? Реверсер заявил о тайной записи звука во время звонков",
+      "author": "Екатерина Быстрова",
+      "publisher": "Anti-Malware.ru",
+      "published": "2026-05-18",
+      "kind": "news",
+      "lang": "ru",
+      "note": "Обзор разбора zarazaexe и перечень заявленных возможностей.",
+      "snapshots": [
+        {
+          "retrieved": "2026-11-21T16:28:46Z",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "etag": "\"1795278433-0\"",
+          "last_modified": "Sat, 21 Nov 2026 16:27:13 GMT",
+          "bytes": 102518,
+          "sha256": "64629877f54a1498ee3b210e3410cd0cadf762b391b98f1c1d4b1d31f809c250",
+          "path": "provenance/.private/anti-malware-zarazaexe-2026-05-18-20261121T162846Z.html"
+        }
+      ]
+    },
+    {
+      "id": "interseclab-max-2026-10-22",
+      "url": "https://interseclab.org/research/max",
+      "title": "The Max Messenger: An Analysis of Russia’s State-Mandated Messaging Application",
+      "author": "Анна Эндерс, Леа Хорн, Марла Ривера",
+      "publisher": "InterSecLab",
+      "published": "2026-10-22",
+      "kind": "report",
+      "lang": "en",
+      "note": "Страница отчёта: 11 выводов, метод, расхождения с другими исследованиями.",
+      "snapshots": [
+        {
+          "retrieved": "2026-11-21T16:28:46Z",
+          "status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "etag": null,
+          "last_modified": "Fri, 20 Nov 2026 21:00:44 GMT",
+          "bytes": 258378,
+          "sha256": "098d1182a527799d38a9c49388806d817e14773aa972ad15ee7ba5462b23db54",
+          "path": "provenance/.private/interseclab-max-2026-10-22-20261121T162846Z.html"
+        }
+      ]
+    },
+    {
+      "id": "interseclab-max-pdf-2026-10-22",
+      "url": "https://interseclab.org/wp-content/uploads/2026/10/The-Max-Messenger_October2026_RU.pdf",
+      "title": "Мессенджер Max: анализ российского мессенджера, насаждаемого государством (PDF, рус.)",
+      "author": "Анна Эндерс, Леа Хорн, Марла Ривера",
+      "publisher": "InterSecLab",
+      "published": "2026-10-22",
+      "kind": "report-pdf",
+      "lang": "ru",
+      "note": "Полный текст отчёта, версия 1.2, 22 октября 2026.",
+      "snapshots": [
+        {
+          "retrieved": "2026-11-21T16:28:47Z",
+          "status": 200,
+          "content_type": "application/pdf",
+          "etag": "\"6ada653a-795818\"",
+          "last_modified": "Thu, 22 Oct 2026 19:34:18 GMT",
+          "bytes": 7952408,
+          "sha256": "c37dd34fe2a229627e8f67a741a549425385553dbb19f36b1179358170cca3a6",
+          "path": "provenance/.private/interseclab-max-pdf-2026-10-22-20261121T162847Z.pdf"
+        }
+      ]
+    }
+  ]
+}

@@ -29,6 +29,12 @@
 - `DESIGN.md` — правила оформления: токены, компоненты, доступность, бюджеты
 - `RISK-MODEL.md` — как пункты распределяются по профилям риска
 
+## Провенанс источников
+
+- `provenance/README.md` — правила фиксации: публичный манифест с хешами, приватные снапшоты.
+- `provenance/sources.json` — девять источников по MAX: URL, дата, статус, SHA-256.
+- `python3 tools/snapshot.py` — снять источник; `python3 tools/verify_provenance.py` — проверить хеши.
+
 ## Файлы
 
 - [`research-whatsapp-security-2026-11-20.md`](research-whatsapp-security-2026-11-20.md)
