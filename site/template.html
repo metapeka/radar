@@ -7,7 +7,7 @@
 <meta name="description" content="<!--DESC-->">
 <meta name="color-scheme" content="light dark">
 <script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css?v=<!--VER-->">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -32,6 +32,7 @@
         <button type="button" data-profile="elevated" aria-pressed="false">Повыш.</button>
         <button type="button" data-profile="targeted" aria-pressed="false">Целевой</button>
       </div>
+      <div class="profile-hint" aria-live="polite"></div>
     </div>
     <nav aria-label="Разделы"><!--NAV--></nav>
     <div class="sidebar-foot">Версия 0.3 · 21.11.2026</div>
@@ -64,7 +65,7 @@
   </div>
 </div>
 
-<script src="assets/search-index.js"></script>
-<script src="assets/app.js"></script>
+<script src="assets/search-index.js?v=<!--VER-->"></script>
+<script src="assets/app.js?v=<!--VER-->"></script>
 </body>
 </html>

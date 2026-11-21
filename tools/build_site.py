@@ -5,6 +5,7 @@ import json
 import re
 import subprocess
 import pathlib
+import time
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
@@ -228,7 +229,8 @@ def validate_profiles() -> None:
 
 def main() -> None:
     validate_profiles()
-    template = (SITE / "template.html").read_text()
+    ver = time.strftime("%y%m%d%H%M")
+    template = (SITE / "template.html").read_text().replace("<!--VER-->", ver)
     OUT.mkdir(exist_ok=True)
     (OUT / "assets").mkdir(exist_ok=True)
     for name in ("style.css", "app.js"):

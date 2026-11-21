@@ -297,7 +297,67 @@
   var btns = Array.prototype.slice.call(document.querySelectorAll('.profile-switch button'));
   if (!btns.length) return;
 
-  function apply(p, persist) {
+  var groups = {
+    elevated: Array.prototype.slice.call(document.querySelectorAll('.profile.elevated')),
+    targeted: Array.prototype.slice.call(document.querySelectorAll('.profile.targeted'))
+  };
+  var hint = document.querySelector('.profile-hint');
+
+  function countFor(p) {
+    if (p === 'basic') return 0;
+    if (p === 'elevated') return groups.elevated.length;
+    return groups.elevated.length + groups.targeted.length;
+  }
+  function firstBlock(p) {
+    if (p === 'targeted' && groups.targeted.length) return groups.targeted[0];
+    if (groups.elevated.length) return groups.elevated[0];
+    return groups.targeted.length ? groups.targeted[0] : null;
+  }
+
+  btns.forEach(function (b) {
+    var n = countFor(b.dataset.profile);
+    var cnt = document.createElement('span');
+    cnt.className = 'cnt';
+    cnt.textContent = String(n);
+    b.appendChild(cnt);
+    b.dataset.count = String(n);
+    if (!n) b.title = 'На этой странице нет отдельных пунктов для этого профиля';
+  });
+
+  function updateHint() {
+    if (!hint) return;
+    var e = groups.elevated.length, t = groups.targeted.length;
+    if (!e && !t) { hint.textContent = 'Дополнительных блоков на странице нет'; return; }
+    var parts = [];
+    if (e) parts.push('повышенный — ' + e);
+    if (t) parts.push('целевой — ' + t);
+    hint.textContent = 'На странице: ' + parts.join(', ');
+  }
+
+  function toast(msg, target) {
+    var old = document.querySelector('.toast');
+    if (old) old.remove();
+    var el = document.createElement('div');
+    el.className = 'toast';
+    el.setAttribute('role', 'status');
+    var span = document.createElement('span');
+    span.textContent = msg;
+    el.appendChild(span);
+    if (target) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = 'Показать';
+      btn.addEventListener('click', function () {
+        target.scrollIntoView({ block: 'start' });
+        el.remove();
+      });
+      el.appendChild(btn);
+    }
+    document.body.appendChild(el);
+    setTimeout(function () { if (el.parentNode) el.remove(); }, 7000);
+  }
+
+  function apply(p, persist, announce) {
     if (!(p in order)) p = 'basic';
     root.dataset.profile = p;
     btns.forEach(function (b) {
@@ -305,6 +365,16 @@
     });
     if (persist) {
       try { localStorage.setItem('profile', p); } catch (e) {}
+    }
+    if (announce) {
+      var n = countFor(p);
+      if (!n) {
+        toast('Для профиля «' + (p === 'elevated' ? 'повышенный' : 'целевой') +
+              '» на этой странице отдельных пунктов нет');
+      } else {
+        var block = firstBlock(p);
+        toast('Профиль изменён: добавлено блоков — ' + n, block);
+      }
     }
   }
 
@@ -317,15 +387,15 @@
     var box = el.closest('.profile');
     if (!box) return;
     var need = box.classList.contains('targeted') ? 'targeted' : 'elevated';
-    if (order[need] > order[root.dataset.profile || 'basic']) apply(need, true);
+    if (order[need] > order[root.dataset.profile || 'basic']) apply(need, true, false);
   }
 
-  var initial = root.dataset.profile || 'basic';
-  apply(initial, false);
+  apply(root.dataset.profile || 'basic', false, false);
+  updateHint();
   revealHash();
 
   btns.forEach(function (b) {
-    b.addEventListener('click', function () { apply(b.dataset.profile, true); });
+    b.addEventListener('click', function () { apply(b.dataset.profile, true, true); });
   });
   window.addEventListener('hashchange', revealHash);
 })();
