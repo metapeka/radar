@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Безопасность мессенджеров: сравнение — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Четыре мессенджера и три разных вопроса: кто может прочитать содержимое, что отдают по законному запросу и какие уязвимости были в 2025–2026 годах.">
+<meta name="color-scheme" content="light dark">
+<script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
+<link rel="stylesheet" href="assets/style.css?v=2611220037">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span></button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd aria-hidden="true">/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="profile-switch">
+      <div class="nav-title">Профиль риска</div>
+      <div class="seg" role="radiogroup" aria-label="Профиль риска">
+        <button type="button" data-profile="basic" aria-pressed="true">Обычный</button>
+        <button type="button" data-profile="elevated" aria-pressed="false">Повыш.</button>
+        <button type="button" data-profile="targeted" aria-pressed="false">Целевой</button>
+      </div>
+      <div class="profile-hint" aria-live="polite"></div>
+    </div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html" class="active" aria-current="page">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.3 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <div class="crumbs"><a href="index.html">Главная</a><span class="sep">/</span><span>Мессенджеры</span><span class="sep">/</span><span class="here">Безопасность мессенджеров: сравнение</span></div>
+      <h1>Безопасность мессенджеров: сравнение</h1>
+      <blockquote>
+<p>Четыре мессенджера и три разных вопроса: кто может прочитать содержимое, что отдают по законному запросу и какие уязвимости были в 2025–2026 годах.</p>
+</blockquote>
+<div class="callout note"><span class="callout-title">Контекст</span>
+<p><strong>Как читать.</strong> «Сервер может прочитать» и «государство получило» — разные утверждения. Первое — про архитектуру, второе — про право и практику. В таблицах ниже они разделены. Данные проверены 22 ноября 2026 года; числа из отчётов разных лет и юрисдикций напрямую не сравнимы.</p>
+</div>
+<h2 id="три-вопроса-которые-нельзя-смешивать">Три вопроса, которые нельзя смешивать</h2>
+<table tabindex="0" aria-label="Три вопроса, которые нельзя смешивать">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Вопрос</th>
+<th scope="col">Что означает</th>
+<th scope="col">Где смотреть</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Есть ли E2EE</td>
+<td>Может ли оператор прочитать текст</td>
+<td>Модель шифрования</td>
+</tr>
+<tr class="even">
+<td>Что отдаёт по запросу</td>
+<td>Какие данные и на каком основании</td>
+<td>Прозрачность и политика</td>
+</tr>
+<tr class="odd">
+<td>Какие были уязвимости</td>
+<td>Можно ли прочитать устройство в обход шифрования</td>
+<td>CVE и инциденты</td>
+</tr>
+</tbody>
+</table>
+<p>Ответы не складываются в рейтинг «кто лучше». Signal выигрывает по доверию к серверу, WhatsApp — по распространённости и E2EE по умолчанию, Telegram — по доступности и секретным чатам, MAX — по обязательной предустановке, а не по приватности.</p>
+<h2 id="сводка">Сводка</h2>
+<table tabindex="0" aria-label="Сводка">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Мессенджер</th>
+<th scope="col">E2EE по умолчанию</th>
+<th scope="col">Сервер читает содержимое</th>
+<th scope="col">Где хранится история</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Signal</td>
+<td>да, все чаты</td>
+<td>нет</td>
+<td>на устройстве</td>
+</tr>
+<tr class="even">
+<td>WhatsApp</td>
+<td>да, все чаты</td>
+<td>нет, кроме бэкапа и заражённого устройства</td>
+<td>на устройстве; бэкап — в облаке</td>
+</tr>
+<tr class="odd">
+<td>Telegram</td>
+<td>нет, только секретные чаты</td>
+<td>да, облачные чаты</td>
+<td>на сервере</td>
+</tr>
+<tr class="even">
+<td>MAX</td>
+<td>нет</td>
+<td>да</td>
+<td>на сервере</td>
+</tr>
+</tbody>
+</table>
+<p>Оговорки:</p>
+<ul>
+<li><strong>WhatsApp.</strong> Текст защищён, но облачный бэкап по умолчанию не зашифрован сквозным ключом. Прочитав бэкап, можно получить историю, не взламывая E2EE.</li>
+<li><strong>Telegram.</strong> Секретные чаты — E2EE, но они не синхронизируются и не подходят для групп. Облачные чаты, группы и каналы сервер хранит.</li>
+<li><strong>MAX.</strong> Сквозного шифрования нет: InterSecLab перехватила сообщение до шифрования. Это наблюдение, а не вывод из кода.</li>
+<li><strong>Signal.</strong> Метаданные минимизированы, но привязка к номеру и связанные устройства остаются векторами.</li>
+</ul>
+<h2 id="кто-что-отдаёт">Кто что отдаёт</h2>
+<table tabindex="0" aria-label="Кто что отдаёт">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Мессенджер</th>
+<th scope="col">Метаданные</th>
+<th scope="col">Содержимое</th>
+<th scope="col">Публичная отчётность</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Signal</td>
+<td>дата регистрации, последнее подключение</td>
+<td>нет</td>
+<td>да, публикует повестки</td>
+</tr>
+<tr class="even">
+<td>WhatsApp</td>
+<td>телефон, IP, устройство, время</td>
+<td>нет; но бэкап — отдельно</td>
+<td>агрегированно по Meta</td>
+</tr>
+<tr class="odd">
+<td>Telegram</td>
+<td>телефон, IP</td>
+<td>облачные чаты технически доступны; публично известны раскрытия метаданных</td>
+<td>через бота, по странам</td>
+</tr>
+<tr class="even">
+<td>MAX</td>
+<td>да</td>
+<td>да, архитектурно; политика допускает передачу</td>
+<td>публичного отчёта нет</td>
+</tr>
+</tbody>
+</table>
+<h3 id="signal">Signal</h3>
+<p>Единственный из четырёх, кто публикует сами запросы. По данным Signal, в ответ на повестку можно отдать только <strong>дату и время регистрации</strong> и <strong>дату последнего подключения</strong>. Содержимого, контактов и списка чатов у сервера нет.</p>
+<p>В 2026 году Signal опубликовал две повестки Большого жюри — 6 марта и 3 ноября. Обе касались данных, которых у сервиса нет.</p>
+<h3 id="whatsapp">WhatsApp</h3>
+<p>Meta отвечает на законные запросы, но не может отдать текст: он зашифрован на устройстве. Отдаются метаданные — номер, IP, сведения об устройстве, время активности. Отдельной статистики по WhatsApp Meta не публикует: цифры идут в общем отчёте по всем продуктам.</p>
+<p>По данным отчёта Meta за первое полугодие 2025 года: 374 516 запросов, удовлетворено 78,7%, около 46 400 — «экстренные раскрытия» без решения суда. Это все приложения Meta, не только WhatsApp.</p>
+<p>Отдельно: если включён облачный бэкап, историю можно запросить у Apple или Google — в зависимости от того, где лежит копия.</p>
+<h3 id="telegram">Telegram</h3>
+<p>До сентября 2024 года Telegram почти не раскрывал данные. После задержания Павла Дурова политика изменилась: компания заявила, что будет передавать IP и номер телефона по обоснованным запросам в рамках уголовных дел.</p>
+<p>Цифры 2024 года: США — 900 запросов, 2 253 пользователя; Индия — 14 641 запрос, 23 535 пользователей; Великобритания — 142 запроса, 293 пользователя. Речь о номерах и IP, не о тексте переписки.</p>
+<p>Технически облачные чаты хранятся на серверах Telegram. Публично известные раскрытия касаются метаданных, но архитектура такова, что содержимое облачного чата оператору доступно.</p>
+<h3 id="max">MAX</h3>
+<p>Политика прямо предусматривает передачу данных «исполнительным и судебным органам по официальному и законному требованию». Сквозного шифрования нет, поэтому содержимое читаемо на сервере. По 374-ФЗ и СОРМ оператор обязан предоставлять ФСБ технический доступ; это оценка InterSecLab, а не отдельный технический факт.</p>
+<p>Публичного отчёта о запросах MAX не публикует. Проверить частоту и объём раскрытий независимо нельзя.</p>
+<div class="callout myth"><span class="callout-title">Миф</span>
+<p><strong>«У кого-то есть прямой доступ без разрешения».</strong> Публично подтверждённых случаев такого доступа нет ни у одного из четырёх. Есть архитектура: у Signal и WhatsApp сервер не имеет ключей к содержимому; у Telegram облачные чаты лежат на сервере; у MAX E2EE нет. Юридический доступ — отдельный слой: запрос, решение суда, СОРМ. Не смешивайте «сервер может» и «государство уже прочитало».</p>
+</div>
+<h2 id="уязвимости-20252026">Уязвимости 2025–2026</h2>
+<table tabindex="0" aria-label="Уязвимости 2025–2026">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Дата</th>
+<th scope="col">Мессенджер</th>
+<th scope="col">Что</th>
+<th scope="col">Статус</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>29.08.2025</td>
+<td>WhatsApp</td>
+<td>CVE-2025-55177: неполная авторизация при синхронизации связанных устройств на iOS и macOS; в цепочке с CVE-2025-43300 могла использоваться в целевой атаке</td>
+<td>исправлено: iOS 2.25.21.73, macOS 2.25.21.78</td>
+</tr>
+<tr class="even">
+<td>26.03.2026</td>
+<td>Telegram</td>
+<td>ZDI-CAN-30207: заявлен zero-click RCE через анимированные стикеры на Android и Linux, CVSS 9.8</td>
+<td>спорно: Telegram отрицает, CVE нет, независимо не подтверждено</td>
+</tr>
+<tr class="odd">
+<td>21.09.2026</td>
+<td>Telegram Desktop</td>
+<td>CVE-2026-94488: stored XSS в HTML-экспорте чата; бот мог спрятать код в кнопке и получить историю при открытии файла</td>
+<td>исправлено в 7.0.1; старые экспорты пересоздать</td>
+</tr>
+<tr class="even">
+<td>20.10.2026</td>
+<td>Signal</td>
+<td>CVE-2026-113380: в RingRTC до 2.72.0 собеседник мог не дать завершить звонок, аудио и видео оставались активны; CVSS 9.3</td>
+<td>исправлено в 2.72.0; следов эксплуатации нет</td>
+</tr>
+<tr class="odd">
+<td>20.11.2026</td>
+<td>WhatsApp</td>
+<td>CVE-2026-102769: SQL-инъекция в Android до 2.26.35.74 при открытии «order details» от неофициального клиента; удаление файлов и утечка одного бита</td>
+<td>исправлено в 2.26.35.74; эксплуатации не видели</td>
+</tr>
+<tr class="even">
+<td>—</td>
+<td>MAX</td>
+<td>ZipSlip в DownloadService, CVSS 7.0–9.8 по заявлению исследователя</td>
+<td>не подтверждено независимо; публичного CVE нет</td>
+</tr>
+</tbody>
+</table>
+<p>Что из этого следует:</p>
+<ul>
+<li><strong>Обновления важнее выбора мессенджера.</strong> Все подтверждённые уязвимости из таблицы закрыты обновлением.</li>
+<li><strong>Zero-click существует, но остаётся целевым.</strong> Он дорог и живёт до патча; массовые угрозы по-прежнему идут через код, QR и бэкапы.</li>
+<li><strong>Спорные заявления не становятся фактом от того, что попали в новости.</strong> ZDI-CAN-30207 — пример: оценка 9.8 есть, подтверждения и CVE нет, вендор отрицает.</li>
+<li><strong>Старые экспорты — тоже риск.</strong> Исправление Telegram Desktop не чинит уже созданные HTML-файлы.</li>
+</ul>
+<h2 id="что-выбрать">Что выбрать</h2>
+<table tabindex="0" aria-label="Что выбрать">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Сценарий</th>
+<th scope="col">Канал</th>
+<th scope="col">Почему</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Источники, юристы, правозащита</td>
+<td>Signal</td>
+<td>E2EE по умолчанию, минимум метаданных, публичные повестки</td>
+</tr>
+<tr class="even">
+<td>Быт, семья, банк</td>
+<td>WhatsApp</td>
+<td>E2EE по умолчанию, но включить E2EE-бэкап и помнить про метаданные</td>
+</tr>
+<tr class="odd">
+<td>Сообщества и каналы</td>
+<td>Telegram</td>
+<td>Удобство и доступность; секретные чаты для чувствительного</td>
+</tr>
+<tr class="even">
+<td>Работа, госуслуги, обязательное</td>
+<td>MAX</td>
+<td>Считать содержимое читаемым сервером; ничего чувствительного</td>
+</tr>
+</tbody>
+</table>
+<p>Правило простое: <strong>канал выбирается по худшему вопросу, а не по лучшему.</strong> Если разговор нельзя прочитать никому, кроме адресата, — Signal. Если нужно быть там, где все, — WhatsApp с E2EE-бэкапом. Если нужен канал сообщества — Telegram с секретными чатами для чувствительного. Если MAX обязателен — только организационное.</p>
+<h2 id="чек-лист">Чек-лист</h2>
+<h3 id="p0">P0</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Signal — для чувствительного; проверить <code>Registration Lock</code> и связанные устройства.</label></li>
+<li><label><input type="checkbox" />WhatsApp — включить E2EE-бэкап; без него история доступна провайдеру облака.</label></li>
+<li><label><input type="checkbox" />Telegram — облачный пароль; помнить, что облачные чаты не E2EE.</label></li>
+<li><label><input type="checkbox" />MAX — не устанавливать на основной аппарат и не отправлять документы.</label></li>
+<li><label><input type="checkbox" />Обновлять все четыре приложения: свежие CVE закрываются патчами.</label></li>
+</ul>
+<h3 id="p1">P1</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Проверить связанные устройства во всех мессенджерах.</label></li>
+<li><label><input type="checkbox" />Отключить превью уведомлений на уровне ОС.</label></li>
+<li><label><input type="checkbox" />Для Telegram — секретные чаты для чувствительного, с пониманием ограничений.</label></li>
+<li><label><input type="checkbox" />Не пересылать старые HTML-экспорты Telegram, созданные до 7.0.1.</label></li>
+</ul>
+<h3 id="p2">P2</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Разные номера для разных контуров: личное, работа, регистрации.</label></li>
+<li><label><input type="checkbox" />Раз в квартал сверять настройки приватности после обновлений.</label></li>
+<li><label><input type="checkbox" />Помнить, что метаданные не защищены ни в одном из четырёх.</label></li>
+</ul>
+<h2 id="в-россии">В России</h2>
+<p>Доступность не равна безопасности. Signal заблокирован с августа 2024 года, WhatsApp — с февраля 2026, Telegram блокировался массово с марта 2026; MAX предустановлен с 1 сентября 2025 года. Блокировка канала не делает оставшийся канал приватнее — она меняет только то, кто им пользуется.</p>
+<section id="если-вы-в-целевом-профиле" class="profile targeted">
+<h3>Если вы в целевом профиле</h3>
+<ul>
+<li><strong>Signal — основной канал</strong> для источников и чувствительных разговоров; отдельное устройство или профиль.</li>
+<li><strong>MAX не использовать для связи с источниками</strong> ни при каких настройках: E2EE нет, содержимое читаемо сервером.</li>
+<li><strong>Telegram — только секретные чаты</strong> для чувствительного; облачные чаты считать доступными серверу.</li>
+<li><strong>WhatsApp — бытовой канал</strong>, без облачного бэкапа; историю, которая может навредить, не хранить.</li>
+<li><strong>Обновления — в тот же день</strong>, когда вышли: уязвимости в звонках и экспорте — реальные, а не теоретические.</li>
+</ul>
+</section>
+<h2 id="источники">Источники</h2>
+<table tabindex="0" aria-label="Источники">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Дата</th>
+<th scope="col">Работа</th>
+<th scope="col">Что даёт</th>
+<th scope="col">Ссылка</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>29.08.2025</td>
+<td>MITRE, CVE-2025-55177</td>
+<td>Уязвимость WhatsApp для iOS и macOS</td>
+<td><a href="https://www.cve.org/CVERecord?id=CVE-2025-55177">cve.org</a></td>
+</tr>
+<tr class="even">
+<td>07.01.2025</td>
+<td>TechCrunch</td>
+<td>Раскрытия Telegram в 2024 году</td>
+<td><a href="https://techcrunch.com/2025/01/07/telegram-reports-spike-in-sharing-user-data-with-law-enforcement/">techcrunch.com</a></td>
+</tr>
+<tr class="odd">
+<td>17.03.2026</td>
+<td>Meta Transparency Report (обзор Voronoi)</td>
+<td>374 516 запросов Meta за H1 2025</td>
+<td><a href="https://www.voronoiapp.com/technology/Meta-Gave-Governments-User-Data-295000-Times-in-H1-2025-7827">voronoiapp.com</a></td>
+</tr>
+<tr class="even">
+<td>30.03.2026</td>
+<td>Security Affairs</td>
+<td>ZDI-CAN-30207 и отрицание Telegram</td>
+<td><a href="https://securityaffairs.com/190167/security/its-a-mystery-alleged-unpatched-telegram-zero-day-allows-device-takeover-but-telegram-denies.html">securityaffairs.com</a></td>
+</tr>
+<tr class="odd">
+<td>21.09.2026</td>
+<td>MITRE, CVE-2026-94488</td>
+<td>XSS в HTML-экспорте Telegram Desktop</td>
+<td><a href="https://www.cve.org/CVERecord?id=CVE-2026-94488">cve.org</a></td>
+</tr>
+<tr class="even">
+<td>20.10.2026</td>
+<td>MITRE, CVE-2026-113380</td>
+<td>Уязвимость RingRTC в Signal</td>
+<td><a href="https://www.cve.org/CVERecord?id=CVE-2026-113380">cve.org</a></td>
+</tr>
+<tr class="odd">
+<td>22.10.2026</td>
+<td>InterSecLab</td>
+<td>MAX: отсутствие E2EE, СОРМ, инфраструктура</td>
+<td><a href="https://interseclab.org/research/max">interseclab.org</a></td>
+</tr>
+<tr class="even">
+<td>03.11.2026</td>
+<td>Signal Government Requests</td>
+<td>Повестки и минимум данных</td>
+<td><a href="https://signal.org/bigbrother">signal.org/bigbrother</a></td>
+</tr>
+<tr class="odd">
+<td>20.11.2026</td>
+<td>MITRE, CVE-2026-102769</td>
+<td>SQL-инъекция в WhatsApp для Android</td>
+<td><a href="https://www.cve.org/CVERecord?id=CVE-2026-102769">cve.org</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="см.-также">См. также</h2>
+<ul>
+<li><a href="whatsapp.html">WhatsApp</a> — E2EE, бэкапы, шесть векторов угона.</li>
+<li><a href="telegram.html">Telegram</a> — облачные и секретные чаты, угон аккаунта.</li>
+<li><a href="signal.html">Signal</a> — минимум метаданных и связанные устройства.</li>
+<li><a href="max.html">MAX</a> — что собирает и почему не подходит для чувствительного.</li>
+<li><a href="max-research.html">MAX: исследования и хронология</a> — что подтвердилось, а что нет.</li>
+</ul>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="charts.html"><span class="dir">Назад</span>Данные</a><a class="next" href="whatsapp.html"><span class="dir">Дальше</span>WhatsApp</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <nav class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#три-вопроса-которые-нельзя-смешивать">Три вопроса, которые нельзя смешивать</a>
+<a class="d2" href="#сводка">Сводка</a>
+<a class="d2" href="#кто-что-отдаёт">Кто что отдаёт</a>
+<a class="d3" href="#signal">Signal</a>
+<a class="d3" href="#whatsapp">WhatsApp</a>
+<a class="d3" href="#telegram">Telegram</a>
+<a class="d3" href="#max">MAX</a>
+<a class="d2" href="#уязвимости-20252026">Уязвимости 2025–2026</a>
+<a class="d2" href="#что-выбрать">Что выбрать</a>
+<a class="d2" href="#чек-лист">Чек-лист</a>
+<a class="d3" href="#p0">P0</a>
+<a class="d3" href="#p1">P1</a>
+<a class="d3" href="#p2">P2</a>
+<a class="d2" href="#в-россии">В России</a>
+<a class="d2" href="#источники">Источники</a>
+<a class="d2" href="#см.-также">См. также</a>
+  </nav>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false" aria-label="Поиск по сайту">
+    <div id="searchResults" class="search-results" role="listbox" aria-live="polite" aria-label="Результаты поиска"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js?v=2611220037"></script>
+<script src="assets/app.js?v=2611220037"></script>
+</body>
+</html>
