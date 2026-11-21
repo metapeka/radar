@@ -289,3 +289,43 @@
     apply("");
   });
 })();
+
+/* ---------- профили риска ---------- */
+(function () {
+  var root = document.documentElement;
+  var order = { basic: 0, elevated: 1, targeted: 2 };
+  var btns = Array.prototype.slice.call(document.querySelectorAll('.profile-switch button'));
+  if (!btns.length) return;
+
+  function apply(p, persist) {
+    if (!(p in order)) p = 'basic';
+    root.dataset.profile = p;
+    btns.forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.profile === p));
+    });
+    if (persist) {
+      try { localStorage.setItem('profile', p); } catch (e) {}
+    }
+  }
+
+  function revealHash() {
+    if (!location.hash) return;
+    var id;
+    try { id = decodeURIComponent(location.hash.slice(1)); } catch (e) { return; }
+    var el = document.getElementById(id);
+    if (!el) return;
+    var box = el.closest('.profile');
+    if (!box) return;
+    var need = box.classList.contains('targeted') ? 'targeted' : 'elevated';
+    if (order[need] > order[root.dataset.profile || 'basic']) apply(need, true);
+  }
+
+  var initial = root.dataset.profile || 'basic';
+  apply(initial, false);
+  revealHash();
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { apply(b.dataset.profile, true); });
+  });
+  window.addEventListener('hashchange', revealHash);
+})();

@@ -6,6 +6,7 @@
 <title>iOS — Личная безопасность и мессенджеры</title>
 <meta name="description" content="На iPhone почти нет «вирусного» вектора — зато есть кража кода-пароля, подглядывание и профили конфигурации. И есть жёсткая привязка защиты к версии iOS.">
 <meta name="color-scheme" content="light dark">
+<script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
 <link rel="stylesheet" href="assets/style.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
@@ -24,6 +25,14 @@
 
 <div class="shell">
   <aside class="sidebar" id="sidebar">
+    <div class="profile-switch">
+      <div class="nav-title">Профиль риска</div>
+      <div class="seg" role="radiogroup" aria-label="Профиль риска">
+        <button type="button" data-profile="basic" aria-pressed="true">Обычный</button>
+        <button type="button" data-profile="elevated" aria-pressed="false">Повыш.</button>
+        <button type="button" data-profile="targeted" aria-pressed="false">Целевой</button>
+      </div>
+    </div>
     <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a></div>
 <div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a></div>
 <div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html" class="active" aria-current="page">iOS</a><a href="android.html">Android</a></div>
@@ -237,6 +246,16 @@ mvt-ios check-backup --iocs malware.stix2 ./decrypted</code></pre>
 <li>Проверить загрузчик и прошивку программно нельзя; косвенно — attestation и отсутствие джейлбрейка.</li>
 <li>Если устройство было скомпрометировано целевой атакой, правильный ответ — новое устройство и перевыпуск аккаунтов, а не «почистить».</li>
 </ul>
+<section id="если-вы-в-целевом-профиле" class="profile targeted">
+<h3>Если вы в целевом профиле</h3>
+<ul>
+<li><strong>Lockdown Mode</strong> — включить постоянно, а не «на время»: он снижает поверхность атаки, но ломает часть функций.</li>
+<li><strong>MVT раз в месяц</strong>: шифрованный бэкап и sysdiagnose, разбор на отдельном компьютере.</li>
+<li><strong>Отказ от iCloud-бэкапа</strong> чатов целиком: облако — ещё один держатель ваших данных.</li>
+<li><strong>Отдельное устройство</strong> для чувствительной работы и отдельный Apple Account.</li>
+<li><strong>Физическая гигиена</strong>: не оставлять телефон без присмотра, отключить Siri на экране блокировки, проверить доверенные номера.</li>
+</ul>
+</section>
 
     </article>
     <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="linux.html"><span class="dir">Назад</span>Linux</a><a class="next" href="android.html"><span class="dir">Дальше</span>Android</a></nav>

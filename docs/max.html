@@ -6,6 +6,7 @@
 <title>MAX — Личная безопасность и мессенджеры</title>
 <meta name="description" content="Российский мессенджер-суперапп. Ключевое отличие от WhatsApp и Signal: сквозное шифрование официально не заявлено, а часть данных по политике передаётся по запросу госорганов.">
 <meta name="color-scheme" content="light dark">
+<script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
 <link rel="stylesheet" href="assets/style.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
@@ -24,6 +25,14 @@
 
 <div class="shell">
   <aside class="sidebar" id="sidebar">
+    <div class="profile-switch">
+      <div class="nav-title">Профиль риска</div>
+      <div class="seg" role="radiogroup" aria-label="Профиль риска">
+        <button type="button" data-profile="basic" aria-pressed="true">Обычный</button>
+        <button type="button" data-profile="elevated" aria-pressed="false">Повыш.</button>
+        <button type="button" data-profile="targeted" aria-pressed="false">Целевой</button>
+      </div>
+    </div>
     <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a></div>
 <div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html" class="active" aria-current="page">MAX</a></div>
 <div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
@@ -216,6 +225,23 @@
 <li>Считать, что всё отправленное может быть прочитано не только адресатом.</li>
 <li>Проверять, что именно приложение просит при обновлениях: новые разрешения — повод отказаться от обновления до выяснения.</li>
 </ol>
+<section id="что-добавить-при-повышенном-профиле" class="profile elevated">
+<h3>Что добавить при повышенном профиле</h3>
+<ul>
+<li><strong>Отдельный номер</strong> и отдельный профиль для рабочего MAX.</li>
+<li><strong>Не отправлять документы</strong> и фото документов, даже себе.</li>
+<li><strong>Проверять разрешения после каждого обновления</strong>: список запросов меняется.</li>
+<li><strong>Ограничить геолокацию</strong> до «только при использовании».</li>
+</ul>
+</section>
+<section id="если-вы-в-целевом-профиле" class="profile targeted">
+<h3>Если вы в целевом профиле</h3>
+<ul>
+<li><strong>Не использовать MAX для чувствительного</strong>: нет E2EE, есть сканирование фильтрами.</li>
+<li><strong>Отдельное устройство или профиль ОС</strong>, если сервис обязателен по работе.</li>
+<li><strong>Исходить из того, что переписка доступна серверу</strong>, и не хранить в ней то, что навредит при раскрытии.</li>
+</ul>
+</section>
 
     </article>
     <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="signal.html"><span class="dir">Назад</span>Signal</a><a class="next" href="macos.html"><span class="dir">Дальше</span>macOS</a></nav>

@@ -207,7 +207,27 @@ def render_charts() -> None:
     print("графики:", ", ".join(p.name for p in sorted(out.glob("*.svg"))))
 
 
+def validate_profiles() -> None:
+    allowed = {"elevated", "targeted"}
+    bad = []
+    for f in sorted((SITE / "content").glob("*.md")):
+        for i, line in enumerate(f.read_text().splitlines(), 1):
+            m = re.match(r":::\s*\{\.profile([^}]*)\}", line)
+            if not m:
+                continue
+            classes = [c.lstrip(".") for c in m.group(1).split()]
+            if len(classes) != 1 or set(classes) - allowed:
+                bad.append(f"{f.name}:{i}: {line.strip()}")
+    if bad:
+        print("профили: проверьте разметку:")
+        for b in bad:
+            print("  -", b)
+    else:
+        print("профили: разметка корректна")
+
+
 def main() -> None:
+    validate_profiles()
     template = (SITE / "template.html").read_text()
     OUT.mkdir(exist_ok=True)
     (OUT / "assets").mkdir(exist_ok=True)
