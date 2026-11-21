@@ -142,13 +142,29 @@ figcaption{font-size:12.8px; color:var(--muted); margin-top:8px; line-height:1.5
 
 /* timeline */
 .timeline{list-style:none; margin:6px 0 24px; padding:0; border-left:2px solid var(--line)}
-.timeline li{position:relative; margin:0 0 20px; padding:0 0 0 24px}
-.timeline li::before{content:""; position:absolute; left:-6px; top:.55em; width:10px; height:10px;
+.timeline > li{position:relative; margin:0 0 14px; padding:0 0 0 24px}
+.timeline > li::before{content:""; position:absolute; left:-6px; top:.55em; width:10px; height:10px;
   border-radius:50%; background:var(--bg); border:2px solid var(--accent)}
+.timeline details{margin:0}
+.timeline summary{position:relative; padding:2px 24px 2px 0; cursor:pointer; list-style:none}
+.timeline summary::-webkit-details-marker{display:none}
+.timeline summary::after{content:"+"; position:absolute; right:0; top:0; font-size:17px; line-height:1.35;
+  color:var(--muted); font-weight:600}
+.timeline details[open] summary::after{content:"−"}
+.timeline summary:hover .tl-title{color:var(--accent)}
 .timeline time{display:block; font-size:12.5px; font-weight:600; color:var(--muted)}
-.timeline b{display:block; font-weight:640; margin-top:1px}
-.timeline li > a{font-size:13.5px; word-break:break-word}
-@media print{ .timeline li{break-inside:avoid} }
+.timeline .tl-title{display:block; font-weight:640}
+.timeline .tl-note{display:block; font-size:13.5px; color:var(--muted); line-height:1.45}
+.timeline .tl-body{padding:6px 0 4px}
+.timeline .tl-body ul{margin:4px 0 10px}
+.timeline .tl-body table{margin:8px 0 10px; font-size:13px}
+.timeline .tl-src{font-size:13px; margin:0}
+.timeline .tl-src a{word-break:break-word}
+.timeline-actions{margin:0 0 12px; font-size:13px; color:var(--muted)}
+.timeline-actions button{font:inherit; font-size:12.5px; padding:4px 12px; border:1px solid var(--line);
+  border-radius:999px; background:var(--bg); color:var(--fg); cursor:pointer}
+.timeline-actions button:hover{border-color:var(--accent); color:var(--accent)}
+@media print{ .timeline-actions{display:none} .timeline > li{break-inside:avoid} }
 
 /* tables */
 article table{display:block; width:100%; overflow-x:auto; border-collapse:collapse; margin:6px 0 20px; font-size:14px}

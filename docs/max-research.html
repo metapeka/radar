@@ -7,7 +7,7 @@
 <meta name="description" content="Что в мессенджере MAX независимо проверено, что не подтвердилось и что из этого следует для тех, кто под риском.">
 <meta name="color-scheme" content="light dark">
 <script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
-<link rel="stylesheet" href="assets/style.css?v=2611210855">
+<link rel="stylesheet" href="assets/style.css?v=2611211814">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -49,7 +49,7 @@
 <p>Что в мессенджере MAX независимо проверено, что не подтвердилось и что из этого следует для тех, кто под риском.</p>
 </blockquote>
 <div class="callout note"><span class="callout-title">Контекст</span>
-<p><strong>Как читать.</strong> У каждой находки — дата публикации и статус: <strong>подтверждено</strong> (два независимых метода или прямое наблюдение), <strong>один источник</strong>, <strong>не подтверждено</strong>, <strong>открытый вопрос</strong>. Ссылки проверены 21 ноября 2026 года. Поведение MAX зависит от сборки и серверных флагов, поэтому выводы относятся к конкретным версиям, а не к приложению «вообще».</p>
+<p><strong>Как читать.</strong> У каждой находки — дата публикации и статус: <strong>подтверждено</strong> (два независимых метода или прямое наблюдение), <strong>один источник</strong>, <strong>не подтверждено</strong>, <strong>открытый вопрос</strong>. Ссылки проверены 21 ноября 2026 года; новых независимых работ после отчёта InterSecLab не найдено. Поведение MAX зависит от сборки и серверных флагов, поэтому выводы относятся к конкретным версиям, а не к приложению «вообще».</p>
 </div>
 <h2 id="коротко">Коротко</h2>
 <ul>
@@ -60,36 +60,433 @@
 <li><strong>Ни одно исследование не утверждает</strong>, что эти возможности применяли против конкретного человека. Это важно и для журналиста, и для того, кто пишет о MAX.</li>
 </ul>
 <h2 id="хронология">Хронология</h2>
+<p class="timeline-actions">
+<button type="button" data-tl-toggle aria-pressed="false">
+Развернуть всё
+</button>
+<span>или нажмите на событие</span>
+</p>
 <ol class="timeline">
 <li>
-<time datetime="2025-08-19">19 августа 2025</time> <b>Первый статический разбор APK</b> BarredEwe (Максим Гришутин) разобрал APK: WebRTC, ExoPlayer, TensorFlow Lite, Huawei HMS; следы TamTam/OK; нет Signal/Olm/Matrix, то есть нет E2EE; база Room/SQLite без SQLCipher. Автор честно оговорил: подтвердить сбор данных статикой не может. <a href="https://habr.com/ru/articles/938518/">habr.com/ru/articles/938518</a>
+<details class="tl">
+<summary>
+<time datetime="2025-08-19">19 августа 2025</time> <span class="tl-title">Первый статический разбор APK</span> <span class="tl-note">Современный стек, E2EE нет</span>
+</summary>
+<div class="tl-body">
+<ul>
+<li>
+<b>Стек:</b> WebRTC, ExoPlayer, TensorFlow Lite, Huawei HMS; в коде следы TamTam/OK.
 </li>
 <li>
-<time datetime="2025-09-26">26 сентября 2025</time> <b>48 часов наблюдения за телефоном</b> RKS Global проверили Android 25.9.2 и iOS 25.9.5: камера, микрофон, геолокация, адреса серверов. Трафик не расшифрован — выводы ограничены. <a href="https://rks.global/research/max/">rks.global/research/max</a>
+<b>Криптография:</b> Signal/Olm/Matrix не найдены — только TLS до сервера.
 </li>
 <li>
-<time datetime="2025-10-19">19 октября 2025</time> <b>Фейковая «утечка 46,2 млн строк»</b> Объявление на DarkForums; Минцифры и MAX опровергли, независимого подтверждения нет. В сэмпле из 15 записей ID Госуслуг не совпали с ФИО. <a href="https://xakep.ru/2025/10/20/max-leak">xakep.ru/2025/10/20/max-leak</a>
+<b>Хранение:</b> Room/SQLite без SQLCipher.
+</li>
+</ul>
+<p class="tl-src">
+<a href="https://habr.com/ru/articles/938518/">Источник: habr.com/ru/articles/938518</a>
+</p>
+</div>
+</details>
 </li>
 <li>
-<time datetime="2026-03-05">5 марта 2026</time> <b>Скрытый модуль проверки сети</b> runetfreedom перехватил трафик через mitmproxy/WireGuard, разобрал собственный протокол (MessagePack) и нашёл <code>GET_HOST_REACHABILITY</code>: внешний IP, оператор, флаг VPN, доступность Госуслуг, Telegram, WhatsApp. Модуль включается серверным флагом. <a href="https://habr.com/ru/articles/1006666/">habr.com/ru/articles/1006666</a>
+<details class="tl">
+<summary>
+<time datetime="2025-09-26">26 сентября 2025</time> <span class="tl-title">48 часов наблюдения за телефоном</span> <span class="tl-note">Android и iOS; трафик не расшифрован</span>
+</summary>
+<div class="tl-body">
+<ul>
+<li>
+<b>Датчики:</b> проверяли, как приложение обращается к камере, микрофону и геолокации.
 </li>
 <li>
-<time datetime="2026-03-06">6 марта 2026</time> <b>Ответ MAX</b> Пресс-служба: IP нужен «исключительно для звонков» (WebRTC), запросы к Apple и Google — для push, запросов к WhatsApp и Telegram нет. Пункты про точечное включение и состав отчёта не опровергнуты. <a href="https://xakep.ru/2026/03/06/max-reverse/">xakep.ru/2026/03/06/max-reverse</a>
+<b>Сеть:</b> собраны адреса серверов, включая <code>api.oneme.ru</code>; трафик не расшифрован.
+</li>
+</ul>
+<p class="tl-src">
+<a href="https://rks.global/research/max/">Источник: rks.global/research/max</a>
+</p>
+</div>
+</details>
 </li>
 <li>
-<time datetime="2026-04-30">30 апреля 2026</time> <b>Cloudflare Radar и метка spyware</b> max.ru и web.max.ru на день попали в категорию шпионского ПО; метку сняли после объяснения VK о «неверной интерпретации заголовков аналитики». Причина пересмотра публично не раскрыта.
+<details class="tl">
+<summary>
+<time datetime="2025-10-19">19 октября 2025</time> <span class="tl-title">Фейковая «утечка 46,2 млн строк»</span> <span class="tl-note">опровергнута, независимых подтверждений нет</span>
+</summary>
+<div class="tl-body">
+<ul>
+<li>
+На DarkForums появилось объявление о «полном дампе max.ru» на 46 203 590 строк.
 </li>
 <li>
-<time datetime="2026-05-18">18 мая 2026</time> <b>Большой реверс APK</b> zarazaexe (owenewans): MyTracker и список приложений, детект и блокировка VPN, адресная книга, Force Update, NFC из мини-аппов, фейковые чаты, удаление сообщений пушем, Mobile ID по HTTP, <code>trace_flow</code>, on-device KWS/ASR, Widevine, ZipSlip. Часть выводов позже не подтвердилась — см. раздел о промахах. <a href="https://habr.com/ru/articles/1036222/">habr.com/ru/articles/1036222</a>
+Минцифры и MAX опровергли; в сэмпле из 15 записей ID Госуслуг не совпали с ФИО.
 </li>
 <li>
-<time datetime="2026-06-04">4 июня 2026</time> <b>MAX удалён из App Store</b> Контекст для reproducibility: сборки для iOS перестали быть доступны новым пользователям. Ранее установленные приложения продолжили работать.
+Независимого подтверждения утечки нет.
+</li>
+</ul>
+<p class="tl-src">
+<a href="https://xakep.ru/2025/10/20/max-leak">Источник: xakep.ru/2025/10/20/max-leak</a>
+</p>
+</div>
+</details>
 </li>
 <li>
-<time datetime="2026-10-22">22 октября 2026</time> <b>Отчёт InterSecLab</b> Девять недель анализа сборки 26.12.0 (6664): перехват данных внутри приложения перед шифрованием и сверка каждого наблюдения с кодом. Одиннадцать ключевых выводов, отдельный разбор расхождений с другими исследованиями. <a href="https://interseclab.org/research/max">interseclab.org/research/max</a>
+<details class="tl">
+<summary>
+<time datetime="2026-03-05">5 марта 2026</time> <span class="tl-title">Скрытый модуль проверки сети</span> <span class="tl-note">IP, оператор, VPN и доступность чужих сервисов</span>
+</summary>
+<div class="tl-body">
+<p>
+Перехват трафика в режиме WireGuard и разбор собственного протокола на MessagePack.
+</p>
+<table tabindex="0" aria-label="Хронология">
+<caption>
+Что обнаружено
+</caption>
+<thead>
+<tr>
+<th scope="col">
+Находка
+</th>
+<th scope="col">
+Детали
+</th>
+<th scope="col">
+Статус
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Внешний IP
+</td>
+<td>
+Запрос через шесть сервисов, ответ <code>127.0.0.1</code> отбрасывается
+</td>
+<td>
+подтверждено
+</td>
+</tr>
+<tr>
+<td>
+Оператор
+</td>
+<td>
+PLMN, например <code>25001:MTS</code>
+</td>
+<td>
+подтверждено
+</td>
+</tr>
+<tr>
+<td>
+VPN
+</td>
+<td>
+<code>NetworkCapabilities.TRANSPORT_VPN</code>
+</td>
+<td>
+подтверждено
+</td>
+</tr>
+<tr>
+<td>
+Хосты
+</td>
+<td>
+Госуслуги, Telegram, WhatsApp, Google
+</td>
+<td>
+подтверждено
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+Отчёт уходит в общем протоколе <code>api.oneme.ru</code> — отдельно от мессенджера его не заблокировать.
 </li>
 <li>
-<time datetime="2026-11-21">21 ноября 2026</time> <b>Сверка источников</b> Ссылки и формулировки на этой странице проверены; новых независимых исследований после отчёта InterSecLab не найдено.
+Список хостов задаётся сервером, а не зашит в код.
+</li>
+</ul>
+<p class="tl-src">
+<a href="https://habr.com/ru/articles/1006666/">Источник: habr.com/ru/articles/1006666</a>
+</p>
+</div>
+</details>
+</li>
+<li>
+<details class="tl">
+<summary>
+<time datetime="2026-03-06">6 марта 2026</time> <span class="tl-title">Ответ MAX</span> <span class="tl-note">IP — для звонков, запросов к Telegram и WhatsApp нет</span>
+</summary>
+<div class="tl-body">
+<ul>
+<li>
+<b>IP:</b> используется «исключительно для обеспечения корректной работы звонков» (WebRTC).
+</li>
+<li>
+<b>Apple и Google:</b> проверка доставки push-уведомлений.
+</li>
+<li>
+<b>Не опровергнуто:</b> точечное включение модуля и состав отчёта (IP, оператор, VPN, доступность хостов).
+</li>
+</ul>
+<p class="tl-src">
+<a href="https://xakep.ru/2026/03/06/max-reverse/">Источник: xakep.ru/2026/03/06/max-reverse</a>
+</p>
+</div>
+</details>
+</li>
+<li>
+<details class="tl">
+<summary>
+<time datetime="2026-04-30">30 апреля 2026</time> <span class="tl-title">Cloudflare Radar и метка spyware</span> <span class="tl-note">метка держалась один день</span>
+</summary>
+<div class="tl-body">
+<ul>
+<li>
+max.ru и web.max.ru на день попали в категорию шпионского ПО.
+</li>
+<li>
+Метку сняли после объяснения VK о «неверной интерпретации заголовков аналитики»; причина пересмотра публично не раскрыта.
+</li>
+</ul>
+<p class="tl-src">
+<a href="https://interseclab.org/research/max">Источник: interseclab.org/research/max</a>
+</p>
+</div>
+</details>
+</li>
+<li>
+<details class="tl">
+<summary>
+<time datetime="2026-05-18">18 мая 2026</time> <span class="tl-title">Большой реверс APK</span> <span class="tl-note">список приложений, VPN, адресная книга, KWS</span>
+</summary>
+<div class="tl-body">
+<table tabindex="0" aria-label="Хронология">
+<caption>
+Что обнаружено
+</caption>
+<thead>
+<tr>
+<th scope="col">
+Находка
+</th>
+<th scope="col">
+Детали
+</th>
+<th scope="col">
+Статус
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+MyTracker
+</td>
+<td>
+<code>packageName</code> + <code>firstInstallTime</code>, <code>tracker-api.vk-analytics.ru</code>
+</td>
+<td>
+один источник
+</td>
+</tr>
+<tr>
+<td>
+VPN
+</td>
+<td>
+Детект и блокировка чатов по серверному флагу
+</td>
+<td>
+подтверждено
+</td>
+</tr>
+<tr>
+<td>
+Адресная книга
+</td>
+<td>
+Имена и номера; хеширования нет
+</td>
+<td>
+подтверждено
+</td>
+</tr>
+<tr>
+<td>
+Force Update
+</td>
+<td>
+APK с CDN в обход магазина
+</td>
+<td>
+один источник
+</td>
+</tr>
+<tr>
+<td>
+NFC
+</td>
+<td>
+Payload из мини-аппа без предупреждения
+</td>
+<td>
+один источник
+</td>
+</tr>
+<tr>
+<td>
+Push
+</td>
+<td>
+Удаление сообщения из локальной базы
+</td>
+<td>
+не подтверждено
+</td>
+</tr>
+<tr>
+<td>
+Mobile ID
+</td>
+<td>
+HTTP без TLS к эндпоинтам операторов
+</td>
+<td>
+подтверждено
+</td>
+</tr>
+<tr>
+<td>
+KWS и ASR
+</td>
+<td>
+Модель на устройстве, загрузка по URL с сервера
+</td>
+<td>
+подтверждено
+</td>
+</tr>
+<tr>
+<td>
+Widevine, ZipSlip
+</td>
+<td>
+Постоянный DRM-ID; распаковка ZIP без проверки путей
+</td>
+<td>
+не подтверждено
+</td>
+</tr>
+</tbody>
+</table>
+<p class="tl-src">
+<a href="https://habr.com/ru/articles/1036222/">Источник: habr.com/ru/articles/1036222</a>
+</p>
+</div>
+</details>
+</li>
+<li>
+<details class="tl">
+<summary>
+<time datetime="2026-06-04">4 июня 2026</time> <span class="tl-title">MAX удалён из App Store</span> <span class="tl-note">контекст для воспроизводимости</span>
+</summary>
+<div class="tl-body">
+<ul>
+<li>
+Apple удалила приложение из магазина; новые установки на iPhone и iPad стали недоступны.
+</li>
+<li>
+Ранее установленные приложения продолжили работать, но перестали обновляться через магазин.
+</li>
+</ul>
+<p class="tl-src">
+<a href="https://interseclab.org/research/max">Источник: interseclab.org/research/max</a>
+</p>
+</div>
+</details>
+</li>
+<li>
+<details class="tl">
+<summary>
+<time datetime="2026-10-22">22 октября 2026</time> <span class="tl-title">Отчёт InterSecLab</span> <span class="tl-note">11 выводов, перехват до шифрования</span>
+</summary>
+<div class="tl-body">
+<table tabindex="0" aria-label="Хронология">
+<caption>
+Что подтверждено
+</caption>
+<thead>
+<tr>
+<th scope="col">
+Вывод
+</th>
+<th scope="col">
+Статус
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+E2EE нет, сообщения читаемы на сервере
+</td>
+<td>
+подтверждено
+</td>
+</tr>
+<tr>
+<td>
+Адресная книга с именами и номерами без хеширования
+</td>
+<td>
+подтверждено
+</td>
+</tr>
+<tr>
+<td>
+Серверные флаги и точечное управление аккаунтом
+</td>
+<td>
+подтверждено
+</td>
+</tr>
+<tr>
+<td>
+Проверка сети и произвольный список адресов с сервера
+</td>
+<td>
+подтверждено
+</td>
+</tr>
+<tr>
+<td>
+Модель распознавания фразы на устройстве, загрузка с сервера
+</td>
+<td>
+подтверждено
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<b>Не утверждается:</b> применение возможностей против конкретных людей.
+</li>
+</ul>
+<p class="tl-src">
+<a href="https://interseclab.org/research/max">Источник: interseclab.org/research/max</a>
+</p>
+</div>
+</details>
 </li>
 </ol>
 <h2 id="что-задокументировано">Что задокументировано</h2>
@@ -99,13 +496,13 @@
 <h3 id="контакты-и-социальный-граф">Контакты и социальный граф</h3>
 <p>В сборке InterSecLab адресная книга передавалась <strong>с именами и номерами в открытом виде, без хеширования</strong>. Изменение любого контакта запускает синхронизацию; каждый сеанс отправляется число записей, включая людей, которые MAX не пользуются. Поиск по любому зарегистрированному номеру отдаёт ID, отображаемое имя и дату создания аккаунта, а также без запроса — онлайн-статус найденного и создаёт объект чата, связывая два аккаунта. <strong>Подтверждено:</strong> InterSecLab (перехват при регистрации).</p>
 <h3 id="содержимое">Содержимое</h3>
-<p>E2EE отсутствует. Голосовые сообщения по запросу распознаются на серверах VK. Во время звонка аудиопоток идёт в модель на устройстве, которую приложение скачивает по URL с сервера и сверяет контрольную сумму с серверным значением. В изученной сборке модель распознавала одну русскую фразу и отдавала метрику качества звонка; механизм позволяет подменить модель без обновления приложения. <strong>Подтверждено:</strong> InterSecLab; досье RKS Global.</p>
+<p>E2EE отсутствует. Голосовые сообщения по запросу распознаются на серверах VK. Во время звонка аудиопоток идёт в модель на устройстве: приложение скачивает её по URL с сервера и сверяет контрольную сумму с серверным значением. В изученной сборке модель распознавала одну фразу и отдавала метрику качества звонка; подменить её можно без обновления приложения. <strong>Подтверждено:</strong> InterSecLab; досье RKS Global.</p>
 <h3 id="идентификаторы-и-приложения">Идентификаторы и приложения</h3>
-<p>MyTracker SDK с <code>tracker-api.vk-analytics.ru</code>, список установленных приложений (packageName и время установки), GAID/OAID, сенсоры, детект Magisk — по разбору zarazaexe. InterSecLab: компонент списка приложений в коде есть, но в их сборке не инициализировался, а нужного разрешения нет в манифесте. Это <strong>возможность, зависящая от сборки и флага</strong>, а не постоянное поведение. <strong>Один источник</strong> для активного сбора.</p>
+<p>MyTracker SDK с <code>tracker-api.vk-analytics.ru</code>, список приложений (packageName и время установки), GAID/OAID, сенсоры, детект Magisk — по разбору zarazaexe. InterSecLab: компонент списка приложений в коде есть, но в их сборке не инициализировался, нужного разрешения нет в манифесте. Это <strong>возможность, зависящая от сборки и флага</strong>. <strong>Один источник</strong> для активного сбора.</p>
 <h3 id="управление-с-сервера">Управление с сервера</h3>
 <p>Сотни серверных флагов, среди них <code>host-reachability</code>, <code>net-ssl-session-validate</code> (отключение проверки TLS-сессии), <code>fake-chats</code>, <code>calls-fakeboss-incoming-call-enabled</code>, <code>log-sensitive</code>, <code>outgoing-call-uri</code>. Отдельный канал <code>trace_flow</code> / <code>trace-flow.ru</code> шлёт User ID, Device ID, реальный IP и флаг VPN. InterSecLab подтвердила, что это отдельный канал со своим адресом и учётными данными, а домен и сертификат принадлежат сети VK. <strong>Подтверждено:</strong> InterSecLab.</p>
 <h3 id="инфраструктура-и-правовая-рамка">Инфраструктура и правовая рамка</h3>
-<p>Основные серверы — в России, в блоке 4096 IP, выделенном московскому ООО «ВК» 5 сентября 2025 года; телеметрия — на ресурсах VK. По 374-ФЗ и СОРМ оператор обязан предоставлять ФСБ технический доступ; при отсутствии E2EE это означает читаемость содержимого на сервере. Это оценка InterSecLab, а не отдельный технический факт.</p>
+<p>Основные серверы — в России, в блоке 4096 IP, выделенном московскому ООО «ВК» 5 сентября 2025 года; телеметрия — на ресурсах VK. По 374-ФЗ и СОРМ оператор обязан давать ФСБ технический доступ; при отсутствии E2EE это означает читаемость содержимого на сервере. Оценка InterSecLab, а не отдельный технический факт.</p>
 <h2 id="попадания">Попадания</h2>
 <table tabindex="0" aria-label="Попадания">
 <colgroup>
@@ -242,14 +639,14 @@
 <ul class="task-list">
 <li><label><input type="checkbox" />Проверить разрешения: геолокация — «только при использовании» или выключить; контакты, камера, микрофон — по необходимости.</label></li>
 <li><label><input type="checkbox" />Не отправлять документы, фото документов и финансовые данные даже себе.</label></li>
-<li><label><input type="checkbox" />Проверять разрешения после каждого обновления: список запросов меняется.</label></li>
-<li><label><input type="checkbox" />Не полагаться на VPN как на «режим невидимости»: факт VPN уходит в отчёт, а работа может быть заблокирована.</label></li>
+<li><label><input type="checkbox" />Проверять разрешения после обновлений.</label></li>
+<li><label><input type="checkbox" />Не полагаться на VPN как на «режим невидимости»: факт VPN уходит в отчёт.</label></li>
 </ul>
 <h3 id="p2">P2</h3>
 <ul class="task-list">
-<li><label><input type="checkbox" />Помнить, что метаданные (IP, оператор, время сессий, список приложений) уходят и без E2EE.</label></li>
-<li><label><input type="checkbox" />Проверять сборку и источник установки: поведение зависит от версии и серверных флагов.</label></li>
-<li><label><input type="checkbox" />Раз в квартал сверять чек-лист с текущей версией приложения.</label></li>
+<li><label><input type="checkbox" />Помнить, что метаданные (IP, оператор, время сессий) уходят и без E2EE.</label></li>
+<li><label><input type="checkbox" />Проверять сборку и источник установки: поведение зависит от версии и флагов.</label></li>
+<li><label><input type="checkbox" />Раз в квартал сверять чек-лист с текущей версией.</label></li>
 </ul>
 <section id="что-добавить-при-повышенном-профиле" class="profile elevated">
 <h3>Что добавить при повышенном профиле</h3>
@@ -392,7 +789,7 @@
   </div>
 </div>
 
-<script src="assets/search-index.js?v=2611210855"></script>
-<script src="assets/app.js?v=2611210855"></script>
+<script src="assets/search-index.js?v=2611211814"></script>
+<script src="assets/app.js?v=2611211814"></script>
 </body>
 </html>

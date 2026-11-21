@@ -399,3 +399,43 @@
   });
   window.addEventListener('hashchange', revealHash);
 })();
+
+/* ---------- таймлайн: развернуть всё ---------- */
+(function () {
+  var items = Array.prototype.slice.call(document.querySelectorAll('details.tl'));
+  if (!items.length) return;
+  var btn = document.querySelector('[data-tl-toggle]');
+
+  function allOpen() {
+    return items.every(function (d) { return d.open; });
+  }
+
+  function label() {
+    if (!btn) return;
+    btn.textContent = allOpen() ? 'Свернуть всё' : 'Развернуть всё';
+    btn.setAttribute('aria-pressed', String(allOpen()));
+  }
+
+  if (btn) {
+    btn.addEventListener('click', function () {
+      var open = !allOpen();
+      items.forEach(function (d) { d.open = open; });
+      label();
+    });
+    items.forEach(function (d) { d.addEventListener('toggle', label); });
+    label();
+  }
+
+  window.addEventListener('beforeprint', function () {
+    items.forEach(function (d) {
+      d.dataset.wasOpen = d.open ? '1' : '0';
+      d.open = true;
+    });
+  });
+
+  window.addEventListener('afterprint', function () {
+    items.forEach(function (d) {
+      if (d.dataset.wasOpen === '0') d.open = false;
+    });
+  });
+})();
