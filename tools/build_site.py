@@ -15,7 +15,7 @@ NAV = [
     ("Начало", [("index", "Обзор"), ("threat-model", "Модель угроз"),
                 ("methodology", "Методика"), ("charts", "Данные")]),
     ("Мессенджеры", [("whatsapp", "WhatsApp"), ("telegram", "Telegram"), ("signal", "Signal"),
-                     ("max", "MAX")]),
+                     ("max", "MAX"), ("max-research", "MAX: разбор")]),
     ("Платформы", [("macos", "macOS"), ("windows", "Windows"), ("linux", "Linux"),
                    ("ios", "iOS"), ("android", "Android")]),
     ("Практика", [("network", "Сеть и периметр"), ("monitoring", "Мониторинг"),

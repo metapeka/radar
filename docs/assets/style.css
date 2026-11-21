@@ -140,6 +140,16 @@ figure{margin:0 0 24px}
 figure img{display:block; width:100%; height:auto; border:1px solid var(--line); border-radius:10px; background:var(--bg)}
 figcaption{font-size:12.8px; color:var(--muted); margin-top:8px; line-height:1.5}
 
+/* timeline */
+.timeline{list-style:none; margin:6px 0 24px; padding:0; border-left:2px solid var(--line)}
+.timeline li{position:relative; margin:0 0 20px; padding:0 0 0 24px}
+.timeline li::before{content:""; position:absolute; left:-6px; top:.55em; width:10px; height:10px;
+  border-radius:50%; background:var(--bg); border:2px solid var(--accent)}
+.timeline time{display:block; font-size:12.5px; font-weight:600; color:var(--muted)}
+.timeline b{display:block; font-weight:640; margin-top:1px}
+.timeline li > a{font-size:13.5px; word-break:break-word}
+@media print{ .timeline li{break-inside:avoid} }
+
 /* tables */
 article table{display:block; width:100%; overflow-x:auto; border-collapse:collapse; margin:6px 0 20px; font-size:14px}
 article table:focus-visible{outline:3px solid var(--ring); outline-offset:2px}

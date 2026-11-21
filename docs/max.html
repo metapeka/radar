@@ -7,7 +7,7 @@
 <meta name="description" content="Российский мессенджер-суперапп. Ключевое отличие от WhatsApp и Signal: сквозное шифрование официально не заявлено, а часть данных по политике передаётся по запросу госорганов.">
 <meta name="color-scheme" content="light dark">
 <script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
-<link rel="stylesheet" href="assets/style.css?v=2611210341">
+<link rel="stylesheet" href="assets/style.css?v=2611210855">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -35,7 +35,7 @@
       <div class="profile-hint" aria-live="polite"></div>
     </div>
     <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a></div>
-<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html" class="active" aria-current="page">MAX</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html" class="active" aria-current="page">MAX</a><a href="max-research.html">MAX: разбор</a></div>
 <div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
 <div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
     <div class="sidebar-foot">Версия 0.3 · 21.11.2026</div>
@@ -178,6 +178,7 @@
 <p>Разные методики и разные версии приложения. Пассивный анализ видит только то, что прошло через сеть и не зашифровано на уровне приложения; статический — только то, что не обфусцировано. Ни один из них не даёт полной картины.</p>
 <p>Позиция компании (апрель 2026): классификация Cloudflare вызвана «неверной интерпретацией заголовков веб-аналитики», приложение проходит аудиты, работает bug bounty. По пунктам выводы исследования публично не опровергнуты.</p>
 <p><strong>Как это читать:</strong> относитесь к обоим результатам как к гипотезам с датой, а не как к приговору или оправданию. Проверить на своей версии можно методикой из <a href="app-analysis.html">анализа приложений</a>.</p>
+<p>Хронология исследований и разбор того, что подтвердилось, а что нет, — на странице <a href="max-research.html">«MAX: исследования и хронология»</a>.</p>
 <h2 id="разрешения">Разрешения</h2>
 <p>Android-манифест (по публичному разбору): контакты (чтение и запись), камера, микрофон, точная геолокация (включая фоновую), доступ к медиа. Для мессенджера это ожидаемо, но каждое разрешение стоит проверить: геолокация в фоне нужна далеко не всегда.</p>
 <p>iOS: отдельного публичного разбора разрешений не найдено.</p>
@@ -245,7 +246,7 @@
 </section>
 
     </article>
-    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="signal.html"><span class="dir">Назад</span>Signal</a><a class="next" href="macos.html"><span class="dir">Дальше</span>macOS</a></nav>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="signal.html"><span class="dir">Назад</span>Signal</a><a class="next" href="max-research.html"><span class="dir">Дальше</span>MAX: разбор</a></nav>
     <footer class="foot">
       Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
       Проверяйте версии ОС — названия пунктов меняются между релизами.
@@ -277,7 +278,7 @@
   </div>
 </div>
 
-<script src="assets/search-index.js?v=2611210341"></script>
-<script src="assets/app.js?v=2611210341"></script>
+<script src="assets/search-index.js?v=2611210855"></script>
+<script src="assets/app.js?v=2611210855"></script>
 </body>
 </html>
