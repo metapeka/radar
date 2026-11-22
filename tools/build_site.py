@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Собирает статическую вики из site/content/*.md в docs/ (GitHub Pages)."""
+import datetime
 import html
 import json
 import re
@@ -208,6 +209,42 @@ def render_charts() -> None:
     print("графики:", ", ".join(p.name for p in sorted(out.glob("*.svg"))))
 
 
+def load_verified() -> dict:
+    """Даты проверки страниц: site/data/verified.json, ключ — slug."""
+    src = SITE / "data" / "verified.json"
+    if not src.exists():
+        print("проверено: нет site/data/verified.json — бейджи пропущены")
+        return {}
+    pages = json.loads(src.read_text())["pages"]
+    for slug, iso in pages.items():
+        try:
+            datetime.date.fromisoformat(iso)
+        except ValueError:
+            raise SystemExit(f"{src}: {slug}: нужна дата ГГГГ-ММ-ДД, получено {iso!r}")
+    return pages
+
+
+def verified_badge(iso: str) -> str:
+    d = datetime.date.fromisoformat(iso)
+    return (f'<p class="verified"><time datetime="{iso}">проверено '
+            f'{d.day:02d}.{d.month:02d}.{d.year}</time></p>')
+
+
+def report_verified(verified: dict) -> None:
+    today = datetime.date.today()
+    missing = [slug for slug, _, _ in FLAT if slug not in verified]
+    extra = sorted(set(verified) - set(slug for slug, _, _ in FLAT))
+    stale = sorted(s for s, iso in verified.items()
+                   if (today - datetime.date.fromisoformat(iso)).days > 90)
+    print(f"проверено: {len(FLAT) - len(missing)} из {len(FLAT)} страниц")
+    if missing:
+        print("  без даты:", ", ".join(missing))
+    if extra:
+        print("  лишние ключи (нет такой страницы):", ", ".join(extra))
+    if stale:
+        print("  старше 90 дней:", ", ".join(stale))
+
+
 def validate_profiles() -> None:
     allowed = {"elevated", "targeted"}
     bad = []
@@ -229,6 +266,8 @@ def validate_profiles() -> None:
 
 def main() -> None:
     validate_profiles()
+    verified = load_verified()
+    report_verified(verified)
     ver = time.strftime("%y%m%d%H%M")
     template = (SITE / "template.html").read_text().replace("<!--VER-->", ver)
     OUT.mkdir(exist_ok=True)
@@ -262,6 +301,7 @@ def main() -> None:
                 .replace("<!--NAV-->", build_nav(slug))
                 .replace("<!--CRUMBS-->", "" if slug == "index" else build_crumbs(group, title))
                 .replace("<!--PAGETITLE-->", html.escape(title))
+                .replace("<!--VERIFIED-->", verified_badge(verified[slug]) if slug in verified else "")
                 .replace("<!--CONTENT-->", body_html)
                 .replace("<!--TOC-->", build_toc(body_html))
                 .replace("<!--PAGER-->", build_pager(idx)))
@@ -283,6 +323,7 @@ def main() -> None:
         .replace("<!--NAV-->", build_nav(""))
         .replace("<!--CRUMBS-->", '<a href="index.html">Главная</a><span class="sep">/</span><span class="here">404</span>')
         .replace("<!--PAGETITLE-->", "Страница не найдена")
+        .replace("<!--VERIFIED-->", "")
         .replace("<!--CONTENT-->",
                  '<p>Возможно, раздел переехал. Начните с <a href="index.html">обзора</a> '
                  'или воспользуйтесь поиском (клавиша <kbd>/</kbd>).</p>')

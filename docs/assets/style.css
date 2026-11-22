@@ -93,6 +93,11 @@ article strong{font-weight:640}
 .crumbs .sep{opacity:.5}
 .crumbs .here{color:var(--fg)}
 
+/* verified date */
+.verified:empty{display:none}
+.verified{margin:-6px 0 16px; font-size:12.5px; color:var(--muted)}
+.verified time{font-variant-numeric:tabular-nums}
+
 /* lead */
 article blockquote{
   margin:0 0 22px; padding:14px 16px; background:var(--accent-soft);

@@ -72,6 +72,7 @@ Workflow `.github/workflows/digest.yml` по понедельникам соби
 - Ссылка на источник и дата.
 - `python3 tools/build_site.py` проходит.
 - `updates.md` обновлён.
+- Дата в `site/data/verified.json` обновлена, если менялись факты; `python3 tools/check_verified.py` проходит.
 - Приватные снапшоты и секреты не добавлены.
 
 Шаблон PR подставится автоматически.

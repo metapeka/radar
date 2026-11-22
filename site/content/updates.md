@@ -8,6 +8,7 @@
 
 | Дата | Что изменилось | Страницы |
 |---|---|---|
+| 23.11.2026 | Дата проверки под заголовком; хранение в `site/data/verified.json` | Все страницы |
 | 23.11.2026 | Гид: «О проекте», CONTRIBUTING, шаблоны Issue и PR | [О проекте](about.html) |
 | 23.11.2026 | Автосбор недельной сводки: GitHub Actions и Issue-шаблон | [Сводка](digest.html) |
 | 23.11.2026 | Свежие CVE: WhatsApp, Telegram, iPhone, Signal, MAX; добавлена недельная сводка | [Сводка](digest.html), [Сравнение](comparison.html), [WhatsApp](whatsapp.html), [Telegram](telegram.html), [Signal](signal.html), [iOS](ios.html), [MAX](max.html) |
