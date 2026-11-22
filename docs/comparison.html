@@ -7,7 +7,7 @@
 <meta name="description" content="Четыре мессенджера и три разных вопроса: кто может прочитать содержимое, что отдают по законному запросу и какие уязвимости были в 2025–2026 годах.">
 <meta name="color-scheme" content="light dark">
 <script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
-<link rel="stylesheet" href="assets/style.css?v=2611220254">
+<link rel="stylesheet" href="assets/style.css?v=2611230028">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -34,7 +34,7 @@
       </div>
       <div class="profile-hint" aria-live="polite"></div>
     </div>
-    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a></div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a></div>
 <div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html" class="active" aria-current="page">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
 <div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
 <div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
@@ -309,30 +309,48 @@
 <td>исправлено: iOS 2.25.21.73, macOS 2.25.21.78</td>
 </tr>
 <tr class="even">
-<td>26.03.2026</td>
+<td>15.10.2026</td>
 <td>Telegram</td>
-<td>ZDI-CAN-30207: заявлен zero-click RCE через анимированные стикеры на Android и Linux, CVSS 9.8</td>
-<td>спорно: Telegram отрицает, CVE нет, независимо не подтверждено</td>
+<td>ZDI-26-757 / CVE-2026-111105: numeric truncation в rlottie, RCE; CVSS 7.0, нужно открыть файл или страницу</td>
+<td>advisory опубликован; Telegram заявил серверную валидацию</td>
 </tr>
 <tr class="odd">
+<td>17.11.2026</td>
+<td>Telegram</td>
+<td>Виджеты: заявлен обход sandbox и RCE на Android 13.2.2; Kaspersky сообщила о WebRAT через виджеты</td>
+<td>CVE нет, детали не раскрыты; обновляться</td>
+</tr>
+<tr class="even">
 <td>21.09.2026</td>
 <td>Telegram Desktop</td>
 <td>CVE-2026-94488: stored XSS в HTML-экспорте чата; бот мог спрятать код в кнопке и получить историю при открытии файла</td>
 <td>исправлено в 7.0.1; старые экспорты пересоздать</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>20.10.2026</td>
 <td>Signal</td>
 <td>CVE-2026-113380: в RingRTC до 2.72.0 собеседник мог не дать завершить звонок, аудио и видео оставались активны; CVSS 9.3</td>
 <td>исправлено в 2.72.0; следов эксплуатации нет</td>
 </tr>
+<tr class="even">
+<td>20.11.2026</td>
+<td>WhatsApp</td>
+<td>CVE-2026-23871: утечка IP через рекламный ответ Click to WhatsApp на Android до 2.26.17.4; подозрение на использование в скаме, CVSS 3.5</td>
+<td>исправлено в 2.26.17.4</td>
+</tr>
 <tr class="odd">
 <td>20.11.2026</td>
 <td>WhatsApp</td>
-<td>CVE-2026-102769: SQL-инъекция в Android до 2.26.35.74 при открытии «order details» от неофициального клиента; удаление файлов и утечка одного бита</td>
+<td>CVE-2026-102769: SQL-инъекция в Android до 2.26.35.74 при открытии «order details» от неофициального клиента; удаление файлов и утечка одного бита, CVSS 6.8</td>
 <td>исправлено в 2.26.35.74; эксплуатации не видели</td>
 </tr>
 <tr class="even">
+<td>20.11.2026</td>
+<td>WhatsApp</td>
+<td>CVE-2026-44908: неверная проверка цепочки сертификата Meta AI, CVSS 4.8</td>
+<td>исправлено; следов эксплуатации нет</td>
+</tr>
+<tr class="odd">
 <td>—</td>
 <td>MAX</td>
 <td>ZipSlip в DownloadService, CVSS 7.0–9.8 по заявлению исследователя</td>
@@ -340,11 +358,12 @@
 </tr>
 </tbody>
 </table>
+<p>По Signal новых CVE после 20.10.2026 не найдено. По MAX в апреле 2026 сообщили о 213 уязвимостях по bug bounty; публичного списка и CVE нет, оценить их нельзя.</p>
 <p>Что из этого следует:</p>
 <ul>
 <li><strong>Обновления важнее выбора мессенджера.</strong> Все подтверждённые уязвимости из таблицы закрыты обновлением.</li>
 <li><strong>Zero-click существует, но остаётся целевым.</strong> Он дорог и живёт до патча; массовые угрозы по-прежнему идут через код, QR и бэкапы.</li>
-<li><strong>Спорные заявления не становятся фактом от того, что попали в новости.</strong> ZDI-CAN-30207 — пример: оценка 9.8 есть, подтверждения и CVE нет, вендор отрицает.</li>
+<li><strong>Спорные заявления не становятся фактом от того, что попали в новости.</strong> ZDI-26-757 — пример: в новостях писали 9.8 и zero-click, в опубликованном advisory — 7.0 и требуется взаимодействие.</li>
 <li><strong>Старые экспорты — тоже риск.</strong> Исправление Telegram Desktop не чинит уже созданные HTML-файлы.</li>
 </ul>
 <h2 id="вывод">Вывод</h2>
@@ -452,6 +471,36 @@
 <td><a href="https://signal.org/bigbrother">signal.org/bigbrother</a></td>
 </tr>
 <tr class="odd">
+<td>10.04.2026</td>
+<td>iXBT / «Коммерсантъ»</td>
+<td>213 уязвимостей MAX по bug bounty</td>
+<td><a href="https://www.ixbt.com/news/2026/04/10/belye-hakery-nashli-213-ujazvimostej-v-messendzhere-max-no-v-centre-bezopasnosti-platformy-zajavili-chto-dannye.html">ixbt.com</a></td>
+</tr>
+<tr class="even">
+<td>15.10.2026</td>
+<td>ZDI</td>
+<td>ZDI-26-757, CVE-2026-111105</td>
+<td><a href="https://www.zerodayinitiative.com/advisories/ZDI-26-757">zerodayinitiative.com</a></td>
+</tr>
+<tr class="odd">
+<td>17.11.2026</td>
+<td>The Hacker News</td>
+<td>Виджеты Telegram и WebRAT</td>
+<td><a href="https://thehackernews.com/2026/11/researchers-claim-two-rce-exploits-that.html">thehackernews.com</a></td>
+</tr>
+<tr class="even">
+<td>20.11.2026</td>
+<td>The Hacker News</td>
+<td>Три CVE WhatsApp</td>
+<td><a href="https://thehackernews.com/2026/11/whatsapp-patches-3-security-flaws.html">thehackernews.com</a></td>
+</tr>
+<tr class="odd">
+<td>20.11.2026</td>
+<td>MITRE, CVE-2026-23871</td>
+<td>Утечка IP через рекламный ответ</td>
+<td><a href="https://www.cve.org/CVERecord?id=CVE-2026-23871">cve.org</a></td>
+</tr>
+<tr class="even">
 <td>20.11.2026</td>
 <td>MITRE, CVE-2026-102769</td>
 <td>SQL-инъекция в WhatsApp для Android</td>
@@ -469,7 +518,7 @@
 </ul>
 
     </article>
-    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="charts.html"><span class="dir">Назад</span>Данные</a><a class="next" href="whatsapp.html"><span class="dir">Дальше</span>WhatsApp</a></nav>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="digest.html"><span class="dir">Назад</span>Сводка</a><a class="next" href="whatsapp.html"><span class="dir">Дальше</span>WhatsApp</a></nav>
     <footer class="foot">
       Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
       Проверяйте версии ОС — названия пунктов меняются между релизами.
@@ -503,7 +552,7 @@
   </div>
 </div>
 
-<script src="assets/search-index.js?v=2611220254"></script>
-<script src="assets/app.js?v=2611220254"></script>
+<script src="assets/search-index.js?v=2611230028"></script>
+<script src="assets/app.js?v=2611230028"></script>
 </body>
 </html>

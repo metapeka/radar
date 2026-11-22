@@ -88,17 +88,22 @@
 | Дата | Мессенджер | Что | Статус |
 |---|---|---|---|
 | 29.08.2025 | WhatsApp | CVE-2025-55177: неполная авторизация при синхронизации связанных устройств на iOS и macOS; в цепочке с CVE-2025-43300 могла использоваться в целевой атаке | исправлено: iOS 2.25.21.73, macOS 2.25.21.78 |
-| 26.03.2026 | Telegram | ZDI-CAN-30207: заявлен zero-click RCE через анимированные стикеры на Android и Linux, CVSS 9.8 | спорно: Telegram отрицает, CVE нет, независимо не подтверждено |
+| 15.10.2026 | Telegram | ZDI-26-757 / CVE-2026-111105: numeric truncation в rlottie, RCE; CVSS 7.0, нужно открыть файл или страницу | advisory опубликован; Telegram заявил серверную валидацию |
+| 17.11.2026 | Telegram | Виджеты: заявлен обход sandbox и RCE на Android 13.2.2; Kaspersky сообщила о WebRAT через виджеты | CVE нет, детали не раскрыты; обновляться |
 | 21.09.2026 | Telegram Desktop | CVE-2026-94488: stored XSS в HTML-экспорте чата; бот мог спрятать код в кнопке и получить историю при открытии файла | исправлено в 7.0.1; старые экспорты пересоздать |
 | 20.10.2026 | Signal | CVE-2026-113380: в RingRTC до 2.72.0 собеседник мог не дать завершить звонок, аудио и видео оставались активны; CVSS 9.3 | исправлено в 2.72.0; следов эксплуатации нет |
-| 20.11.2026 | WhatsApp | CVE-2026-102769: SQL-инъекция в Android до 2.26.35.74 при открытии «order details» от неофициального клиента; удаление файлов и утечка одного бита | исправлено в 2.26.35.74; эксплуатации не видели |
+| 20.11.2026 | WhatsApp | CVE-2026-23871: утечка IP через рекламный ответ Click to WhatsApp на Android до 2.26.17.4; подозрение на использование в скаме, CVSS 3.5 | исправлено в 2.26.17.4 |
+| 20.11.2026 | WhatsApp | CVE-2026-102769: SQL-инъекция в Android до 2.26.35.74 при открытии «order details» от неофициального клиента; удаление файлов и утечка одного бита, CVSS 6.8 | исправлено в 2.26.35.74; эксплуатации не видели |
+| 20.11.2026 | WhatsApp | CVE-2026-44908: неверная проверка цепочки сертификата Meta AI, CVSS 4.8 | исправлено; следов эксплуатации нет |
 | — | MAX | ZipSlip в DownloadService, CVSS 7.0–9.8 по заявлению исследователя | не подтверждено независимо; публичного CVE нет |
+
+По Signal новых CVE после 20.10.2026 не найдено. По MAX в апреле 2026 сообщили о 213 уязвимостях по bug bounty; публичного списка и CVE нет, оценить их нельзя.
 
 Что из этого следует:
 
 - **Обновления важнее выбора мессенджера.** Все подтверждённые уязвимости из таблицы закрыты обновлением.
 - **Zero-click существует, но остаётся целевым.** Он дорог и живёт до патча; массовые угрозы по-прежнему идут через код, QR и бэкапы.
-- **Спорные заявления не становятся фактом от того, что попали в новости.** ZDI-CAN-30207 — пример: оценка 9.8 есть, подтверждения и CVE нет, вендор отрицает.
+- **Спорные заявления не становятся фактом от того, что попали в новости.** ZDI-26-757 — пример: в новостях писали 9.8 и zero-click, в опубликованном advisory — 7.0 и требуется взаимодействие.
 - **Старые экспорты — тоже риск.** Исправление Telegram Desktop не чинит уже созданные HTML-файлы.
 
 ## Вывод
@@ -156,6 +161,11 @@
 | 20.10.2026 | MITRE, CVE-2026-113380 | Уязвимость RingRTC в Signal | [cve.org](https://www.cve.org/CVERecord?id=CVE-2026-113380) |
 | 22.10.2026 | InterSecLab | MAX: отсутствие E2EE, СОРМ, инфраструктура | [interseclab.org](https://interseclab.org/research/max) |
 | 03.11.2026 | Signal Government Requests | Повестки и минимум данных | [signal.org/bigbrother](https://signal.org/bigbrother) |
+| 10.04.2026 | iXBT / «Коммерсантъ» | 213 уязвимостей MAX по bug bounty | [ixbt.com](https://www.ixbt.com/news/2026/04/10/belye-hakery-nashli-213-ujazvimostej-v-messendzhere-max-no-v-centre-bezopasnosti-platformy-zajavili-chto-dannye.html) |
+| 15.10.2026 | ZDI | ZDI-26-757, CVE-2026-111105 | [zerodayinitiative.com](https://www.zerodayinitiative.com/advisories/ZDI-26-757) |
+| 17.11.2026 | The Hacker News | Виджеты Telegram и WebRAT | [thehackernews.com](https://thehackernews.com/2026/11/researchers-claim-two-rce-exploits-that.html) |
+| 20.11.2026 | The Hacker News | Три CVE WhatsApp | [thehackernews.com](https://thehackernews.com/2026/11/whatsapp-patches-3-security-flaws.html) |
+| 20.11.2026 | MITRE, CVE-2026-23871 | Утечка IP через рекламный ответ | [cve.org](https://www.cve.org/CVERecord?id=CVE-2026-23871) |
 | 20.11.2026 | MITRE, CVE-2026-102769 | SQL-инъекция в WhatsApp для Android | [cve.org](https://www.cve.org/CVERecord?id=CVE-2026-102769) |
 
 ## См. также

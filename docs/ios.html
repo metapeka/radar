@@ -7,7 +7,7 @@
 <meta name="description" content="На iPhone почти нет «вирусного» вектора — зато есть кража кода-пароля, подглядывание и профили конфигурации. И есть жёсткая привязка защиты к версии iOS.">
 <meta name="color-scheme" content="light dark">
 <script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
-<link rel="stylesheet" href="assets/style.css?v=2611220254">
+<link rel="stylesheet" href="assets/style.css?v=2611230028">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -34,7 +34,7 @@
       </div>
       <div class="profile-hint" aria-live="polite"></div>
     </div>
-    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a></div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a></div>
 <div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
 <div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html" class="active" aria-current="page">iOS</a><a href="android.html">Android</a></div>
 <div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
@@ -103,6 +103,45 @@
 </table>
 <p>Важно про модели: <strong>iOS 18 поддерживают iPhone XS, XS Max и XR и новее.</strong> iPhone X (A11) на iOS 18 не обновляется — его последняя версия 16.7.16 (11 мая 2026). Если на устройстве «iPhone X» установилась 18.7.12, это XS/XR, а не X.</p>
 <p>Актуальная ветка 18.7 на ноябрь 2026 — <strong>18.7.12 (сборка 22H390, 9 ноября 2026)</strong>: шесть CVE в Bluetooth, AirPlay, CoreUtils (две), MediaRemote и rapportd, включая спаривание Bluetooth без участия пользователя. Эксплуатации в дикой природе Apple не заявляла.</p>
+<h2 id="микрофон-без-разрешения">Микрофон без разрешения</h2>
+<div class="callout warning"><span class="callout-title">Важно</span>
+<p>CVE-2026-65339: приложение могло записывать звук после нажатия «Не разрешать». Исправлено в iOS 26.6.1 и iPadOS 26.6.1 (17 августа 2026), для старых устройств — в iOS 18.7.11 (26 октября 2026).</p>
+</div>
+<table tabindex="0" aria-label="Микрофон без разрешения">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Параметр</th>
+<th scope="col">Значение</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CVE</td>
+<td>CVE-2026-65339, CVSS 5.0</td>
+</tr>
+<tr class="even">
+<td>Что</td>
+<td>логическая ошибка в аудиосервисе <code>audiomxd</code>: приложение подменяло идентификатор процесса и обходило TCC</td>
+</tr>
+<tr class="odd">
+<td>Что нужно</td>
+<td>установленное приложение; в тестах — сборка через Xcode, вне App Review</td>
+</tr>
+<tr class="even">
+<td>Индикатор</td>
+<td>оранжевый индикатор микрофона мог не появляться</td>
+</tr>
+<tr class="odd">
+<td>Эксплуатация</td>
+<td>не заявлена; Apple и исследователи не сообщают об атаках</td>
+</tr>
+</tbody>
+</table>
+<p>Вывод: «запрет микрофона» — не абсолютная гарантия, а проверка TCC, которую можно обойти ошибкой в системном сервисе. Мера — обновление.</p>
 <h2 id="ключевые-механизмы">Ключевые механизмы</h2>
 <table tabindex="0" aria-label="Ключевые механизмы">
 <colgroup>
@@ -217,7 +256,7 @@ mvt-ios check-backup --iocs malware.stix2 ./decrypted</code></pre>
 <li><label><input type="checkbox" />Advanced Data Protection включён, recovery key сохранён.</label></li>
 <li><label><input type="checkbox" />Профили конфигурации: список пуст.</label></li>
 <li><label><input type="checkbox" />Пользовательские корневые сертификаты: незнакомых нет.</label></li>
-<li><label><input type="checkbox" />Автообновления iOS включены.</label></li>
+<li><label><input type="checkbox" />Автообновления iOS включены; версия не ниже 26.6.1 или 18.7.11 (CVE-2026-65339).</label></li>
 <li><label><input type="checkbox" />E2EE-бэкап WhatsApp (см. <a href="whatsapp.html">WhatsApp</a>).</label></li>
 </ul>
 <h3 id="p1">P1</h3>
@@ -269,6 +308,7 @@ mvt-ios check-backup --iocs malware.stix2 ./decrypted</code></pre>
   <nav class="toc" aria-label="Содержание страницы">
     <div class="toc-title">На странице</div>
     <a class="d2" href="#версии-и-возможности">Версии и возможности</a>
+<a class="d2" href="#микрофон-без-разрешения">Микрофон без разрешения</a>
 <a class="d2" href="#ключевые-механизмы">Ключевые механизмы</a>
 <a class="d2" href="#профили-и-сертификаты">Профили и сертификаты</a>
 <a class="d2" href="#обнаружение-компрометации">Обнаружение компрометации</a>
@@ -289,7 +329,7 @@ mvt-ios check-backup --iocs malware.stix2 ./decrypted</code></pre>
   </div>
 </div>
 
-<script src="assets/search-index.js?v=2611220254"></script>
-<script src="assets/app.js?v=2611220254"></script>
+<script src="assets/search-index.js?v=2611230028"></script>
+<script src="assets/app.js?v=2611230028"></script>
 </body>
 </html>

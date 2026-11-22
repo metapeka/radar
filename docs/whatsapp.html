@@ -7,7 +7,7 @@
 <meta name="description" content="Сквозное шифрование защищает текст сообщения. Оно не защищает аккаунт, не защищает бэкап и не скрывает метаданные.">
 <meta name="color-scheme" content="light dark">
 <script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
-<link rel="stylesheet" href="assets/style.css?v=2611220254">
+<link rel="stylesheet" href="assets/style.css?v=2611230028">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -34,7 +34,7 @@
       </div>
       <div class="profile-hint" aria-live="polite"></div>
     </div>
-    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a></div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a></div>
 <div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html" class="active" aria-current="page">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
 <div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
 <div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
@@ -147,6 +147,39 @@
 </tbody>
 </table>
 <p>Вывод: сервер не является целью. Дешевле получить код, привязать устройство или прочитать бэкап.</p>
+<h2 id="свежие-cve-ноябрь-2026">Свежие CVE (ноябрь 2026)</h2>
+<table tabindex="0" aria-label="Свежие CVE (ноябрь 2026)">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">CVE</th>
+<th scope="col">Что</th>
+<th scope="col">Версия</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CVE-2026-23871</td>
+<td>Утечка IP через специально собранный рекламный ответ Click to WhatsApp; подозрение на использование в скаме, CVSS 3.5</td>
+<td>Android и Business до 2.26.17.4</td>
+</tr>
+<tr class="even">
+<td>CVE-2026-102769</td>
+<td>SQL-инъекция при открытии «order details» от неофициального клиента; удаление локальных файлов и утечка одного бита, CVSS 6.8</td>
+<td>Android до 2.26.35.74</td>
+</tr>
+<tr class="odd">
+<td>CVE-2026-44908</td>
+<td>Неверная проверка цепочки сертификата в аттестации Meta AI, CVSS 4.8</td>
+<td>iOS до 2.26.24.72, Android до 2.26.23.74, Mac до 2.26.23.72</td>
+</tr>
+</tbody>
+</table>
+<p>Все три закрыты обновлением. Для CVE-2026-23871 WhatsApp говорит о подозрении на использование в скаме; для двух других следов эксплуатации нет.</p>
 <h2 id="шесть-векторов-угона">Шесть векторов угона</h2>
 <table tabindex="0" aria-label="Шесть векторов угона">
 <colgroup>
@@ -245,7 +278,7 @@
 <li><label><input type="checkbox" /><strong>Резервная почта.</strong> <code>Настройки → Аккаунт → Адрес электронной почты</code>. Без неё сброс только через 7 дней ожидания.</label></li>
 <li><label><input type="checkbox" /><strong>E2EE-бэкап.</strong> <code>Настройки → Чаты → Резервная копия → Резервная копия со сквозным шифрованием</code>. Пароль или 64-значный ключ — сохранить <strong>вне телефона</strong>. Ключ невосстановим.</label></li>
 <li><label><input type="checkbox" /><strong>Ревизия устройств.</strong> <code>Настройки → Связанные устройства</code>. Всё незнакомое — «Выйти». Лимит: 4 устройства плюс телефон.</label></li>
-<li><label><input type="checkbox" /><strong>Обновления.</strong> ОС и приложения. CVE-2025-55177 эксплуатировалась в дикой природе и закрыта патчем.</label></li>
+<li><label><input type="checkbox" /><strong>Обновления.</strong> ОС и приложения. CVE-2025-55177 эксплуатировалась в дикой природе; ноябрьские CVE — Android 2.26.35.74 и новее.</label></li>
 </ul>
 <h3 id="p1-гигиена">P1 — гигиена</h3>
 <ul class="task-list">
@@ -331,6 +364,7 @@
     <div class="toc-title">На странице</div>
     <a class="d2" href="#что-защищено-а-что-нет">Что защищено, а что нет</a>
 <a class="d2" href="#взламывали-ли-серверы">Взламывали ли серверы</a>
+<a class="d2" href="#свежие-cve-ноябрь-2026">Свежие CVE (ноябрь 2026)</a>
 <a class="d2" href="#шесть-векторов-угона">Шесть векторов угона</a>
 <a class="d2" href="#что-получает-атакующий">Что получает атакующий</a>
 <a class="d2" href="#чек-лист">Чек-лист</a>
@@ -350,7 +384,7 @@
   </div>
 </div>
 
-<script src="assets/search-index.js?v=2611220254"></script>
-<script src="assets/app.js?v=2611220254"></script>
+<script src="assets/search-index.js?v=2611230028"></script>
+<script src="assets/app.js?v=2611230028"></script>
 </body>
 </html>

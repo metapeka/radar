@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сводка: 17–23 ноября 2026 — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Что изменилось в безопасности мессенджеров и iPhone за неделю — и какие действия из-за этого поменялись.">
+<meta name="color-scheme" content="light dark">
+<script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
+<link rel="stylesheet" href="assets/style.css?v=2611230028">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span></button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd aria-hidden="true">/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="profile-switch">
+      <div class="nav-title">Профиль риска</div>
+      <div class="seg" role="radiogroup" aria-label="Профиль риска">
+        <button type="button" data-profile="basic" aria-pressed="true">Обычный</button>
+        <button type="button" data-profile="elevated" aria-pressed="false">Повыш.</button>
+        <button type="button" data-profile="targeted" aria-pressed="false">Целевой</button>
+      </div>
+      <div class="profile-hint" aria-live="polite"></div>
+    </div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a><a href="digest.html" class="active" aria-current="page">Сводка</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.3 · 21.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <div class="crumbs"><a href="index.html">Главная</a><span class="sep">/</span><span>Начало</span><span class="sep">/</span><span class="here">Сводка: 17–23 ноября 2026</span></div>
+      <h1>Сводка: 17–23 ноября 2026</h1>
+      <blockquote>
+<p>Что изменилось в безопасности мессенджеров и iPhone за неделю — и какие действия из-за этого поменялись.</p>
+</blockquote>
+<div class="callout note"><span class="callout-title">Контекст</span>
+<p><strong>Как читать.</strong> В сводку попадает только то, что меняет рекомендации на сайте: новая уязвимость, исправление, изменение практики. Дата среза — 23 ноября 2026. Статусы: <strong>исправлено</strong>, <strong>не подтверждено</strong>, <strong>наблюдение</strong>.</p>
+</div>
+<h2 id="главное-за-неделю">Главное за неделю</h2>
+<table tabindex="0" aria-label="Главное за неделю">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Дата</th>
+<th scope="col">Что</th>
+<th scope="col">Кому</th>
+<th scope="col">Действие</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>15.10.2026</td>
+<td>Telegram: ZDI-26-757 / CVE-2026-111105, rlottie, RCE, CVSS 7.0</td>
+<td>пользователям Telegram</td>
+<td>обновиться; не открывать подозрительные файлы и страницы</td>
+</tr>
+<tr class="even">
+<td>17.11.2026</td>
+<td>iPhone: CVE-2026-65339, запись звука после запрета микрофона</td>
+<td>iPhone и iPad</td>
+<td>iOS 26.6.1+ или 18.7.11+</td>
+</tr>
+<tr class="odd">
+<td>17.11.2026</td>
+<td>Telegram: заявлен обход sandbox виджетов на Android 13.2.2; Kaspersky — WebRAT</td>
+<td>Android</td>
+<td>обновиться; не запускать виджеты незнакомых ботов</td>
+</tr>
+<tr class="even">
+<td>20.11.2026</td>
+<td>WhatsApp: три CVE — утечка IP, SQL-инъекция, проверка сертификата</td>
+<td>Android, iOS, Mac</td>
+<td>Android 2.26.35.74+, iOS 2.26.24.72+</td>
+</tr>
+<tr class="odd">
+<td>20.11.2026</td>
+<td>CISA KEV: Apache Roller, Cisco Expressway, SAP NetWeaver, VMware vCenter</td>
+<td>администраторам</td>
+<td>патч до 23.11.2026</td>
+</tr>
+<tr class="even">
+<td>20.11.2026</td>
+<td>Signal: новых CVE после 20.10.2026 нет; CVE-2026-113380 закрыт</td>
+<td>пользователям Signal</td>
+<td>RingRTC 2.72.0+</td>
+</tr>
+<tr class="odd">
+<td>апрель 2026</td>
+<td>MAX: 213 уязвимостей по bug bounty, публичного списка нет</td>
+<td>пользователям MAX</td>
+<td>считать риск неизвестным, не хранить чувствительное</td>
+</tr>
+</tbody>
+</table>
+<p>Две поправки к тому, что писали в новостях:</p>
+<ul>
+<li><strong>ZDI-26-757</strong> — не zero-click с оценкой 9.8. В опубликованном advisory CVSS 7.0 и требуется взаимодействие: открыть файл или страницу.</li>
+<li><strong>Telegram-виджеты</strong> — заявление NebuSec, а не подтверждённая уязвимость с CVE. Демонстрация на тестовом сервере, детали не раскрыты. Но Kaspersky сообщает о реальной доставке WebRAT — обновление и отказ от виджетов незнакомых ботов оправданы.</li>
+</ul>
+<h2 id="что-делать-сейчас">Что делать сейчас</h2>
+<h3 id="p0">P0</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />iPhone/iPad: обновиться до iOS 26.6.1+ или 18.7.11+.</label></li>
+<li><label><input type="checkbox" />WhatsApp на Android: версия 2.26.35.74 или новее.</label></li>
+<li><label><input type="checkbox" />Telegram: последняя версия; виджеты незнакомых ботов не запускать.</label></li>
+<li><label><input type="checkbox" />Signal: RingRTC 2.72.0+ (обновление приложения).</label></li>
+<li><label><input type="checkbox" />Администраторам: закрыть четыре KEV-уязвимости до 23.11.2026.</label></li>
+<li><label><input type="checkbox" />MAX: новых подтверждённых CVE нет, но 213 находок bug bounty не раскрыты — чувствительное там не хранить.</label></li>
+</ul>
+<h3 id="p1">P1</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Проверить, что автообновления включены на телефонах и планшетах.</label></li>
+<li><label><input type="checkbox" />Пересоздать старые HTML-экспорты Telegram, сделанные до 7.0.1.</label></li>
+<li><label><input type="checkbox" />Для источников и чувствительного — Signal, не MAX и не Telegram-облако.</label></li>
+</ul>
+<h2 id="как-обновляется-сводка">Как обновляется сводка</h2>
+<p>Раз в неделю, по понедельникам, 30–40 минут:</p>
+<ol type="1">
+<li><strong>CISA KEV</strong> — JSON с сайта CISA: какие уязвимости добавили за неделю, есть ли дедлайн.</li>
+<li><strong>CVE.org / MITRE</strong> — новые записи по WhatsApp, Telegram, Signal, Apple, Google.</li>
+<li><strong>Advisories вендоров</strong> — WhatsApp Security Advisories, Signal Security, Telegram changelog, Apple Security Releases.</li>
+<li><strong>Профильные источники</strong> — The Hacker News, SecurityLab, Xakep, «Коммерсантъ»; только как наводка, не как доказательство.</li>
+<li><strong>Проверка</strong> — есть ли CVE, затронутые версии, статус исправления, следы эксплуатации.</li>
+<li><strong>Запись</strong> — добавить строку в таблицу, обновить дату среза, при изменении рекомендации поправить страницу мессенджера или платформы.</li>
+<li><strong>Провенанс</strong> — снять снапшот источника по правилам <code>provenance/README.md</code>.</li>
+</ol>
+<p>Правила: не публиковать слух без статуса «не подтверждено»; не смешивать CVE и заявления исследователей; не переносить в сводку всё подряд — только то, что меняет действие читателя.</p>
+<h2 id="источники">Источники</h2>
+<table tabindex="0" aria-label="Источники">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Дата</th>
+<th scope="col">Работа</th>
+<th scope="col">Что даёт</th>
+<th scope="col">Ссылка</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>10.04.2026</td>
+<td>iXBT / «Коммерсантъ»</td>
+<td>213 уязвимостей MAX по bug bounty</td>
+<td><a href="https://www.ixbt.com/news/2026/04/10/belye-hakery-nashli-213-ujazvimostej-v-messendzhere-max-no-v-centre-bezopasnosti-platformy-zajavili-chto-dannye.html">ixbt.com</a></td>
+</tr>
+<tr class="even">
+<td>15.10.2026</td>
+<td>ZDI</td>
+<td>ZDI-26-757, CVE-2026-111105</td>
+<td><a href="https://www.zerodayinitiative.com/advisories/ZDI-26-757">zerodayinitiative.com</a></td>
+</tr>
+<tr class="odd">
+<td>17.11.2026</td>
+<td>The Hacker News</td>
+<td>Виджеты Telegram и WebRAT</td>
+<td><a href="https://thehackernews.com/2026/11/researchers-claim-two-rce-exploits-that.html">thehackernews.com</a></td>
+</tr>
+<tr class="even">
+<td>17.11.2026</td>
+<td>The Hacker News</td>
+<td>iPhone CVE-2026-65339</td>
+<td><a href="https://thehackernews.com/2026/11/researchers-detail-iphone-flaw-that-let.html">thehackernews.com</a></td>
+</tr>
+<tr class="odd">
+<td>20.11.2026</td>
+<td>The Hacker News</td>
+<td>Три CVE WhatsApp</td>
+<td><a href="https://thehackernews.com/2026/11/whatsapp-patches-3-security-flaws.html">thehackernews.com</a></td>
+</tr>
+<tr class="even">
+<td>20.11.2026</td>
+<td>CISA</td>
+<td>Четыре KEV-уязвимости, дедлайн 23.11</td>
+<td><a href="https://www.cisa.gov/news-events/alerts/2026/11/20/cisa-adds-four-known-exploited-vulnerabilities-catalog">cisa.gov</a></td>
+</tr>
+<tr class="odd">
+<td>20.10.2026</td>
+<td>MITRE, CVE-2026-113380</td>
+<td>RingRTC в Signal</td>
+<td><a href="https://www.cve.org/CVERecord?id=CVE-2026-113380">cve.org</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="см.-также">См. также</h2>
+<ul>
+<li><a href="comparison.html">Сравнение мессенджеров</a> — кто что отдаёт и какие CVE были.</li>
+<li><a href="whatsapp.html">WhatsApp</a>, <a href="telegram.html">Telegram</a>, <a href="signal.html">Signal</a>, <a href="max.html">MAX</a>.</li>
+<li><a href="ios.html">iOS</a> — версии и Lockdown Mode.</li>
+<li><a href="methodology.html">Методика</a> — уровни уверенности.</li>
+</ul>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="charts.html"><span class="dir">Назад</span>Данные</a><a class="next" href="comparison.html"><span class="dir">Дальше</span>Сравнение</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <nav class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#главное-за-неделю">Главное за неделю</a>
+<a class="d2" href="#что-делать-сейчас">Что делать сейчас</a>
+<a class="d3" href="#p0">P0</a>
+<a class="d3" href="#p1">P1</a>
+<a class="d2" href="#как-обновляется-сводка">Как обновляется сводка</a>
+<a class="d2" href="#источники">Источники</a>
+<a class="d2" href="#см.-также">См. также</a>
+  </nav>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false" aria-label="Поиск по сайту">
+    <div id="searchResults" class="search-results" role="listbox" aria-live="polite" aria-label="Результаты поиска"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js?v=2611230028"></script>
+<script src="assets/app.js?v=2611230028"></script>
+</body>
+</html>

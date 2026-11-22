@@ -25,6 +25,7 @@
 ## Разделы
 
 <div class="cards">
+  <a class="card" href="digest.html"><b>Сводка</b><span>Что изменилось за неделю и что делать</span></a>
   <a class="card" href="comparison.html"><b>Сравнение</b><span>Кто читает, что отдаёт, свежие CVE</span></a>
   <a class="card" href="whatsapp.html"><b>WhatsApp</b><span>E2EE, бэкапы, шесть векторов угона</span></a>
   <a class="card" href="ios.html"><b>iOS</b><span>Версии, Stolen Device Protection, MVT</span></a>

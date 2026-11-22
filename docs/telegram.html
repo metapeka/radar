@@ -7,7 +7,7 @@
 <meta name="description" content="Облачные чаты Telegram не защищены сквозным шифрованием. Главный риск — не перехват, а угон аккаунта по коду из SMS.">
 <meta name="color-scheme" content="light dark">
 <script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
-<link rel="stylesheet" href="assets/style.css?v=2611220254">
+<link rel="stylesheet" href="assets/style.css?v=2611230028">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -34,7 +34,7 @@
       </div>
       <div class="profile-hint" aria-live="polite"></div>
     </div>
-    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a></div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a></div>
 <div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html" class="active" aria-current="page">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
 <div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
 <div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
@@ -89,6 +89,34 @@
 <li><strong>Подмена номера.</strong> SIM-swap и перевыпуск eSIM работают против Telegram так же, как против всего остального.</li>
 </ol>
 <p>Отдельная деталь: после входа нового устройства у владельца есть окно, чтобы завершить сессию, но не мгновенное — рассчитывать на «выкинет автоматически» не стоит.</p>
+<h2 id="свежие-уязвимости">Свежие уязвимости</h2>
+<table tabindex="0" aria-label="Свежие уязвимости">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Дата</th>
+<th scope="col">Что</th>
+<th scope="col">Статус</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>15.10.2026</td>
+<td>ZDI-26-757 / CVE-2026-111105: numeric truncation в rlottie, RCE; CVSS 7.0, нужно открыть файл или страницу</td>
+<td>advisory опубликован; Telegram заявил серверную валидацию</td>
+</tr>
+<tr class="even">
+<td>17.11.2026</td>
+<td>Виджеты: заявлен обход sandbox и RCE на Android 13.2.2; Kaspersky сообщила о WebRAT через виджеты</td>
+<td>CVE нет, детали не раскрыты; обновляться</td>
+</tr>
+</tbody>
+</table>
+<p>Это не отменяет главного: массовый вектор — угон аккаунта по коду, а не RCE.</p>
 <h2 id="чек-лист">Чек-лист</h2>
 <h3 id="p0">P0</h3>
 <ul class="task-list">
@@ -101,6 +129,7 @@
 <h3 id="p1">P1</h3>
 <ul class="task-list">
 <li><label><input type="checkbox" /><strong>Passkeys</strong>, если доступны в вашей версии.</label></li>
+<li><label><input type="checkbox" /><strong>Обновление Telegram.</strong> Виджеты незнакомых ботов не запускать: в ноябре 2026 через них доставляли WebRAT.</label></li>
 <li><label><input type="checkbox" /><strong>Скрытие превью</strong> в уведомлениях — на уровне ОС.</label></li>
 <li><label><input type="checkbox" /><strong>Ограничение «Кто может добавлять в группы»</strong> — «Мои контакты».</label></li>
 <li><label><input type="checkbox" /><strong>Проверка активных сессий раз в месяц</strong> — привычка, а не разовая акция.</label></li>
@@ -214,6 +243,7 @@
     <div class="toc-title">На странице</div>
     <a class="d2" href="#модель-шифрования">Модель шифрования</a>
 <a class="d2" href="#три-способа-потерять-аккаунт">Три способа потерять аккаунт</a>
+<a class="d2" href="#свежие-уязвимости">Свежие уязвимости</a>
 <a class="d2" href="#чек-лист">Чек-лист</a>
 <a class="d3" href="#p0">P0</a>
 <a class="d3" href="#p1">P1</a>
@@ -232,7 +262,7 @@
   </div>
 </div>
 
-<script src="assets/search-index.js?v=2611220254"></script>
-<script src="assets/app.js?v=2611220254"></script>
+<script src="assets/search-index.js?v=2611230028"></script>
+<script src="assets/app.js?v=2611230028"></script>
 </body>
 </html>
