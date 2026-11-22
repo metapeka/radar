@@ -7,7 +7,7 @@
 <meta name="description" content="Что изменилось на сайте: даты, суть правок и ссылки на затронутые страницы.">
 <meta name="color-scheme" content="light dark">
 <script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
-<link rel="stylesheet" href="assets/style.css?v=2611230119">
+<link rel="stylesheet" href="assets/style.css?v=2611230159">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -34,7 +34,7 @@
       </div>
       <div class="profile-hint" aria-live="polite"></div>
     </div>
-    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a><a href="updates.html" class="active" aria-current="page">Обновления</a></div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="about.html">О проекте</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a><a href="updates.html" class="active" aria-current="page">Обновления</a></div>
 <div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
 <div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
 <div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
@@ -67,30 +67,35 @@
 <tbody>
 <tr class="odd">
 <td>23.11.2026</td>
+<td>Гид: «О проекте», CONTRIBUTING, шаблоны Issue и PR</td>
+<td><a href="about.html">О проекте</a></td>
+</tr>
+<tr class="even">
+<td>23.11.2026</td>
 <td>Автосбор недельной сводки: GitHub Actions и Issue-шаблон</td>
 <td><a href="digest.html">Сводка</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>23.11.2026</td>
 <td>Свежие CVE: WhatsApp, Telegram, iPhone, Signal, MAX; добавлена недельная сводка</td>
 <td><a href="digest.html">Сводка</a>, <a href="comparison.html">Сравнение</a>, <a href="whatsapp.html">WhatsApp</a>, <a href="telegram.html">Telegram</a>, <a href="signal.html">Signal</a>, <a href="ios.html">iOS</a>, <a href="max.html">MAX</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>22.11.2026</td>
 <td>Сравнение переработано: матрица «кто что отдаёт», хронология раскрытий, вывод</td>
 <td><a href="comparison.html">Сравнение</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>21.11.2026</td>
 <td>MAX: таймлайн исследований и разбор промахов; провенанс источников; правила Pages и Issues</td>
 <td><a href="max-research.html">MAX: разбор</a>, <a href="https://github.com/metapeka/whatsapp-security-research/blob/master/provenance/README.md">Провенанс</a>, <a href="https://github.com/metapeka/whatsapp-security-research/blob/master/DESIGN.md">DESIGN</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>21.11.2026</td>
 <td>Профили риска, фильтр таблиц по платформам, счётчики чек-листов</td>
 <td><a href="threat-model.html">Модель угроз</a>, <a href="ios.html">iOS</a>, <a href="android.html">Android</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>21.11.2026</td>
 <td>Базовые разделы: MAX, анализ приложений, стенд, методика</td>
 <td><a href="max.html">MAX</a>, <a href="app-analysis.html">Анализ приложений</a>, <a href="lab-bench.html">Стенд</a>, <a href="methodology.html">Методика</a></td>
@@ -115,6 +120,7 @@
     <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="digest.html"><span class="dir">Назад</span>Сводка</a><a class="next" href="comparison.html"><span class="dir">Дальше</span>Сравнение</a></nav>
     <footer class="foot">
       Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      <a href="about.html">Как устроен проект и откуда факты</a>.
       Проверяйте версии ОС — названия пунктов меняются между релизами.
     </footer>
   </main>
@@ -134,7 +140,7 @@
   </div>
 </div>
 
-<script src="assets/search-index.js?v=2611230119"></script>
-<script src="assets/app.js?v=2611230119"></script>
+<script src="assets/search-index.js?v=2611230159"></script>
+<script src="assets/app.js?v=2611230159"></script>
 </body>
 </html>

@@ -41,6 +41,12 @@
 - `tools/collect_digest.py` — локальный запуск: `python3 tools/collect_digest.py --out digest-draft.md`.
 - GitHub отключает расписание после 60 дней без активности; ручной запуск — `workflow_dispatch`.
 
+## Участие
+
+- `CONTRIBUTING.md` — как предложить правку, собрать сайт и проверить источники.
+- Страница «О проекте»: https://metapeka.github.io/whatsapp-security-research/about.html — как устроен проект и откуда факты.
+- Шаблоны: Issue «Ошибка в факте» и Pull Request.
+
 ## Файлы
 
 - [`research-whatsapp-security-2026-11-20.md`](research-whatsapp-security-2026-11-20.md)

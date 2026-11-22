@@ -12,7 +12,7 @@ SITE = ROOT / "site"
 OUT = ROOT / "docs"
 
 NAV = [
-    ("Начало", [("index", "Обзор"), ("threat-model", "Модель угроз"),
+    ("Начало", [("index", "Обзор"), ("about", "О проекте"), ("threat-model", "Модель угроз"),
                 ("methodology", "Методика"), ("charts", "Данные"), ("digest", "Сводка"), ("updates", "Обновления")]),
     ("Мессенджеры", [("comparison", "Сравнение"), ("whatsapp", "WhatsApp"), ("telegram", "Telegram"),
                      ("signal", "Signal"), ("max", "MAX"), ("max-research", "MAX: разбор")]),

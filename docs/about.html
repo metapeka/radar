@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>О проекте — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Как собирается вики, откуда берутся факты и как проверить каждое утверждение.">
+<meta name="color-scheme" content="light dark">
+<script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
+<link rel="stylesheet" href="assets/style.css?v=2611230159">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span></button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd aria-hidden="true">/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="profile-switch">
+      <div class="nav-title">Профиль риска</div>
+      <div class="seg" role="radiogroup" aria-label="Профиль риска">
+        <button type="button" data-profile="basic" aria-pressed="true">Обычный</button>
+        <button type="button" data-profile="elevated" aria-pressed="false">Повыш.</button>
+        <button type="button" data-profile="targeted" aria-pressed="false">Целевой</button>
+      </div>
+      <div class="profile-hint" aria-live="polite"></div>
+    </div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="about.html" class="active" aria-current="page">О проекте</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a><a href="updates.html">Обновления</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.4 · 23.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <div class="crumbs"><a href="index.html">Главная</a><span class="sep">/</span><span>Начало</span><span class="sep">/</span><span class="here">О проекте</span></div>
+      <h1>О проекте</h1>
+      <blockquote>
+<p>Как собирается вики, откуда берутся факты и как проверить каждое утверждение.</p>
+</blockquote>
+<h2 id="что-это">Что это</h2>
+<p>Практическая вики о защите аккаунтов, устройств и переписки. Цель — проверяемый ответ на вопрос «что мне сделать», а не рейтинг мессенджеров и не новостная лента.</p>
+<p>Проект не связан с вендорами и не получает оплату за упоминания. Ошибки и разногласия видны в истории git и в Issues.</p>
+<h2 id="как-устроен-сайт">Как устроен сайт</h2>
+<table tabindex="0" aria-label="Как устроен сайт">
+<thead>
+<tr class="header">
+<th scope="col">Слой</th>
+<th scope="col">Что</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Исходники</td>
+<td><code>site/content/*.md</code></td>
+</tr>
+<tr class="even">
+<td>Сборка</td>
+<td><code>tools/build_site.py</code> → pandoc</td>
+</tr>
+<tr class="odd">
+<td>Шаблон</td>
+<td><code>site/template.html</code></td>
+</tr>
+<tr class="even">
+<td>Публикация</td>
+<td><code>docs/</code> → GitHub Pages</td>
+</tr>
+<tr class="odd">
+<td>Провенанс</td>
+<td><code>provenance/</code></td>
+</tr>
+</tbody>
+</table>
+<p>Сайт статический: нет CDN, внешних шрифтов, API и аналитики. Читается без JavaScript, работает офлайн, печатается на A4.</p>
+<h2 id="откуда-факты">Откуда факты</h2>
+<ul>
+<li>Приоритет источников: документация вендора, NVD/CVE, CISA KEV, судебные документы, Citizen Lab и Amnesty, затем СМИ.</li>
+<li>Уровни уверенности: <strong>подтверждено</strong>, <strong>один источник</strong>, <strong>оценка</strong>, <strong>не найдено</strong> — как в <a href="methodology.html">методике</a>.</li>
+<li>У каждого действия — версия ОС или клиента и дата проверки.</li>
+<li>Публичный манифест <code>provenance/sources.json</code>: URL, дата, статус, SHA-256. Полные снапшоты приватны и в git не попадают.</li>
+<li>История git: изменение страницы видно в коммите и diff. Старые версии остаются у клонов и форков, даже если ветку перепишут.</li>
+</ul>
+<h2 id="как-появляется-сводка">Как появляется сводка</h2>
+<ol type="1">
+<li><strong>Понедельник, автоматика.</strong> Workflow <code>digest.yml</code> забирает CISA KEV и NVD по WhatsApp, Telegram и Signal.</li>
+<li><strong>Черновик.</strong> Скрипт фильтрует шум и открывает Issue с таблицами и ссылками.</li>
+<li><strong>Проверка.</strong> Человек с LLM проверяет первоисточники: CVE, версии, эксплуатацию, меняется ли рекомендация.</li>
+<li><strong>Правка.</strong> 3–6 строк попадают в <a href="digest.html">сводку</a>, при необходимости — на страницу мессенджера; изменение фиксируется в <a href="updates.html">обновлениях</a> и в provenance.</li>
+<li><strong>Публикация.</strong> Merge в <code>master</code> → Pages. Автопубликации нет.</li>
+</ol>
+<h2 id="как-проверить">Как проверить</h2>
+<ol type="1">
+<li>Открыть ссылку на источник и сверить дату, версию и статус.</li>
+<li>Посмотреть <code>provenance/sources.json</code> и хеш снапшота.</li>
+<li>Проверить историю страницы в git: кто, когда и что изменил.</li>
+<li>Если нашли ошибку — открыть Issue «Ошибка в факте».</li>
+</ol>
+<h2 id="как-участвовать">Как участвовать</h2>
+<ul>
+<li><strong>Issue</strong> — ошибка в факте, новый источник, предложение страницы.</li>
+<li><strong>Pull request</strong> — одна логическая правка, ссылка на источник, обновление <code>updates.md</code>, сборка.</li>
+<li>Подробные правила — в <a href="https://github.com/metapeka/whatsapp-security-research/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a>.</li>
+</ul>
+<h2 id="чего-здесь-нет">Чего здесь нет</h2>
+<ul>
+<li>инструкций по проведению атак;</li>
+<li>утверждений, сгенерированных без проверки;</li>
+<li>внешней аналитики и трекеров;</li>
+<li>платных рекомендаций и рейтингов «лучший мессенджер».</li>
+</ul>
+<h2 id="как-ссылаться">Как ссылаться</h2>
+<p>Ссылайтесь на конкретную страницу и дату проверки:</p>
+<pre><code>Название страницы. Личная безопасность и мессенджеры.
+https://metapeka.github.io/whatsapp-security-research/&lt;slug&gt;.html
+(проверено 23.11.2026)</code></pre>
+<h2 id="см.-также">См. также</h2>
+<ul>
+<li><a href="methodology.html">Методика</a> — уровни уверенности и приоритет источников.</li>
+<li><a href="threat-model.html">Модель угроз</a> — от кого защищаемся.</li>
+<li><a href="updates.html">Обновления</a> — что и когда менялось на сайте.</li>
+</ul>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="index.html"><span class="dir">Назад</span>Обзор</a><a class="next" href="threat-model.html"><span class="dir">Дальше</span>Модель угроз</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      <a href="about.html">Как устроен проект и откуда факты</a>.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <nav class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#что-это">Что это</a>
+<a class="d2" href="#как-устроен-сайт">Как устроен сайт</a>
+<a class="d2" href="#откуда-факты">Откуда факты</a>
+<a class="d2" href="#как-появляется-сводка">Как появляется сводка</a>
+<a class="d2" href="#как-проверить">Как проверить</a>
+<a class="d2" href="#как-участвовать">Как участвовать</a>
+<a class="d2" href="#чего-здесь-нет">Чего здесь нет</a>
+<a class="d2" href="#как-ссылаться">Как ссылаться</a>
+<a class="d2" href="#см.-также">См. также</a>
+  </nav>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false" aria-label="Поиск по сайту">
+    <div id="searchResults" class="search-results" role="listbox" aria-live="polite" aria-label="Результаты поиска"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js?v=2611230159"></script>
+<script src="assets/app.js?v=2611230159"></script>
+</body>
+</html>
