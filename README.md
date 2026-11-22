@@ -44,6 +44,7 @@
 ## Участие
 
 - `CONTRIBUTING.md` — как предложить правку, собрать сайт и проверить источники.
+- `ROADMAP.md` — этапы развития и критерии готовности.
 - Страница «О проекте»: https://metapeka.github.io/whatsapp-security-research/about.html — как устроен проект и откуда факты.
 - Шаблоны: Issue «Ошибка в факте» и Pull Request.
 

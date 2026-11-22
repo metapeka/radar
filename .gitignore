@@ -2,3 +2,4 @@
 provenance/.private/
 __pycache__/
 *.pyc
+HANDOFF.md
