@@ -13,7 +13,7 @@ OUT = ROOT / "docs"
 
 NAV = [
     ("Начало", [("index", "Обзор"), ("threat-model", "Модель угроз"),
-                ("methodology", "Методика"), ("charts", "Данные"), ("digest", "Сводка")]),
+                ("methodology", "Методика"), ("charts", "Данные"), ("digest", "Сводка"), ("updates", "Обновления")]),
     ("Мессенджеры", [("comparison", "Сравнение"), ("whatsapp", "WhatsApp"), ("telegram", "Telegram"),
                      ("signal", "Signal"), ("max", "MAX"), ("max-research", "MAX: разбор")]),
     ("Платформы", [("macos", "macOS"), ("windows", "Windows"), ("linux", "Linux"),

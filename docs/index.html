@@ -7,7 +7,7 @@
 <meta name="description" content="Практическая вики: как устроена защита аккаунтов, устройств и переписки в WhatsApp, Telegram и Signal — и что конкретно проверять на macOS, Windows, Linux, iOS и Android.">
 <meta name="color-scheme" content="light dark">
 <script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
-<link rel="stylesheet" href="assets/style.css?v=2611230028">
+<link rel="stylesheet" href="assets/style.css?v=2611230119">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -34,11 +34,11 @@
       </div>
       <div class="profile-hint" aria-live="polite"></div>
     </div>
-    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html" class="active" aria-current="page">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a></div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html" class="active" aria-current="page">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a><a href="updates.html">Обновления</a></div>
 <div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
 <div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
 <div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
-    <div class="sidebar-foot">Версия 0.3 · 21.11.2026</div>
+    <div class="sidebar-foot">Версия 0.4 · 23.11.2026</div>
   </aside>
 
   <main id="main" class="content">
@@ -89,6 +89,13 @@
 <li><strong>Сквозное шифрование резервной копии</strong> — по умолчанию оно выключено.</li>
 <li><strong>Ревизия «Связанных устройств»</strong> — раз в месяц, вручную.</li>
 </ol>
+<h2 id="последние-обновления">Последние обновления</h2>
+<ul>
+<li><strong>23 ноября 2026</strong> — <a href="digest.html">свежие CVE и недельная сводка</a>.</li>
+<li><strong>22 ноября 2026</strong> — <a href="comparison.html">сравнение мессенджеров</a> переработано: матрица и хронология раскрытий.</li>
+<li><strong>21 ноября 2026</strong> — <a href="max-research.html">разбор MAX</a> и провенанс источников.</li>
+</ul>
+<p><a href="updates.html">Все обновления</a></p>
 <h2 id="разделы">Разделы</h2>
 <div class="cards">
 <p><a class="card" href="digest.html"><b>Сводка</b><span>Что изменилось за неделю и что делать</span></a> <a class="card" href="comparison.html"><b>Сравнение</b><span>Кто читает, что отдаёт, свежие CVE</span></a> <a class="card" href="whatsapp.html"><b>WhatsApp</b><span>E2EE, бэкапы, шесть векторов угона</span></a> <a class="card" href="ios.html"><b>iOS</b><span>Версии, Stolen Device Protection, MVT</span></a> <a class="card" href="android.html"><b>Android</b><span>Разрешения, банкеры, Advanced Protection</span></a> <a class="card" href="max.html"><b>MAX</b><span>Что собирает и что заявлено о шифровании</span></a> <a class="card" href="app-analysis.html"><b>Анализ приложений</b><span>Что клиент отправляет на самом деле</span></a> <a class="card" href="lab-bench.html"><b>Стенд</b><span>Изолированная сеть и мониторинг</span></a></p>
@@ -170,6 +177,10 @@
 <td>Данные и графики</td>
 <td>готово</td>
 </tr>
+<tr class="odd">
+<td>Сводка и обновления</td>
+<td>готово</td>
+</tr>
 </tbody>
 </table>
 <p>«Готово» здесь значит: есть проверяемые действия с приоритетом. Глубина L2 (пошаговые процедуры со скриншотами и разбором ложных срабатываний) добавляется по мере проверки на живых машинах.</p>
@@ -197,6 +208,7 @@
     <div class="toc-title">На странице</div>
     <a class="d2" href="#зачем-это">Зачем это</a>
 <a class="d2" href="#с-чего-начать">С чего начать</a>
+<a class="d2" href="#последние-обновления">Последние обновления</a>
 <a class="d2" href="#разделы">Разделы</a>
 <a class="d2" href="#карта-разделов">Карта разделов</a>
 <a class="d2" href="#статус-наполнения">Статус наполнения</a>
@@ -212,7 +224,7 @@
   </div>
 </div>
 
-<script src="assets/search-index.js?v=2611230028"></script>
-<script src="assets/app.js?v=2611230028"></script>
+<script src="assets/search-index.js?v=2611230119"></script>
+<script src="assets/app.js?v=2611230119"></script>
 </body>
 </html>

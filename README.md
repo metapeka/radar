@@ -35,6 +35,12 @@
 - `provenance/sources.json` — девять источников по MAX: URL, дата, статус, SHA-256.
 - `python3 tools/snapshot.py` — снять источник; `python3 tools/verify_provenance.py` — проверить хеши.
 
+## Автоматизация
+
+- `.github/workflows/digest.yml` — по понедельникам собирает черновик сводки (CISA KEV + NVD) и открывает Issue.
+- `tools/collect_digest.py` — локальный запуск: `python3 tools/collect_digest.py --out digest-draft.md`.
+- GitHub отключает расписание после 60 дней без активности; ручной запуск — `workflow_dispatch`.
+
 ## Файлы
 
 - [`research-whatsapp-security-2026-11-20.md`](research-whatsapp-security-2026-11-20.md)

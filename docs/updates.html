@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Последние обновления — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Что изменилось на сайте: даты, суть правок и ссылки на затронутые страницы.">
+<meta name="color-scheme" content="light dark">
+<script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
+<link rel="stylesheet" href="assets/style.css?v=2611230119">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span></button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd aria-hidden="true">/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="profile-switch">
+      <div class="nav-title">Профиль риска</div>
+      <div class="seg" role="radiogroup" aria-label="Профиль риска">
+        <button type="button" data-profile="basic" aria-pressed="true">Обычный</button>
+        <button type="button" data-profile="elevated" aria-pressed="false">Повыш.</button>
+        <button type="button" data-profile="targeted" aria-pressed="false">Целевой</button>
+      </div>
+      <div class="profile-hint" aria-live="polite"></div>
+    </div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a><a href="updates.html" class="active" aria-current="page">Обновления</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.4 · 23.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <div class="crumbs"><a href="index.html">Главная</a><span class="sep">/</span><span>Начало</span><span class="sep">/</span><span class="here">Последние обновления</span></div>
+      <h1>Последние обновления</h1>
+      <blockquote>
+<p>Что изменилось на сайте: даты, суть правок и ссылки на затронутые страницы.</p>
+</blockquote>
+<div class="callout note"><span class="callout-title">Контекст</span>
+<p>Это журнал изменений сайта, а не новостей безопасности. Новые CVE и инциденты — в <a href="digest.html">недельной сводке</a>.</p>
+</div>
+<table tabindex="0" aria-label="Таблица">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Дата</th>
+<th scope="col">Что изменилось</th>
+<th scope="col">Страницы</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>23.11.2026</td>
+<td>Автосбор недельной сводки: GitHub Actions и Issue-шаблон</td>
+<td><a href="digest.html">Сводка</a></td>
+</tr>
+<tr class="even">
+<td>23.11.2026</td>
+<td>Свежие CVE: WhatsApp, Telegram, iPhone, Signal, MAX; добавлена недельная сводка</td>
+<td><a href="digest.html">Сводка</a>, <a href="comparison.html">Сравнение</a>, <a href="whatsapp.html">WhatsApp</a>, <a href="telegram.html">Telegram</a>, <a href="signal.html">Signal</a>, <a href="ios.html">iOS</a>, <a href="max.html">MAX</a></td>
+</tr>
+<tr class="odd">
+<td>22.11.2026</td>
+<td>Сравнение переработано: матрица «кто что отдаёт», хронология раскрытий, вывод</td>
+<td><a href="comparison.html">Сравнение</a></td>
+</tr>
+<tr class="even">
+<td>21.11.2026</td>
+<td>MAX: таймлайн исследований и разбор промахов; провенанс источников; правила Pages и Issues</td>
+<td><a href="max-research.html">MAX: разбор</a>, <a href="https://github.com/metapeka/whatsapp-security-research/blob/master/provenance/README.md">Провенанс</a>, <a href="https://github.com/metapeka/whatsapp-security-research/blob/master/DESIGN.md">DESIGN</a></td>
+</tr>
+<tr class="odd">
+<td>21.11.2026</td>
+<td>Профили риска, фильтр таблиц по платформам, счётчики чек-листов</td>
+<td><a href="threat-model.html">Модель угроз</a>, <a href="ios.html">iOS</a>, <a href="android.html">Android</a></td>
+</tr>
+<tr class="even">
+<td>21.11.2026</td>
+<td>Базовые разделы: MAX, анализ приложений, стенд, методика</td>
+<td><a href="max.html">MAX</a>, <a href="app-analysis.html">Анализ приложений</a>, <a href="lab-bench.html">Стенд</a>, <a href="methodology.html">Методика</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="как-ведётся-журнал">Как ведётся журнал</h2>
+<ul>
+<li>Запись добавляется в том же коммите, что и правка страниц.</li>
+<li>Дата — дата публикации, а не дата черновика.</li>
+<li>Одна строка — одно изменение; ссылки ведут на затронутые страницы.</li>
+<li>Технические коммиты без изменения контента в журнал не попадают: для них есть история git.</li>
+<li>Если изменение меняет рекомендацию, сначала правится страница, потом строка в журнале.</li>
+</ul>
+<h2 id="см.-также">См. также</h2>
+<ul>
+<li><a href="digest.html">Сводка за неделю</a> — что изменилось в безопасности, а не на сайте.</li>
+<li><a href="comparison.html">Сравнение мессенджеров</a> — кто что отдаёт и какие CVE были.</li>
+</ul>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="digest.html"><span class="dir">Назад</span>Сводка</a><a class="next" href="comparison.html"><span class="dir">Дальше</span>Сравнение</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+    </footer>
+  </main>
+
+  <nav class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#как-ведётся-журнал">Как ведётся журнал</a>
+<a class="d2" href="#см.-также">См. также</a>
+  </nav>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false" aria-label="Поиск по сайту">
+    <div id="searchResults" class="search-results" role="listbox" aria-live="polite" aria-label="Результаты поиска"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js?v=2611230119"></script>
+<script src="assets/app.js?v=2611230119"></script>
+</body>
+</html>

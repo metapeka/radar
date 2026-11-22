@@ -42,7 +42,7 @@
 
 ## Как обновляется сводка
 
-Раз в неделю, по понедельникам, 30–40 минут:
+Черновик собирается workflow `.github/workflows/digest.yml` по понедельникам: CISA KEV и NVD. Ниже — что проверить руками.
 
 1. **CISA KEV** — JSON с сайта CISA: какие уязвимости добавили за неделю, есть ли дедлайн.
 2. **CVE.org / MITRE** — новые записи по WhatsApp, Telegram, Signal, Apple, Google.

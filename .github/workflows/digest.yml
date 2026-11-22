@@ -1,0 +1,40 @@
+name: Weekly digest draft
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: digest-draft
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build draft
+        run: python3 tools/collect_digest.py --out digest-draft.md
+
+      - name: Open issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          DATE=$(TZ=Europe/Moscow date +%F)
+          TITLE="Сводка: $DATE — черновик"
+          COUNT=$(gh issue list --state all --search "Сводка $DATE in:title" --json number --jq 'length')
+          if [ "$COUNT" != "0" ]; then
+            echo "Черновик уже есть: $TITLE"
+            exit 0
+          fi
+          gh issue create --title "$TITLE" --body-file digest-draft.md

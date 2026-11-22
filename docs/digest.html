@@ -7,7 +7,7 @@
 <meta name="description" content="Что изменилось в безопасности мессенджеров и iPhone за неделю — и какие действия из-за этого поменялись.">
 <meta name="color-scheme" content="light dark">
 <script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
-<link rel="stylesheet" href="assets/style.css?v=2611230028">
+<link rel="stylesheet" href="assets/style.css?v=2611230119">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -34,11 +34,11 @@
       </div>
       <div class="profile-hint" aria-live="polite"></div>
     </div>
-    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a><a href="digest.html" class="active" aria-current="page">Сводка</a></div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a><a href="digest.html" class="active" aria-current="page">Сводка</a><a href="updates.html">Обновления</a></div>
 <div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
 <div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
 <div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
-    <div class="sidebar-foot">Версия 0.3 · 21.11.2026</div>
+    <div class="sidebar-foot">Версия 0.4 · 23.11.2026</div>
   </aside>
 
   <main id="main" class="content">
@@ -134,7 +134,7 @@
 <li><label><input type="checkbox" />Для источников и чувствительного — Signal, не MAX и не Telegram-облако.</label></li>
 </ul>
 <h2 id="как-обновляется-сводка">Как обновляется сводка</h2>
-<p>Раз в неделю, по понедельникам, 30–40 минут:</p>
+<p>Черновик собирается workflow <code>.github/workflows/digest.yml</code> по понедельникам: CISA KEV и NVD. Ниже — что проверить руками.</p>
 <ol type="1">
 <li><strong>CISA KEV</strong> — JSON с сайта CISA: какие уязвимости добавили за неделю, есть ли дедлайн.</li>
 <li><strong>CVE.org / MITRE</strong> — новые записи по WhatsApp, Telegram, Signal, Apple, Google.</li>
@@ -215,7 +215,7 @@
 </ul>
 
     </article>
-    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="charts.html"><span class="dir">Назад</span>Данные</a><a class="next" href="comparison.html"><span class="dir">Дальше</span>Сравнение</a></nav>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="charts.html"><span class="dir">Назад</span>Данные</a><a class="next" href="updates.html"><span class="dir">Дальше</span>Обновления</a></nav>
     <footer class="foot">
       Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
       Проверяйте версии ОС — названия пунктов меняются между релизами.
@@ -242,7 +242,7 @@
   </div>
 </div>
 
-<script src="assets/search-index.js?v=2611230028"></script>
-<script src="assets/app.js?v=2611230028"></script>
+<script src="assets/search-index.js?v=2611230119"></script>
+<script src="assets/app.js?v=2611230119"></script>
 </body>
 </html>

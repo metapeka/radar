@@ -1,2 +1,4 @@
 .gigatool/
 provenance/.private/
+__pycache__/
+*.pyc
