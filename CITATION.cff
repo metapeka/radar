@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "Если используете материалы, ссылайтесь на конкретную страницу и дату проверки."
+title: "Личная безопасность и мессенджеры"
+abstract: "Практическая вики о защите аккаунтов, устройств и переписки: WhatsApp, Telegram, Signal, MAX, платформы, сеть и реагирование на инциденты."
+type: website
+version: "0.4"
+date-released: "2026-11-23"
+url: "https://metapeka.github.io/whatsapp-security-research/"
+repository-code: "https://github.com/metapeka/whatsapp-security-research"
+license: CC-BY-SA-4.0
+keywords:
+  - безопасность
+  - мессенджеры
+  - чек-листы
+  - конфиденциальность
+authors:
+  - name: "Участники проекта «Личная безопасность и мессенджеры»"

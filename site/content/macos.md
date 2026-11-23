@@ -66,29 +66,7 @@ TCC — главный механизм, и главный источник пр
 
 ## Чек-лист
 
-### P0
-
-- [ ] FileVault включён, recovery key сохранён вне Mac.
-- [ ] Gatekeeper не в режиме «Anywhere».
-- [ ] `csrutil status` → enabled.
-- [ ] Автообновления ОС включены.
-- [ ] Ревизия TCC: Accessibility, Full Disk Access, Screen Recording, Input Monitoring — только известные приложения.
-- [ ] Login Items: ничего незнакомого.
-- [ ] Профили конфигурации отсутствуют (или объяснимы).
-
-### P1
-
-- [ ] Lockdown Mode — если профиль риска повышенный.
-- [ ] Advanced Data Protection для iCloud.
-- [ ] Брандмауэр включён, скрытый режим.
-- [ ] Пароль на экранную заставку, блокировка по горячей клавише.
-- [ ] Обновления приложений не только из App Store.
-
-### P2
-
-- [ ] LuLu или аналог для контроля исходящих.
-- [ ] Отдельный стандартный пользователь для работы с сомнительными файлами.
-- [ ] Проверка `sfltool dumpbtm` раз в квартал.
+[Чек-лист на сайте](https://metapeka.github.io/whatsapp-security-research/macos.html) <!--services:macos-->
 
 ## Пределы
 

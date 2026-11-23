@@ -7,7 +7,9 @@
 <meta name="description" content="Практическая вики: как устроена защита аккаунтов, устройств и переписки в WhatsApp, Telegram и Signal — и что конкретно проверять на macOS, Windows, Linux, iOS и Android.">
 <meta name="color-scheme" content="light dark">
 <script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
-<link rel="stylesheet" href="assets/style.css?v=2611230238">
+<link rel="stylesheet" href="assets/style.css?v=2611230510">
+<link rel="alternate" type="application/atom+xml" title="Обновления сайта" href="feed-updates.xml">
+<link rel="alternate" type="application/atom+xml" title="Сводка за неделю" href="feed-digest.xml">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -34,10 +36,10 @@
       </div>
       <div class="profile-hint" aria-live="polite"></div>
     </div>
-    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html" class="active" aria-current="page">Обзор</a><a href="about.html">О проекте</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a><a href="updates.html">Обновления</a></div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html" class="active" aria-current="page">Обзор</a><a href="services.html">Каталог сервисов</a><a href="about.html">О проекте</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="sources.html">Здоровье источников</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a><a href="updates.html">Обновления</a></div>
 <div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
 <div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
-<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="passwords.html">Менеджеры паролей</a><a href="breaches.html">Проверка утечек</a><a href="mail.html">Почта</a><a href="browsers.html">Браузеры</a><a href="routers.html">Роутер</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
     <div class="sidebar-foot">Версия 0.4 · 23.11.2026</div>
   </aside>
 
@@ -48,172 +50,143 @@
       <blockquote>
 <p>Практическая вики: как устроена защита аккаунтов, устройств и переписки в WhatsApp, Telegram и Signal — и что конкретно проверять на macOS, Windows, Linux, iOS и Android.</p>
 </blockquote>
+<div class="hero-stats">
+<div>
+<b>15</b><span>сервисов в каталоге</span>
+</div>
+<div>
+<b>156</b><span>проверяемых пунктов</span>
+</div>
+<div>
+<b>30</b><span>страниц с датой проверки</span>
+</div>
+</div>
+<h2 id="с-чего-начать">С чего начать</h2>
+<div class="steps">
+<p><a class="step" href="threat-model.html"><b>Шаг 01</b><span>Понять, от кого защищаемся: модель угроз и профиль риска</span><em>10 минут</em></a> <a class="step" href="services.html"><b>Шаг 02</b><span>Открыть свой сервис в каталоге и закрыть пункты P0</span><em>15 минут</em></a> <a class="step" href="updates.html"><b>Шаг 03</b><span>Свериться с обновлениями и версиями</span><em>5 минут</em></a></p>
+</div>
 <h2 id="зачем-это">Зачем это</h2>
 <p>Большинство историй «взломали WhatsApp» — это не взлом шифрования. Это либо выманенный код подтверждения, либо подсунутый QR-код привязки устройства, либо украденная сессия с заражённого компьютера, либо незашифрованный облачный бэкап. Криптография в этих сценариях не участвует вообще.</p>
 <p>Отсюда устройство этой вики: сначала аккаунт и сессии, потом устройство и ОС, и только в конце — экзотика вроде zero-click. Порядок отражает частоту реальных инцидентов, а не сложность техник.</p>
-<h2 id="с-чего-начать">С чего начать</h2>
-<table tabindex="0" aria-label="С чего начать">
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th scope="col">Шаг</th>
-<th scope="col">Что сделать</th>
-<th scope="col">Время</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>Прочитать <a href="threat-model.html">модель угроз</a> — понять, от кого защищаемся</td>
-<td>10 мин</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>Пройти чек-лист своего мессенджера: <a href="whatsapp.html">WhatsApp</a>, <a href="telegram.html">Telegram</a>, <a href="signal.html">Signal</a>, <a href="max.html">MAX</a></td>
-<td>15 мин</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>Пройти чек-лист своей платформы: <a href="ios.html">iOS</a>, <a href="android.html">Android</a>, <a href="windows.html">Windows</a>, <a href="macos.html">macOS</a>, <a href="linux.html">Linux</a></td>
-<td>30 мин</td>
-</tr>
-</tbody>
-</table>
-<p>Три вещи, которые закрывают большинство сценариев и которые чаще всего пропускают:</p>
+<h2 id="что-чаще-всего-пропускают">Что чаще всего пропускают</h2>
 <ol type="1">
 <li><strong>Двухшаговая проверка</strong> в мессенджере — пароль, а не только SMS-код.</li>
 <li><strong>Сквозное шифрование резервной копии</strong> — по умолчанию оно выключено.</li>
 <li><strong>Ревизия «Связанных устройств»</strong> — раз в месяц, вручную.</li>
 </ol>
+<h2 id="разделы">Разделы</h2>
+<div class="cards">
+<p><a class="card" href="services.html"><b>Каталог сервисов</b><span>Мессенджеры, платформы, пароли, почта, браузер, роутер</span></a> <a class="card" href="digest.html"><b>Сводка</b><span>Что изменилось за неделю и что делать</span></a> <a class="card" href="comparison.html"><b>Сравнение</b><span>Кто читает, что отдаёт, свежие CVE</span></a> <a class="card" href="incident-response.html"><b>Реагирование</b><span>Что делать в первые 30 минут</span></a></p>
+</div>
+<div class="map">
+<div>
+<h3>
+Основы
+</h3>
+<ul>
+<li>
+<a href="about.html">О проекте</a><br><small>как собирается вики и откуда факты</small>
+</li>
+<li>
+<a href="threat-model.html">Модель угроз</a><br><small>слои, 12 угроз, профили риска</small>
+</li>
+<li>
+<a href="methodology.html">Методика</a><br><small>уровни уверенности и источники</small>
+</li>
+<li>
+<a href="sources.html">Здоровье источников</a><br><small>когда проверены и что сломалось</small>
+</li>
+</ul>
+</div>
+<div>
+<h3>
+Мессенджеры
+</h3>
+<ul>
+<li>
+<a href="whatsapp.html">WhatsApp</a><br><small>E2EE, бэкапы, шесть векторов угона</small>
+</li>
+<li>
+<a href="telegram.html">Telegram</a><br><small>облако против секретных чатов</small>
+</li>
+<li>
+<a href="signal.html">Signal</a><br><small>минимум поверхности, привязка устройств</small>
+</li>
+<li>
+<a href="max.html">MAX</a><br><small>что собирает и что заявлено о шифровании</small>
+</li>
+</ul>
+</div>
+<div>
+<h3>
+Платформы
+</h3>
+<ul>
+<li>
+<a href="ios.html">iOS</a> · <a href="android.html">Android</a><br><small>мобильные разрешения и защита устройства</small>
+</li>
+<li>
+<a href="macos.html">macOS</a> · <a href="windows.html">Windows</a> · <a href="linux.html">Linux</a><br><small>автозагрузка, диски, обновления</small>
+</li>
+</ul>
+</div>
+<div>
+<h3>
+Практика
+</h3>
+<ul>
+<li>
+<a href="passwords.html">Менеджеры паролей</a> · <a href="breaches.html">Проверка утечек</a><br><small>хранение и проверка без отправки данных</small>
+</li>
+<li>
+<a href="mail.html">Почта</a> · <a href="browsers.html">Браузеры</a> · <a href="routers.html">Роутер</a><br><small>мастер-ключи и точки входа</small>
+</li>
+<li>
+<a href="network.html">Сеть и периметр</a> · <a href="monitoring.html">Мониторинг</a><br><small>что видно провайдеру и как заметить чужое</small>
+</li>
+<li>
+<a href="app-analysis.html">Анализ приложений</a> · <a href="lab-bench.html">Стенд</a><br><small>что клиент отправляет на самом деле</small>
+</li>
+</ul>
+</div>
+</div>
+<p>Все разделы в статусе «готово»: проверяемые действия с приоритетом. Глубина L2 — пошаговые процедуры со скриншотами — добавляется по мере проверки на живых машинах.</p>
 <h2 id="последние-обновления">Последние обновления</h2>
 <ul>
-<li><strong>23 ноября 2026</strong> — <a href="digest.html">свежие CVE и недельная сводка</a>.</li>
+<li><strong>23 ноября 2026</strong> — <a href="services.html">каталог сервисов</a>, <a href="breaches.html">проверка утечек</a>, <a href="digest.html">свежие CVE и сводка</a>.</li>
 <li><strong>22 ноября 2026</strong> — <a href="comparison.html">сравнение мессенджеров</a> переработано: матрица и хронология раскрытий.</li>
 <li><strong>21 ноября 2026</strong> — <a href="max-research.html">разбор MAX</a> и провенанс источников.</li>
 </ul>
 <p><a href="updates.html">Все обновления</a></p>
-<h2 id="разделы">Разделы</h2>
-<div class="cards">
-<p><a class="card" href="digest.html"><b>Сводка</b><span>Что изменилось за неделю и что делать</span></a> <a class="card" href="comparison.html"><b>Сравнение</b><span>Кто читает, что отдаёт, свежие CVE</span></a> <a class="card" href="whatsapp.html"><b>WhatsApp</b><span>E2EE, бэкапы, шесть векторов угона</span></a> <a class="card" href="ios.html"><b>iOS</b><span>Версии, Stolen Device Protection, MVT</span></a> <a class="card" href="android.html"><b>Android</b><span>Разрешения, банкеры, Advanced Protection</span></a> <a class="card" href="max.html"><b>MAX</b><span>Что собирает и что заявлено о шифровании</span></a> <a class="card" href="app-analysis.html"><b>Анализ приложений</b><span>Что клиент отправляет на самом деле</span></a> <a class="card" href="lab-bench.html"><b>Стенд</b><span>Изолированная сеть и мониторинг</span></a> <a class="card" href="about.html"><b>О проекте</b><span>Как собирается вики и как проверить факт</span></a></p>
-</div>
-<h2 id="карта-разделов">Карта разделов</h2>
-<p><strong>Основы</strong></p>
-<ul>
-<li><a href="about.html">О проекте</a> — как собирается вики, откуда факты и как проверить</li>
-<li><a href="threat-model.html">Модель угроз</a> — слои, 12 угроз, профили риска</li>
-<li><a href="methodology.html">Методика</a> — уровни уверенности, источники, ограничения</li>
-</ul>
-<p><strong>Мессенджеры</strong></p>
-<ul>
-<li><a href="whatsapp.html">WhatsApp</a> — E2EE, бэкапы, шесть векторов угона</li>
-<li><a href="telegram.html">Telegram</a> — облако против секретных чатов, сессии</li>
-<li><a href="signal.html">Signal</a> — минимум поверхности, привязка устройств</li>
-<li><a href="max.html">MAX</a> — что собирает, что заявлено о шифровании</li>
-</ul>
-<p><strong>Платформы</strong></p>
-<ul>
-<li><a href="macos.html">macOS</a> · <a href="windows.html">Windows</a> · <a href="linux.html">Linux</a></li>
-<li><a href="ios.html">iOS</a> · <a href="android.html">Android</a></li>
-</ul>
-<p><strong>Практика</strong></p>
-<ul>
-<li><a href="network.html">Сеть и периметр</a> — роутер, DNS, публичный Wi-Fi</li>
-<li><a href="monitoring.html">Мониторинг</a> — базовая линия и ревизии</li>
-<li><a href="app-analysis.html">Анализ приложений</a> — что приложение реально отправляет</li>
-<li><a href="lab-bench.html">Стенд для анализа</a> — изолированная сеть и логи</li>
-<li><a href="incident-response.html">Реагирование</a> — что делать в первые 30 минут</li>
-<li><a href="diagnostics-ai.html">Диагностика с AI</a> — что реально возможно, а что нет</li>
-<li><a href="iphone-lab.html">iPhone как стенд</a> — подключение по проводу к Debian</li>
-</ul>
-<h2 id="статус-наполнения">Статус наполнения</h2>
-<table tabindex="0" aria-label="Статус наполнения">
-<thead>
-<tr class="header">
-<th scope="col">Раздел</th>
-<th scope="col">Состояние</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Модель угроз, методика</td>
-<td>готово</td>
-</tr>
-<tr class="even">
-<td>WhatsApp</td>
-<td>готово, опирается на отдельный отчёт</td>
-</tr>
-<tr class="odd">
-<td>Telegram, Signal</td>
-<td>готово, базовый уровень</td>
-</tr>
-<tr class="even">
-<td>MAX</td>
-<td>готово, с оговорками об источниках</td>
-</tr>
-<tr class="odd">
-<td>iOS, Android</td>
-<td>готово</td>
-</tr>
-<tr class="even">
-<td>macOS, Windows, Linux</td>
-<td>готово, якорные настройки</td>
-</tr>
-<tr class="odd">
-<td>Сеть, мониторинг, реагирование</td>
-<td>готово, базовый уровень</td>
-</tr>
-<tr class="even">
-<td>Анализ приложений, стенд</td>
-<td>готово</td>
-</tr>
-<tr class="odd">
-<td>Диагностика с AI, iPhone-стенд</td>
-<td>готово</td>
-</tr>
-<tr class="even">
-<td>Данные и графики</td>
-<td>готово</td>
-</tr>
-<tr class="odd">
-<td>Сводка и обновления</td>
-<td>готово</td>
-</tr>
-</tbody>
-</table>
-<p>«Готово» здесь значит: есть проверяемые действия с приоритетом. Глубина L2 (пошаговые процедуры со скриншотами и разбором ложных срабатываний) добавляется по мере проверки на живых машинах.</p>
 <h2 id="как-читать">Как читать</h2>
 <ul>
 <li><strong>P0</strong> — без этого остальное не имеет смысла.</li>
 <li><strong>P1</strong> — важно, но можно отложить на неделю.</li>
 <li><strong>P2</strong> — гигиена.</li>
 </ul>
-<p>В сайдбаре есть переключатель профиля: <strong>обычный</strong>, <strong>повышенный</strong>, <strong>целевой</strong>. Он не скрывает предупреждения — только добавляет меры, которые нужны при адресных атаках. Правила — в <a href="https://github.com/metapeka/whatsapp-security-research/blob/master/RISK-MODEL.md">RISK-MODEL</a>.</p>
+<p>В сайдбаре есть переключатель профиля: <strong>обычный</strong>, <strong>повышенный</strong>, <strong>целевой</strong>. Он не скрывает предупреждения — только добавляет меры, которые нужны при адресных атаках.</p>
 <p>Везде, где указан путь в меню, рядом стоит версия ОС. Названия пунктов меняются между релизами: если не совпало — ищите по смыслу, а не по точной формулировке.</p>
 <blockquote>
 <p>Материал носит защитный характер. Здесь нет инструкций по проведению атак — только описание классов угроз и мер противодействия.</p>
 </blockquote>
 
     </article>
-    <nav class="pager" aria-label="Соседние разделы"><span></span><a class="next" href="about.html"><span class="dir">Дальше</span>О проекте</a></nav>
+    <nav class="pager" aria-label="Соседние разделы"><span></span><a class="next" href="services.html"><span class="dir">Дальше</span>Каталог сервисов</a></nav>
     <footer class="foot">
       Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
       <a href="about.html">Как устроен проект и откуда факты</a>.
       Проверяйте версии ОС — названия пунктов меняются между релизами.
+      Ленты: <a href="feed-updates.xml">обновления</a>, <a href="feed-digest.xml">сводка</a>.
     </footer>
   </main>
 
   <nav class="toc" aria-label="Содержание страницы">
     <div class="toc-title">На странице</div>
-    <a class="d2" href="#зачем-это">Зачем это</a>
-<a class="d2" href="#с-чего-начать">С чего начать</a>
-<a class="d2" href="#последние-обновления">Последние обновления</a>
+    <a class="d2" href="#с-чего-начать">С чего начать</a>
+<a class="d2" href="#зачем-это">Зачем это</a>
+<a class="d2" href="#что-чаще-всего-пропускают">Что чаще всего пропускают</a>
 <a class="d2" href="#разделы">Разделы</a>
-<a class="d2" href="#карта-разделов">Карта разделов</a>
-<a class="d2" href="#статус-наполнения">Статус наполнения</a>
+<a class="d2" href="#последние-обновления">Последние обновления</a>
 <a class="d2" href="#как-читать">Как читать</a>
   </nav>
 </div>
@@ -226,7 +199,7 @@
   </div>
 </div>
 
-<script src="assets/search-index.js?v=2611230238"></script>
-<script src="assets/app.js?v=2611230238"></script>
+<script src="assets/search-index.js?v=2611230510"></script>
+<script src="assets/app.js?v=2611230510"></script>
 </body>
 </html>

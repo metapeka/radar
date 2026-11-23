@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Роутер — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Роутер — единственное устройство, через которое проходит весь домашний трафик. Заводской пароль и удалённое управление — самые частые ошибки.">
+<meta name="color-scheme" content="light dark">
+<script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
+<link rel="stylesheet" href="assets/style.css?v=2611230510">
+<link rel="alternate" type="application/atom+xml" title="Обновления сайта" href="feed-updates.xml">
+<link rel="alternate" type="application/atom+xml" title="Сводка за неделю" href="feed-digest.xml">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span></button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd aria-hidden="true">/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="profile-switch">
+      <div class="nav-title">Профиль риска</div>
+      <div class="seg" role="radiogroup" aria-label="Профиль риска">
+        <button type="button" data-profile="basic" aria-pressed="true">Обычный</button>
+        <button type="button" data-profile="elevated" aria-pressed="false">Повыш.</button>
+        <button type="button" data-profile="targeted" aria-pressed="false">Целевой</button>
+      </div>
+      <div class="profile-hint" aria-live="polite"></div>
+    </div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="services.html">Каталог сервисов</a><a href="about.html">О проекте</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="sources.html">Здоровье источников</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a><a href="updates.html">Обновления</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="passwords.html">Менеджеры паролей</a><a href="breaches.html">Проверка утечек</a><a href="mail.html">Почта</a><a href="browsers.html">Браузеры</a><a href="routers.html" class="active" aria-current="page">Роутер</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.4 · 23.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <div class="crumbs"><a href="index.html">Главная</a><span class="sep">/</span><span>Практика</span><span class="sep">/</span><span class="here">Роутер</span></div>
+      <h1>Роутер</h1><p class="verified"><time datetime="2026-11-23">проверено 23.11.2026</time></p>
+      <blockquote>
+<p>Роутер — единственное устройство, через которое проходит весь домашний трафик. Заводской пароль и удалённое управление — самые частые ошибки.</p>
+</blockquote>
+<div class="callout warning"><span class="callout-title">Важно</span>
+<p>Если админка роутера открыта из интернета, пароль подбирают автоматически. Проверьте это раньше, чем менять пароль от Wi-Fi.</p>
+</div>
+<h2 id="router">Домашний роутер</h2>
+<h3 id="p0">P0</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Пароль администратора</strong> сменён, заводской логин не используется; веб-интерфейс доступен только из локальной сети.</label></li>
+<li><label><input type="checkbox" /><strong>Прошивка обновлена</strong>, автообновление включено, если производитель его даёт.</label></li>
+<li><label><input type="checkbox" /><strong>Удалённое управление из интернета выключено</strong>; облачная панель — только если понимаете риск.</label></li>
+</ul>
+<h3 id="p1">P1</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>UPnP выключен</strong>, если не нужен: служба включена по умолчанию и открывает порты по запросу приложений.</label></li>
+<li><label><input type="checkbox" /><strong>Wi-Fi: WPA2 или WPA3</strong>, отдельная гостевая сеть для чужих устройств, WPS выключен.</label></li>
+<li><label><input type="checkbox" /><strong>Проброс портов проверен</strong>: незнакомые правила удалены.</label></li>
+</ul>
+<h2 id="источники">Источники</h2>
+<table tabindex="0" aria-label="Источники">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Что</th>
+<th scope="col">Первоисточник</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Защита домашней сети</td>
+<td><a href="https://consumer.ftc.gov/articles/how-secure-your-home-wi-fi-network">How to secure your home Wi-Fi network</a></td>
+</tr>
+<tr class="even">
+<td>Служба UPnP на примере Keenetic</td>
+<td><a href="https://help.keenetic.com/hc/en-us/articles/213969189-UPnP-service">UPnP service</a></td>
+</tr>
+</tbody>
+</table>
+<p><em>Страница FTC не открывается автоматической проверкой (403); формулировки сверены с поисковой выдержкой 23.11.2026.</em></p>
+<h2 id="см.-также">См. также</h2>
+<ul>
+<li><a href="network.html">Сеть и периметр</a> — что видит провайдер и зачем гостевой Wi-Fi.</li>
+<li><a href="monitoring.html">Мониторинг</a> — как заметить незнакомые подключения.</li>
+</ul>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="browsers.html"><span class="dir">Назад</span>Браузеры</a><a class="next" href="app-analysis.html"><span class="dir">Дальше</span>Анализ приложений</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      <a href="about.html">Как устроен проект и откуда факты</a>.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+      Ленты: <a href="feed-updates.xml">обновления</a>, <a href="feed-digest.xml">сводка</a>.
+    </footer>
+  </main>
+
+  <nav class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#router">Домашний роутер</a>
+<a class="d3" href="#p0">P0</a>
+<a class="d3" href="#p1">P1</a>
+<a class="d2" href="#источники">Источники</a>
+<a class="d2" href="#см.-также">См. также</a>
+  </nav>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false" aria-label="Поиск по сайту">
+    <div id="searchResults" class="search-results" role="listbox" aria-live="polite" aria-label="Результаты поиска"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js?v=2611230510"></script>
+<script src="assets/app.js?v=2611230510"></script>
+</body>
+</html>

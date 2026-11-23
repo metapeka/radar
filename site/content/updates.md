@@ -8,6 +8,13 @@
 
 | Дата | Что изменилось | Страницы |
 |---|---|---|
+| 23.11.2026 | Редизайн: тёмная шапка, моноподписи, нумерация разделов, новая главная с шагами и картой | [Главная](index.html) |
+| 23.11.2026 | Проверка утечек: страница со ссылками, без форм и запросов | [Проверка утечек](breaches.html), [Менеджеры паролей](passwords.html) |
+| 23.11.2026 | Почта, браузеры, роутеры: Gmail, Firefox, домашний роутер; в каталоге 15 сервисов | [Почта](mail.html), [Браузеры](browsers.html), [Роутер](routers.html), [Каталог сервисов](services.html) |
+| 23.11.2026 | Менеджеры паролей: Bitwarden, 1Password, KeePassXC; в каталоге 12 сервисов | [Менеджеры паролей](passwords.html), [Каталог сервисов](services.html) |
+| 23.11.2026 | Чек-листы платформ перенесены в `services.json`; в каталоге 9 сервисов | [Каталог сервисов](services.html), [macOS](macos.html), [Windows](windows.html), [Linux](linux.html), [iOS](ios.html), [Android](android.html) |
+| 23.11.2026 | Каталог сервисов и чек-листы из `services.json`: WhatsApp, Telegram, Signal, MAX | [Каталог сервисов](services.html), [WhatsApp](whatsapp.html), [Telegram](telegram.html), [Signal](signal.html), [MAX](max.html) |
+| 23.11.2026 | Здоровье источников, Atom-ленты, проверка ссылок, шаблон «Новый источник», лицензии | [Здоровье источников](sources.html), [Сводка](digest.html), [Обновления](updates.html) |
 | 23.11.2026 | Дата проверки под заголовком; хранение в `site/data/verified.json` | Все страницы |
 | 23.11.2026 | Гид: «О проекте», CONTRIBUTING, шаблоны Issue и PR | [О проекте](about.html) |
 | 23.11.2026 | Автосбор недельной сводки: GitHub Actions и Issue-шаблон | [Сводка](digest.html) |

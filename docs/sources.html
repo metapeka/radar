@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Здоровье источников — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Статус источников: когда проверены, что отвечает, что сломалось.">
+<meta name="color-scheme" content="light dark">
+<script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
+<link rel="stylesheet" href="assets/style.css?v=2611230510">
+<link rel="alternate" type="application/atom+xml" title="Обновления сайта" href="feed-updates.xml">
+<link rel="alternate" type="application/atom+xml" title="Сводка за неделю" href="feed-digest.xml">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span></button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd aria-hidden="true">/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="profile-switch">
+      <div class="nav-title">Профиль риска</div>
+      <div class="seg" role="radiogroup" aria-label="Профиль риска">
+        <button type="button" data-profile="basic" aria-pressed="true">Обычный</button>
+        <button type="button" data-profile="elevated" aria-pressed="false">Повыш.</button>
+        <button type="button" data-profile="targeted" aria-pressed="false">Целевой</button>
+      </div>
+      <div class="profile-hint" aria-live="polite"></div>
+    </div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="services.html">Каталог сервисов</a><a href="about.html">О проекте</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="sources.html" class="active" aria-current="page">Здоровье источников</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a><a href="updates.html">Обновления</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="passwords.html">Менеджеры паролей</a><a href="breaches.html">Проверка утечек</a><a href="mail.html">Почта</a><a href="browsers.html">Браузеры</a><a href="routers.html">Роутер</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.4 · 23.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <div class="crumbs"><a href="index.html">Главная</a><span class="sep">/</span><span>Начало</span><span class="sep">/</span><span class="here">Здоровье источников</span></div>
+      <h1>Здоровье источников</h1>
+      <blockquote>
+<p>Какие источники живы, когда их проверяли и что сломалось. Страница собирается из манифеста при каждой сборке.</p>
+</blockquote>
+
+<div class="callout note"><span class="callout-title">Контекст</span>
+<p>Даты и статусы берутся из <code>provenance/sources.json</code>. Успешная проверка — последний снапшот с кодом 200. Полные снапшоты и хеши лежат в приватном хранилище; здесь только метаданные.</p>
+</div>
+
+<h2 id="сводка">Сводка</h2>
+<p>Источников в манифесте: <b>9</b>. Успешная проверка за последние 7 дней: <b>9 из 9</b>. Манифест обновлён 21.11.2026.</p>
+
+<h2 id="источники">Источники</h2>
+<table tabindex="0" aria-label="Источники">
+<thead><tr><th scope="col">Источник</th><th scope="col">Опубликован</th><th scope="col">Проверен</th><th scope="col">Статус</th></tr></thead>
+<tbody>
+<tr><td><a href="https://habr.com/ru/articles/938518/">Технический разбор Max: что внутри APK</a><br>Хабр</td><td>19.08.2025</td><td>21.11.2026</td><td>200 — ок</td></tr><tr><td><a href="https://rks.global/research/max/">Тестирование слежки в MAX на Android и iPhone</a><br>RKS Global</td><td>26.09.2025</td><td>21.11.2026</td><td>200 — ок</td></tr><tr><td><a href="https://xakep.ru/2025/10/20/max-leak">Минцифры и разработчики Max назвали ложью информацию об утечке данных пользователей мессенджера</a><br>Xakep</td><td>20.10.2025</td><td>21.11.2026</td><td>200 — ок</td></tr><tr><td><a href="https://habr.com/ru/articles/1006666/">Месседжер MAX следит за пользователями VPN? Реверс инжиниринг говорит — да</a><br>Хабр</td><td>05.03.2026</td><td>21.11.2026</td><td>200 — ок</td></tr><tr><td><a href="https://xakep.ru/2026/03/06/max-reverse/">Разработчики мессенджера Max заявляют, что он не отслеживает использование VPN</a><br>Xakep</td><td>06.03.2026</td><td>21.11.2026</td><td>200 — ок</td></tr><tr><td><a href="https://habr.com/ru/articles/1036222/">15 вещей, которые вы бы не хотели знать о мессенджере MAX: тайная запись звука с микрофона в звонках и много чего еще</a><br>Хабр</td><td>18.05.2026</td><td>21.11.2026</td><td>200 — ок</td></tr><tr><td><a href="https://www.anti-malware.ru/news/2026-05-18-111332/50054">МАКС на прослушке? Реверсер заявил о тайной записи звука во время звонков</a><br>Anti-Malware.ru</td><td>18.05.2026</td><td>21.11.2026</td><td>200 — ок</td></tr><tr><td><a href="https://interseclab.org/research/max">The Max Messenger: An Analysis of Russia’s State-Mandated Messaging Application</a><br>InterSecLab</td><td>22.10.2026</td><td>21.11.2026</td><td>200 — ок</td></tr><tr><td><a href="https://interseclab.org/wp-content/uploads/2026/10/The-Max-Messenger_October2026_RU.pdf">Мессенджер Max: анализ российского мессенджера, насаждаемого государством (PDF, рус.)</a><br>InterSecLab</td><td>22.10.2026</td><td>21.11.2026</td><td>200 — ок</td></tr>
+</tbody>
+</table>
+
+<h2 id="что-требует-внимания">Что требует внимания</h2>
+<p>Сейчас всё в порядке: все источники отвечают, проверки свежие.</p>
+
+<h2 id="как-это-устроено">Как это устроено</h2>
+<p>Правила фиксации — в <a href="https://github.com/metapeka/whatsapp-security-research/blob/master/provenance/README.md">provenance/README.md</a>, манифест — в <a href="https://github.com/metapeka/whatsapp-security-research/blob/master/provenance/sources.json">sources.json</a>. Хеш фиксирует, что именно мы видели; он не доказывает авторство источника.</p>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="methodology.html"><span class="dir">Назад</span>Методика</a><a class="next" href="charts.html"><span class="dir">Дальше</span>Данные</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      <a href="about.html">Как устроен проект и откуда факты</a>.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+      Ленты: <a href="feed-updates.xml">обновления</a>, <a href="feed-digest.xml">сводка</a>.
+    </footer>
+  </main>
+
+  <nav class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#сводка">Сводка</a>
+<a class="d2" href="#источники">Источники</a>
+<a class="d2" href="#что-требует-внимания">Что требует внимания</a>
+<a class="d2" href="#как-это-устроено">Как это устроено</a>
+  </nav>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false" aria-label="Поиск по сайту">
+    <div id="searchResults" class="search-results" role="listbox" aria-live="polite" aria-label="Результаты поиска"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js?v=2611230510"></script>
+<script src="assets/app.js?v=2611230510"></script>
+</body>
+</html>

@@ -23,7 +23,12 @@
 - `site/content/*.md` — исходники страниц
 - `site/assets/` — стили и поиск
 - `tools/build_site.py` — сборка (`python3 tools/build_site.py`)
+- `site/data/verified.json` — даты проверки страниц; `tools/check_verified.py` — сверка с историей git
+- `site/data/services.json` — пункты чек-листов; сборка генерирует блоки и «Каталог сервисов»
+- `tools/check_links.py` — проверка внутренних и внешних ссылок
 - `docs/` — собранный сайт, публикуется из ветки `master`, папка `/docs`
+- `docs/feed-updates.xml`, `docs/feed-digest.xml` — Atom-ленты обновлений и сводки
+- `docs/sources.html` — здоровье источников, генерируется из `provenance/sources.json`
 - `GOAL.md` — зачем проект и когда страница считается готовой (для передачи другим агентам)
 - `VISION.md` — долгосрочная картина и принципы
 - `DESIGN.md` — правила оформления: токены, компоненты, доступность, бюджеты
@@ -46,11 +51,15 @@
 - `CONTRIBUTING.md` — как предложить правку, собрать сайт и проверить источники.
 - `ROADMAP.md` — этапы развития и критерии готовности.
 - Страница «О проекте»: https://metapeka.github.io/whatsapp-security-research/about.html — как устроен проект и откуда факты.
-- Шаблоны: Issue «Ошибка в факте» и Pull Request.
+- Шаблоны: Issue «Ошибка в факте», «Новый источник» и Pull Request.
 
 ## Файлы
 
 - [`research-whatsapp-security-2026-11-20.md`](research-whatsapp-security-2026-11-20.md)
+
+## Лицензия
+
+Тексты — CC BY-SA 4.0 (`LICENSE-CONTENT`), код — MIT (`LICENSE`). Как цитировать — `CITATION.cff`. Цитирование с указанием источника и ссылкой приветствуется.
 
 ## Оговорки
 
