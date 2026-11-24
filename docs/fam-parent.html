@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Чек-лист для родителя — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Для телефона пожилого человека. Не «настройте всё», а «проверьте эти девять пунктов и объясните три правила». Рассчитан на 20–30 минут вдвоём, устройство в руках.">
+<meta name="color-scheme" content="light dark">
+<script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
+<link rel="stylesheet" href="assets/style.css?v=2611242158">
+<link rel="alternate" type="application/atom+xml" title="Обновления сайта" href="feed-updates.xml">
+<link rel="alternate" type="application/atom+xml" title="Сводка за неделю" href="feed-digest.xml">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span></button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd aria-hidden="true">/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="profile-switch">
+      <div class="nav-title">Профиль риска</div>
+      <div class="seg" role="radiogroup" aria-label="Профиль риска">
+        <button type="button" data-profile="basic" aria-pressed="true">Обычный</button>
+        <button type="button" data-profile="elevated" aria-pressed="false">Повыш.</button>
+        <button type="button" data-profile="targeted" aria-pressed="false">Целевой</button>
+      </div>
+      <div class="profile-hint" aria-live="polite"></div>
+    </div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="services.html">Каталог сервисов</a><a href="about.html">О проекте</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="sources.html">Здоровье источников</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a><a href="updates.html">Обновления</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Семья</div><a href="fam-phone.html">Телефон за 15 минут</a><a href="fam-detect.html">Какой у меня телефон</a><a href="push.html">Пуши и обман</a><a href="fam-parent.html" class="active" aria-current="page">Чек-лист для родителя</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="passwords.html">Менеджеры паролей</a><a href="breaches.html">Проверка утечек</a><a href="mail.html">Почта</a><a href="browsers.html">Браузеры</a><a href="routers.html">Роутер</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.4 · 23.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <div class="crumbs"><a href="index.html">Главная</a><span class="sep">/</span><span>Семья</span><span class="sep">/</span><span class="here">Чек-лист для родителя</span></div>
+      <h1>Чек-лист для родителя</h1><p class="verified"><time datetime="2026-11-24">проверено 24.11.2026</time></p>
+      <blockquote>
+<p>Для телефона пожилого человека. Не «настройте всё», а «проверьте эти девять пунктов и объясните три правила». Рассчитан на 20–30 минут вдвоём, устройство в руках.</p>
+</blockquote>
+<h2 id="сначала-устройство">Сначала — устройство</h2>
+<p>Не важно, старший это телефон или новый. Важно, какая версия: от неё зависит, какие настройки есть.</p>
+<ul>
+<li>Модель и версия: <a href="fam-detect.html">как узнать</a>.</li>
+<li>Принцип тот же, что в <a href="fam-phone.html">восьми шагах</a>, только с упором на то, где ошибаются чаще всего.</li>
+</ul>
+<div class="callout note"><span class="callout-title">Контекст</span>
+<p>Делайте это вместе, а не вместо. Человек должен видеть, где что лежит, — иначе через месяц он не найдёт ничего сам. Говорите медленно и показывайте пальцем на экран.</p>
+</div>
+<h2 id="девять-пунктов">Девять пунктов</h2>
+<table tabindex="0" aria-label="Девять пунктов">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">№</th>
+<th scope="col">Что проверить</th>
+<th scope="col">Как проверить</th>
+<th scope="col">Почему именно это</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Код разблокировки</td>
+<td>Настройки → Блокировка экрана</td>
+<td>Четыре нуля и дата рождения — первое, что пробуют</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Двухэтапная защита Google или Apple</td>
+<td>myaccount.google.com → Безопасность</td>
+<td>Аккаунт открывает все остальные</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Сторонние приложения</td>
+<td>Настройки → Приложения: то, чего вы не ставили</td>
+<td>«Очиститель», «антивирус», «браузер» — источники рекламы</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Разрешения</td>
+<td>Специальные возможности, уведомления, администраторы</td>
+<td>Так вредоносное приложение читает экран и коды</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Пуши</td>
+<td>Настройки → Уведомления → Управление</td>
+<td>Реклама раздражает и подталкивает скачать «обновление»</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Обновления</td>
+<td>Настройки → Обновление ПО</td>
+<td>Телефон без обновлений = известные дыры</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Резервная копия WhatsApp</td>
+<td>Настройки → Чаты → Резервная копия → шифрование</td>
+<td>Иначе переписка лежит в облаке открытой</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Банк</td>
+<td>Приложение банка: вход по отпечатку, лимиты</td>
+<td>Телефон с банком — самый дорогой для злоумышленника</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>«Кому позвонить»</td>
+<td>Записать номер на бумажке</td>
+<td>В панике человек не найдёт контакт сам</td>
+</tr>
+</tbody>
+</table>
+<p>Подробнее по пунктам 3–5 — <a href="push.html">пуши и всплывающие окна</a>, по 7 — <a href="whatsapp.html">WhatsApp</a>.</p>
+<h2 id="три-правила-которые-нужно-проговорить">Три правила, которые нужно проговорить</h2>
+<p>Правила важнее настроек: настройку можно отменить одним нажатием, правило остаётся.</p>
+<h3 id="приложения-только-из-магазина">1. Приложения — только из магазина</h3>
+<p>Если пришло сообщение «обновите WhatsApp», «ваша посылка», «оплатите штраф» — не нажимать. Скажите: «Я сам проверю» — и позвоните внуку, сыну или дочери.</p>
+<h3 id="код-из-смс-нельзя-никому-называть">2. Код из СМС нельзя никому называть</h3>
+<p>Ни банку, ни «следователю», ни «сотруднику Госуслуг». Настоящий банк никогда не спросит код из сообщения, пароль или «продиктуйте, что на экране».</p>
+<h3 id="торопят-значит-обман">3. Торопят — значит, обман</h3>
+<p>Настоящая беда не требует «прямо сейчас, пока не заблокировали». Положите трубку и наберите номер с обратной стороны карты или с сайта банка.</p>
+<h2 id="что-настроить-со-стороны-семьи">Что настроить со стороны семьи</h2>
+<table tabindex="0" aria-label="Что настроить со стороны семьи">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Что</th>
+<th scope="col">Зачем</th>
+<th scope="col">Цена</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Семейный доступ в Google/Apple</td>
+<td>Видеть, что на устройстве, помогать удалённо</td>
+<td>Нужно доверие: видно больше, чем хочется</td>
+</tr>
+<tr class="even">
+<td>Общий менеджер паролей</td>
+<td>Родственник не помнит пароли, а злоумышленник не угадает</td>
+<td>Всё равно нужен человек, который открывает доступ</td>
+</tr>
+<tr class="odd">
+<td>Регулярная проверка</td>
+<td>Раз в месяц — 5 минут: приложения, разрешения, пуши</td>
+<td>Привычка</td>
+</tr>
+<tr class="even">
+<td>Наследственный контакт (Apple) и Inactive Account Manager (Google)</td>
+<td>Доступ к аккаунту после смерти или потери связи</td>
+<td>Нужно выбрать, кому доверить</td>
+</tr>
+</tbody>
+</table>
+<div class="callout warning"><span class="callout-title">Важно</span>
+<p>Доверить доступ к аккаунту — это доверить всё, включая фото и переписку. Не ставьте себя «главным» без разговора. И никогда не давайте чужому человеку «проверить телефон за вас» — ни курьеру, ни «мастеру из банка».</p>
+</div>
+<h2 id="чек-лист-на-печать">Чек-лист на печать</h2>
+<p>Перед печатью откройте страницу в браузере: отмеченные пункты сохраняются.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />Код разблокировки — 6+ цифр, не дата рождения</label></li>
+<li><label><input type="checkbox" />Двухэтапная защита Google или Apple включена</label></li>
+<li><label><input type="checkbox" />Нет незнакомых приложений, «клинеров» и «антивирусов»</label></li>
+<li><label><input type="checkbox" />Проверены спецвозможности, уведомления и администраторы</label></li>
+<li><label><input type="checkbox" />Рекламные уведомления выключены, банковские — включены</label></li>
+<li><label><input type="checkbox" />Обновления включены автоматически</label></li>
+<li><label><input type="checkbox" />Резервная копия WhatsApp зашифрована, ключ вне телефона</label></li>
+<li><label><input type="checkbox" />Банк: вход по отпечатку, лимиты, уведомления</label></li>
+<li><label><input type="checkbox" />На бумажке записано, кому звонить</label></li>
+<li><label><input type="checkbox" />Три правила проговорены и понятны</label></li>
+</ul>
+<h2 id="если-уже-что-то-случилось">Если уже что-то случилось</h2>
+<ul>
+<li>Списали деньги — звоните в банк и блокируйте карту, пока не поздно.</li>
+<li>«Дал код», «установил по ссылке», «меня уговорили» — сначала <a href="incident-response.html">реагирование</a>, потом разговор. Не ругайте: человек скрывает то, за что боятся осуждения, а скрытая проблема растёт.</li>
+</ul>
+<blockquote>
+<p>Это сводка по материалам сайта: <a href="fam-phone.html">восемь шагов</a>, <a href="push.html">пуши</a>, <a href="android.html">Android</a>, <a href="ios.html">iOS</a>. Названия пунктов и версии систем различаются между брендами — сверяйте по версии на устройстве.</p>
+</blockquote>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="push.html"><span class="dir">Назад</span>Пуши и обман</a><a class="next" href="network.html"><span class="dir">Дальше</span>Сеть и периметр</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      <a href="about.html">Как устроен проект и откуда факты</a>.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+      Ленты: <a href="feed-updates.xml">обновления</a>, <a href="feed-digest.xml">сводка</a>.
+    </footer>
+  </main>
+
+  <nav class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#сначала-устройство">Сначала — устройство</a>
+<a class="d2" href="#девять-пунктов">Девять пунктов</a>
+<a class="d2" href="#три-правила-которые-нужно-проговорить">Три правила, которые нужно проговорить</a>
+<a class="d3" href="#приложения-только-из-магазина">1. Приложения — только из магазина</a>
+<a class="d3" href="#код-из-смс-нельзя-никому-называть">2. Код из СМС нельзя никому называть</a>
+<a class="d3" href="#торопят-значит-обман">3. Торопят — значит, обман</a>
+<a class="d2" href="#что-настроить-со-стороны-семьи">Что настроить со стороны семьи</a>
+<a class="d2" href="#чек-лист-на-печать">Чек-лист на печать</a>
+<a class="d2" href="#если-уже-что-то-случилось">Если уже что-то случилось</a>
+  </nav>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false" aria-label="Поиск по сайту">
+    <div id="searchResults" class="search-results" role="listbox" aria-live="polite" aria-label="Результаты поиска"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js?v=2611242158"></script>
+<script src="assets/app.js?v=2611242158"></script>
+</body>
+</html>

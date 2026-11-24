@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Какой у меня телефон и какая версия — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Один вопрос, без которого не работают все остальные советы: iPhone это, Android или планшет — и какая версия системы. Ответ нужен в первом же разговоре по телефону.">
+<meta name="color-scheme" content="light dark">
+<script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
+<link rel="stylesheet" href="assets/style.css?v=2611242158">
+<link rel="alternate" type="application/atom+xml" title="Обновления сайта" href="feed-updates.xml">
+<link rel="alternate" type="application/atom+xml" title="Сводка за неделю" href="feed-digest.xml">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span></button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd aria-hidden="true">/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="profile-switch">
+      <div class="nav-title">Профиль риска</div>
+      <div class="seg" role="radiogroup" aria-label="Профиль риска">
+        <button type="button" data-profile="basic" aria-pressed="true">Обычный</button>
+        <button type="button" data-profile="elevated" aria-pressed="false">Повыш.</button>
+        <button type="button" data-profile="targeted" aria-pressed="false">Целевой</button>
+      </div>
+      <div class="profile-hint" aria-live="polite"></div>
+    </div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="services.html">Каталог сервисов</a><a href="about.html">О проекте</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="sources.html">Здоровье источников</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a><a href="updates.html">Обновления</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Семья</div><a href="fam-phone.html">Телефон за 15 минут</a><a href="fam-detect.html" class="active" aria-current="page">Какой у меня телефон</a><a href="push.html">Пуши и обман</a><a href="fam-parent.html">Чек-лист для родителя</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="passwords.html">Менеджеры паролей</a><a href="breaches.html">Проверка утечек</a><a href="mail.html">Почта</a><a href="browsers.html">Браузеры</a><a href="routers.html">Роутер</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.4 · 23.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <div class="crumbs"><a href="index.html">Главная</a><span class="sep">/</span><span>Семья</span><span class="sep">/</span><span class="here">Какой у меня телефон и какая версия</span></div>
+      <h1>Какой у меня телефон и какая версия</h1><p class="verified"><time datetime="2026-11-24">проверено 24.11.2026</time></p>
+      <blockquote>
+<p>Один вопрос, без которого не работают все остальные советы: iPhone это, Android или планшет — и какая версия системы. Ответ нужен в первом же разговоре по телефону.</p>
+</blockquote>
+<h2 id="как-узнать-за-20-секунд">Как узнать за 20 секунд</h2>
+<p>Самый быстрый способ — открыть Настройки. Но если человек не может их найти, работает и это:</p>
+<table tabindex="0" aria-label="Как узнать за 20 секунд">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Что видно</th>
+<th scope="col">Что это</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Приложения «App Store», «FaceTime», «iMessage»</td>
+<td>iPhone (iOS) или iPad (iPadOS)</td>
+</tr>
+<tr class="even">
+<td>Приложение «Play Маркет» или «Google Play»</td>
+<td>Android</td>
+</tr>
+<tr class="odd">
+<td>Кнопка «Назад» внизу экрана, «шторка» свайпом сверху</td>
+<td>Android (на iPhone свайпа из угла)</td>
+</tr>
+<tr class="even">
+<td>Логотип яблока на корпусе или на загрузке</td>
+<td>iPhone или iPad</td>
+</tr>
+</tbody>
+</table>
+<p>Планшет — это тот же iPhone или Android, только экран большой. Все пункты те же, но в меню иногда другое название.</p>
+<h2 id="как-узнать-модель-и-версию">Как узнать модель и версию</h2>
+<h3 id="iphone-и-ipad">iPhone и iPad</h3>
+<p>Настройки → Основные → Об этом устройстве.</p>
+<ul>
+<li>Строка «Название модели» — например, «iPhone 13».</li>
+<li>Строка «Версия ПО» — например, «18.7» или «26.1».</li>
+</ul>
+<p>Модель также видна в Настройки → Основные → Об этом устройстве → Название модели (нажать один раз — появится номер, например <code>A2633</code>). Номер нужен, если телефон продают или покупают.</p>
+<h3 id="android">Android</h3>
+<p>От способа зависит от бренда. Ниже — четыре самые частые марки.</p>
+<table tabindex="0" aria-label="Android">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Бренд</th>
+<th scope="col">Модель и версия</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Samsung</td>
+<td>Настройки → Об устройстве → Сведения о программном обеспечении</td>
+</tr>
+<tr class="even">
+<td>Xiaomi, Redmi, POCO</td>
+<td>Настройки → О телефоне</td>
+</tr>
+<tr class="odd">
+<td>Honor, Huawei</td>
+<td>Настройки → О телефоне</td>
+</tr>
+<tr class="even">
+<td>Pixel, «чистый» Android</td>
+<td>Настройки → О телефоне</td>
+</tr>
+</tbody>
+</table>
+<p>Везде ищите строку «Версия Android» и «Номер сборки» или «Версия HyperOS / One UI / MagicOS».</p>
+<p>Названия систем у брендов разные: у Samsung — One UI, у Xiaomi — HyperOS, у Honor — MagicOS. Это не «другая система», это Android с оформлением бренда. Поэтому пункт меню может называться иначе, но смысл тот же.</p>
+<!-- РИСУНОК: три иконки — iPhone, Samsung, Xiaomi — и под каждой путь до «Об устройстве». Позже отрисовать. -->
+<h2 id="что-делать-с-этим-знанием">Что делать с этим знанием</h2>
+<table tabindex="0" aria-label="Что делать с этим знанием">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Если у вас</th>
+<th scope="col">Читайте дальше</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>iPhone или iPad</td>
+<td><a href="fam-phone.html">Телефон за 15 минут</a> → <a href="ios.html">iOS</a></td>
+</tr>
+<tr class="even">
+<td>Android любого бренда</td>
+<td><a href="fam-phone.html">Телефон за 15 минут</a> → <a href="android.html">Android</a></td>
+</tr>
+<tr class="odd">
+<td>Настраиваете чужой телефон</td>
+<td><a href="fam-phone.html">Телефон за 15 минут</a></td>
+</tr>
+<tr class="even">
+<td>Телефон пожилого человека</td>
+<td><a href="fam-parent.html">Чек-лист для родителя</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="зачем-нужна-версия-а-не-только-модель">Зачем нужна версия, а не только модель</h2>
+<p>Функции безопасности есть не на всех версиях. Один и тот же пункт меню может отсутствовать на старом телефоне — и это не поломка.</p>
+<p>Примеры из <a href="ios.html">iOS</a>:</p>
+<ul>
+<li><strong>Stolen Device Protection</strong> — только с iOS 17.3.</li>
+<li><strong>Advanced Data Protection</strong> для iCloud — с iOS 16.2.</li>
+<li><strong>Lockdown Mode</strong> — с iOS 16.0.</li>
+</ul>
+<p>На Android часть новых защит — Advanced Protection, Private Space, журналы вторжений — есть только на Android 16 и не на всех прошивках. Поэтому «у меня нет такой настройки» — нормальный ответ: её просто нет на этом телефоне.</p>
+<div class="callout warning"><span class="callout-title">Важно</span>
+<p>Если устройство давно не получает обновлений — это не мелочь. Телефон без обновлений не защищён от известных дыр, даже если на нём «всё выключено». Такой телефон — повод подумать о замене или о том, чтобы не держать на нём банк и почту.</p>
+</div>
+<h2 id="если-версия-старая">Если версия старая</h2>
+<p>Проверить: Настройки → Обновление ПО (Android) или Настройки → Основные → Обновление ПО (iPhone).</p>
+<ul>
+<li>Обновление не приходит на старый телефон — это граница поддержки, а не ошибка.</li>
+<li>Пример: iPhone X не обновляется на iOS 18; его последняя версия — 16.7.16. Если на iPhone X стоит 18.7, это, скорее всего, XS или XR. Подробнее — <a href="ios.html">iOS</a>.</li>
+</ul>
+<h2 id="отдельно-про-я-не-помню-что-у-меня">Отдельно про «я не помню, что у меня»</h2>
+<p>Проверьте переписку с тем, кто покупал телефон: обычно там чек или модель. Ещё вариант — посмотреть на коробку. Номер модели на коробке совпадает с тем, что в настройках.</p>
+<blockquote>
+<p>Версии и названия пунктов на этой странице — по состоянию на ноябрь 2026. Сверяйте по строкам «Версия ПО» и «Версия Android»: названия меняются между релизами. Источники и ограничения — на страницах <a href="ios.html">iOS</a>, <a href="android.html">Android</a> и в <a href="methodology.html">методике</a>.</p>
+</blockquote>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="fam-phone.html"><span class="dir">Назад</span>Телефон за 15 минут</a><a class="next" href="push.html"><span class="dir">Дальше</span>Пуши и обман</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      <a href="about.html">Как устроен проект и откуда факты</a>.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+      Ленты: <a href="feed-updates.xml">обновления</a>, <a href="feed-digest.xml">сводка</a>.
+    </footer>
+  </main>
+
+  <nav class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#как-узнать-за-20-секунд">Как узнать за 20 секунд</a>
+<a class="d2" href="#как-узнать-модель-и-версию">Как узнать модель и версию</a>
+<a class="d3" href="#iphone-и-ipad">iPhone и iPad</a>
+<a class="d3" href="#android">Android</a>
+<a class="d2" href="#что-делать-с-этим-знанием">Что делать с этим знанием</a>
+<a class="d2" href="#зачем-нужна-версия-а-не-только-модель">Зачем нужна версия, а не только модель</a>
+<a class="d2" href="#если-версия-старая">Если версия старая</a>
+<a class="d2" href="#отдельно-про-я-не-помню-что-у-меня">Отдельно про «я не помню, что у меня»</a>
+  </nav>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false" aria-label="Поиск по сайту">
+    <div id="searchResults" class="search-results" role="listbox" aria-live="polite" aria-label="Результаты поиска"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js?v=2611242158"></script>
+<script src="assets/app.js?v=2611242158"></script>
+</body>
+</html>

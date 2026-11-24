@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Телефон за 15 минут — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Восемь шагов, которые закрывают большинство реальных проблем на домашнем телефоне. Не «всё про безопасность», а только то, что случается часто: угон по коду, деньги с карты, чужой ">
+<meta name="color-scheme" content="light dark">
+<script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
+<link rel="stylesheet" href="assets/style.css?v=2611242158">
+<link rel="alternate" type="application/atom+xml" title="Обновления сайта" href="feed-updates.xml">
+<link rel="alternate" type="application/atom+xml" title="Сводка за неделю" href="feed-digest.xml">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span></button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd aria-hidden="true">/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="profile-switch">
+      <div class="nav-title">Профиль риска</div>
+      <div class="seg" role="radiogroup" aria-label="Профиль риска">
+        <button type="button" data-profile="basic" aria-pressed="true">Обычный</button>
+        <button type="button" data-profile="elevated" aria-pressed="false">Повыш.</button>
+        <button type="button" data-profile="targeted" aria-pressed="false">Целевой</button>
+      </div>
+      <div class="profile-hint" aria-live="polite"></div>
+    </div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="services.html">Каталог сервисов</a><a href="about.html">О проекте</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="sources.html">Здоровье источников</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a><a href="updates.html">Обновления</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Семья</div><a href="fam-phone.html" class="active" aria-current="page">Телефон за 15 минут</a><a href="fam-detect.html">Какой у меня телефон</a><a href="push.html">Пуши и обман</a><a href="fam-parent.html">Чек-лист для родителя</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="passwords.html">Менеджеры паролей</a><a href="breaches.html">Проверка утечек</a><a href="mail.html">Почта</a><a href="browsers.html">Браузеры</a><a href="routers.html">Роутер</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.4 · 23.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <div class="crumbs"><a href="index.html">Главная</a><span class="sep">/</span><span>Семья</span><span class="sep">/</span><span class="here">Телефон за 15 минут</span></div>
+      <h1>Телефон за 15 минут</h1><p class="verified"><time datetime="2026-11-24">проверено 24.11.2026</time></p>
+      <blockquote>
+<p>Восемь шагов, которые закрывают большинство реальных проблем на домашнем телефоне. Не «всё про безопасность», а только то, что случается часто: угон по коду, деньги с карты, чужой доступ к переписке.</p>
+</blockquote>
+<p>Эта страница — для вас и для того, кого вы настраиваете. Всё остальное на сайте нужно, когда этих восьми шагов уже мало.</p>
+<div class="callout note"><span class="callout-title">Контекст</span>
+<p>Порядок не случайный: первые четыре пункта закрывают кражи кода и денег, следующие два — сам телефон, последние два — чтобы не потерять доступ и данные. Если время кончилось на четвёртом — это уже хорошо.</p>
+</div>
+<h2 id="шаг-0.-поймите-что-за-телефон">Шаг 0. Поймите, что за телефон</h2>
+<p>Это не настройка и не безопасность, но без этого непонятно, какие пункты существуют на вашем устройстве. Отдельная страница: <a href="fam-detect.html">какой у меня телефон и какая версия</a>.</p>
+<p>Коротко:</p>
+<ul>
+<li><strong>iPhone</strong> или <strong>iPad</strong> — пункты про Face ID, код-пароль, «Экранное время» и Lockdown Mode.</li>
+<li><strong>Android</strong> — смотрите бренд (Samsung, Xiaomi, Honor, Huawei и т. д.): часть пунктов называется по-разному, часть есть только на Pixel.</li>
+</ul>
+<!-- РИСУНОК: две колонки — силуэт iPhone и силуэт Android, под каждой «что искать». Позже отрисовать, пока не обязательно. -->
+<h2 id="шаг-1.-свой-код-разблокировки">Шаг 1. Свой код разблокировки</h2>
+<p><strong>Зачем.</strong> Телефон нашли, а внутри почта, банк и мессенджеры. Код из четырёх цифр подбирается за минуты, рисунок «ключом» — тоже.</p>
+<table tabindex="0" aria-label="Шаг 1. Свой код разблокировки">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Устройство</th>
+<th scope="col">Где</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>iPhone</td>
+<td>Настройки → Face ID и код-пароль → Изменить код-пароль</td>
+</tr>
+<tr class="even">
+<td>Samsung</td>
+<td>Настройки → Блокировка экрана и безопасность → Тип блокировки экрана</td>
+</tr>
+<tr class="odd">
+<td>Xiaomi</td>
+<td>Настройки → Блокировка экрана и пароль</td>
+</tr>
+<tr class="even">
+<td>Другой Android</td>
+<td>Настройки → Безопасность → Блокировка экрана</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Код от 6 цифр — минимум. Пароль из букв и цифр — лучше.</li>
+<li>Не говорите код вслух и не пишите на бумажке в чехле.</li>
+<li>Скажите близкому человеку, что делать с телефоном, но не сообщайте код по телефону и в мессенджерах.</li>
+</ul>
+<p><strong>Важно:</strong> если поменять тип блокировки, часть платежей и автозаполнения просят подтвердить заново. Это ожидаемо.</p>
+<h2 id="шаг-2.-тот-кто-может-вернуть-телефон">Шаг 2. Тот, кто может «вернуть» телефон</h2>
+<p><strong>Зачем.</strong> Угнать доступ могут не к телефону, а к аккаунту Google или Apple. Через аккаунт можно отвязать телефон, сбросить пароль, увидеть фото и резервную копию.</p>
+<ul>
+<li><strong>Google:</strong> мойаккаунт.google.com → Безопасность → Двухэтапная аутентификация. Ключ — не только SMS; добавьте приложение или passkey.</li>
+<li><strong>Apple:</strong> Настройки → [ваше имя] → Вход и безопасность → Двухфакторная аутентификация.</li>
+<li>Проверьте, какие устройства в аккаунте. Незнакомые — удалить и сменить пароль.</li>
+</ul>
+<p>Подробнее: <a href="ios.html">iOS</a>, <a href="android.html">Android</a>, <a href="passwords.html">менеджеры паролей</a>.</p>
+<div class="callout warning"><span class="callout-title">Важно</span>
+<p>СМС-коды перехватывают через подмену SIM. Если есть выбор — приложение-аутентификатор или passkey, а не СМС.</p>
+</div>
+<h2 id="шаг-3.-самые-важные-аккаунты">Шаг 3. Самые важные аккаунты</h2>
+<p><strong>Зачем.</strong> Один восстановленный аккаунт открывает все остальные: почта → сброс паролей → банк и мессенджеры.</p>
+<ul>
+<li><strong>Почта.</strong> Пароль в менеджере паролей, двухэтапная проверка включена.</li>
+<li><strong>Мессенджеры.</strong> WhatsApp — двухшаговая проверка и резервная проверочная почта; Telegram — облачный пароль и код доступа; Signal — Registration Lock. Подробно на страницах <a href="whatsapp.html">WhatsApp</a>, <a href="telegram.html">Telegram</a>, <a href="signal.html">Signal</a>.</li>
+<li><strong>Банк.</strong> Отдельное приложение, вход по биометрии, лимит на переводы, уведомления включены.</li>
+<li><strong>Госуслуги.</strong> Двухэтапная проверка, контрольные вопросы.</li>
+</ul>
+<p>Пароли не повторять. Если один пароль стоит в двух местах — это одна и та же дверь.</p>
+<h2 id="шаг-4.-не-ставить-приложения-по-ссылке">Шаг 4. Не ставить приложения «по ссылке»</h2>
+<p><strong>Зачем.</strong> Основной канал заражения Android и обмана на iPhone — приложение, которое человек поставил сам. Пришло в сообщении, в пуше, в рекламе.</p>
+<p>Правило: <strong>приложения ставят только из магазина</strong> — App Store, Google Play или системный магазин бренда.</p>
+<ul>
+<li>Ссылка на «обновление WhatsApp», «трекинг посылки», «оплату ЖКХ» — почти всегда обман.</li>
+<li>Android: приложение <code>.apk</code> из чата не устанавливать никогда.</li>
+<li>Проверьте, что запрещена установка из неизвестных источников: Настройки → Приложения → Специальный доступ → Установка неизвестных приложений. Подробнее — <a href="android.html">Android</a>.</li>
+</ul>
+<p>Про сами пуши и всплывающие окна — отдельная страница: <a href="push.html">Пуши и «обновите приложение»</a>.</p>
+<h2 id="шаг-5.-обновления">Шаг 5. Обновления</h2>
+<p><strong>Зачем.</strong> Обновления закрывают дыры, которые уже используют. Пропущенная версия — самая частая причина заражения.</p>
+<ul>
+<li>Включите автоматические обновления ОС и приложений.</li>
+<li>Раз в месяц откройте Настройки → Обновления и посмотрите версию.</li>
+<li>Приложение, которое не обновляется годами, — повод удалить. Особенно «фонарик», «очиститель памяти», «антивирус».</li>
+</ul>
+<h2 id="шаг-6.-разрешения-самые-опасные-пять">Шаг 6. Разрешения: самые опасные пять</h2>
+<p><strong>Зачем.</strong> На Android вредоносное приложение не «взламывает» телефон — оно получает разрешение и читает экран или уведомления.</p>
+<p>Проверьте списки и удалите всё, что не понимаете:</p>
+<table tabindex="0" aria-label="Шаг 6. Разрешения: самые опасные пять">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Где искать (Android)</th>
+<th scope="col">Что означает</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Настройки → Специальные возможности (Accessibility)</td>
+<td>Читает экран и нажимает за вас — так работают банковские трояны</td>
+</tr>
+<tr class="even">
+<td>Настройки → Уведомления → Доступ к уведомлениям</td>
+<td>Читает все уведомления, включая коды</td>
+</tr>
+<tr class="odd">
+<td>Настройки → Безопасность → Администраторы устройства</td>
+<td>Не даёт удалить приложение</td>
+</tr>
+<tr class="even">
+<td>Настройки → Приложения → Специальный доступ → Поверх других приложений</td>
+<td>Рисует поверх банка и подменяет окна</td>
+</tr>
+<tr class="odd">
+<td>Настройки → Приложения → Использование данных об использовании</td>
+<td>Видит, что и когда вы открывали</td>
+</tr>
+</tbody>
+</table>
+<p>На iPhone таких разрешений почти нет, но проверьте: Настройки → Конфиденциальность и безопасность, и Настройки → Основные → VPN и управление устройством. Незнакомый профиль или «сертификат» — удалить.</p>
+<h2 id="шаг-7.-резервная-копия-и-что-будет-если-телефон-потеряется">Шаг 7. Резервная копия и что будет, если телефон потеряется</h2>
+<p><strong>Зачем.</strong> Бэкап спасает от потери, но копия без шифрования отдаёт переписку в облако.</p>
+<ul>
+<li>WhatsApp: Настройки → Чаты → Резервная копия → <strong>Резервная копия со сквозным шифрованием</strong>. Пароль или ключ сохранить не в телефоне.</li>
+<li>iPhone: Настройки → [ваше имя] → iCloud → Резервная копия. Включите «Защиту данных iCloud» (Advanced Data Protection), если доступна.</li>
+<li>Android: Настройки → Google → Резервное копирование. Помните, что копия приложений уходит в ваш Google-аккаунт.</li>
+<li>Запишите, где лежит пароль от копии. Ключ невосстановим: потеряли ключ — потеряли историю.</li>
+</ul>
+<h2 id="чек-лист-на-печать">Чек-лист на печать</h2>
+<p>Распечатайте и отмечайте ручкой. Перед печатью откройте страницу и проверьте прогресс — заполненные галочки сохраняются в браузере.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />Я знаю модель своего телефона и версию системы</label></li>
+<li><label><input type="checkbox" />Код разблокировки — 6+ цифр или пароль, не дата рождения</label></li>
+<li><label><input type="checkbox" />Двухэтапная аутентификация включена в Google или Apple</label></li>
+<li><label><input type="checkbox" />Двухшаговая проверка в WhatsApp / облачный пароль в Telegram</label></li>
+<li><label><input type="checkbox" />Пароли не повторяются, есть менеджер паролей</label></li>
+<li><label><input type="checkbox" />Приложения только из магазина, установка из неизвестных источников запрещена</label></li>
+<li><label><input type="checkbox" />Обновления включены автоматически</label></li>
+<li><label><input type="checkbox" />Проверены Accessibility, доступ к уведомлениям, администраторы устройства</label></li>
+<li><label><input type="checkbox" />Резервная копия WhatsApp зашифрована, ключ сохранён вне телефона</label></li>
+<li><label><input type="checkbox" />Я знаю, кому позвонить в первые 30 минут, если что-то случится</label></li>
+</ul>
+<h2 id="если-что-то-уже-случилось">Если что-то уже случилось</h2>
+<ul>
+<li>Списание денег, чужой перевод — звоните в банк, блокируйте карту, меняйте пароль банка с другого устройства.</li>
+<li>Угнали WhatsApp или Telegram — <a href="incident-response.html">реагирование</a>, первые 30 минут.</li>
+<li>Постоянная реклама, странные приложения, «вы подписаны» — <a href="push.html">пуши и всплывающие окна</a>.</li>
+<li>Если телефон настраиваете пожилому человеку — <a href="fam-parent.html">чек-лист для родителя</a>.</li>
+</ul>
+<blockquote>
+<p>Пункты собраны из уже проверенных страниц сайта: <a href="ios.html">iOS</a>, <a href="android.html">Android</a>, <a href="whatsapp.html">WhatsApp</a>, <a href="telegram.html">Telegram</a>, <a href="signal.html">Signal</a>, <a href="passwords.html">менеджеры паролей</a>. Версии систем — там же, с датой проверки.</p>
+</blockquote>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="android.html"><span class="dir">Назад</span>Android</a><a class="next" href="fam-detect.html"><span class="dir">Дальше</span>Какой у меня телефон</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      <a href="about.html">Как устроен проект и откуда факты</a>.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+      Ленты: <a href="feed-updates.xml">обновления</a>, <a href="feed-digest.xml">сводка</a>.
+    </footer>
+  </main>
+
+  <nav class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#шаг-0.-поймите-что-за-телефон">Шаг 0. Поймите, что за телефон</a>
+<a class="d2" href="#шаг-1.-свой-код-разблокировки">Шаг 1. Свой код разблокировки</a>
+<a class="d2" href="#шаг-2.-тот-кто-может-вернуть-телефон">Шаг 2. Тот, кто может «вернуть» телефон</a>
+<a class="d2" href="#шаг-3.-самые-важные-аккаунты">Шаг 3. Самые важные аккаунты</a>
+<a class="d2" href="#шаг-4.-не-ставить-приложения-по-ссылке">Шаг 4. Не ставить приложения «по ссылке»</a>
+<a class="d2" href="#шаг-5.-обновления">Шаг 5. Обновления</a>
+<a class="d2" href="#шаг-6.-разрешения-самые-опасные-пять">Шаг 6. Разрешения: самые опасные пять</a>
+<a class="d2" href="#шаг-7.-резервная-копия-и-что-будет-если-телефон-потеряется">Шаг 7. Резервная копия и что будет, если телефон потеряется</a>
+<a class="d2" href="#чек-лист-на-печать">Чек-лист на печать</a>
+<a class="d2" href="#если-что-то-уже-случилось">Если что-то уже случилось</a>
+  </nav>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false" aria-label="Поиск по сайту">
+    <div id="searchResults" class="search-results" role="listbox" aria-live="polite" aria-label="Результаты поиска"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js?v=2611242158"></script>
+<script src="assets/app.js?v=2611242158"></script>
+</body>
+</html>

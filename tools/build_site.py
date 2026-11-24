@@ -22,6 +22,8 @@ NAV = [
                      ("signal", "Signal"), ("max", "MAX"), ("max-research", "MAX: разбор")]),
     ("Платформы", [("macos", "macOS"), ("windows", "Windows"), ("linux", "Linux"),
                    ("ios", "iOS"), ("android", "Android")]),
+    ("Семья", [("fam-phone", "Телефон за 15 минут"), ("fam-detect", "Какой у меня телефон"),
+               ("push", "Пуши и обман"), ("fam-parent", "Чек-лист для родителя")]),
     ("Практика", [("network", "Сеть и периметр"), ("monitoring", "Мониторинг"),
                   ("passwords", "Менеджеры паролей"), ("breaches", "Проверка утечек"),
                   ("mail", "Почта"),

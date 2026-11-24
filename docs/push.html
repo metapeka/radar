@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Пуши и «обновите приложение» — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Уведомление на телефоне — не вирус. Но это самый частый способ довести человека до установки вредоносного приложения. Ниже — как отличить рекламу от угрозы и что делать в каждом сл">
+<meta name="color-scheme" content="light dark">
+<script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
+<link rel="stylesheet" href="assets/style.css?v=2611242158">
+<link rel="alternate" type="application/atom+xml" title="Обновления сайта" href="feed-updates.xml">
+<link rel="alternate" type="application/atom+xml" title="Сводка за неделю" href="feed-digest.xml">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span></button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd aria-hidden="true">/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="profile-switch">
+      <div class="nav-title">Профиль риска</div>
+      <div class="seg" role="radiogroup" aria-label="Профиль риска">
+        <button type="button" data-profile="basic" aria-pressed="true">Обычный</button>
+        <button type="button" data-profile="elevated" aria-pressed="false">Повыш.</button>
+        <button type="button" data-profile="targeted" aria-pressed="false">Целевой</button>
+      </div>
+      <div class="profile-hint" aria-live="polite"></div>
+    </div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="services.html">Каталог сервисов</a><a href="about.html">О проекте</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="sources.html">Здоровье источников</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a><a href="updates.html">Обновления</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Семья</div><a href="fam-phone.html">Телефон за 15 минут</a><a href="fam-detect.html">Какой у меня телефон</a><a href="push.html" class="active" aria-current="page">Пуши и обман</a><a href="fam-parent.html">Чек-лист для родителя</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="passwords.html">Менеджеры паролей</a><a href="breaches.html">Проверка утечек</a><a href="mail.html">Почта</a><a href="browsers.html">Браузеры</a><a href="routers.html">Роутер</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.4 · 23.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <div class="crumbs"><a href="index.html">Главная</a><span class="sep">/</span><span>Семья</span><span class="sep">/</span><span class="here">Пуши и «обновите приложение»</span></div>
+      <h1>Пуши и «обновите приложение»</h1><p class="verified"><time datetime="2026-11-24">проверено 24.11.2026</time></p>
+      <blockquote>
+<p>Уведомление на телефоне — не вирус. Но это самый частый способ довести человека до установки вредоносного приложения. Ниже — как отличить рекламу от угрозы и что делать в каждом случае.</p>
+</blockquote>
+<h2 id="откуда-берутся-пуши">Откуда берутся пуши</h2>
+<p>Всплывающее уведомление на экране блокировки показывает <strong>не система</strong>, а приложение. Значит, над ним есть чья-то воля:</p>
+<table tabindex="0" aria-label="Откуда берутся пуши">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Что это</th>
+<th scope="col">Откуда</th>
+<th scope="col">Опасность</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Реклама от приложения</td>
+<td>Любое бесплатное приложение с рекламной сетью</td>
+<td>Раздражает, расходует батарею и трафик</td>
+</tr>
+<tr class="even">
+<td>«Подписка истекла», «ваш антивирус устарел»</td>
+<td>Приложение-«клинер», «ускоритель», «сканер»</td>
+<td>Ведёт на поддельный сайт оплаты</td>
+</tr>
+<tr class="odd">
+<td>«Обновите WhatsApp / Telegram»</td>
+<td>Поддельная ссылка в мессенджере или в пуше</td>
+<td><strong>Ведёт к установке чужого APK</strong></td>
+</tr>
+<tr class="even">
+<td>«Посылка ждёт оплаты», «штраф ГИБДД»</td>
+<td>Рассылка от мошенников</td>
+<td>Фишинг, кража карты</td>
+</tr>
+<tr class="odd">
+<td>Push в браузере</td>
+<td>Сайт, которому вы разрешили уведомления</td>
+<td>Реклама поверх всего, иногда обман</td>
+</tr>
+</tbody>
+</table>
+<p>Важное различие: <strong>системные уведомления</strong> — «обновление доступно», «место на диске кончается» — приходят от системы и ведут в настройки. <strong>Все остальные</strong> — от приложения и могут вести куда угодно.</p>
+<!-- РИСУНОК: два уведомления рядом — одно настоящее «обновление системы», другое поддельное «Обновите WhatsApp». Позже отрисовать. -->
+<h2 id="правило-которое-закрывает-90-случаев">Правило, которое закрывает 90% случаев</h2>
+<p><strong>Приложение обновляют только в магазине приложений.</strong> Никогда — по ссылке из уведомления, сообщения, рекламы или сайта.</p>
+<ul>
+<li>Android: Google Play или системный магазин бренда (Galaxy Store, App Gallery, GetApps).</li>
+<li>iPhone: App Store. Установка .apk на iPhone невозможна — значит, любое «скачайте APK» на iPhone уже обман по определению.</li>
+</ul>
+<h2 id="android-найти-от-какого-приложения-реклама">Android: найти, от какого приложения реклама</h2>
+<p>Не нужно ничего сканировать — достаточно посмотреть, кто отправил уведомление.</p>
+<ol type="1">
+<li>Спуститесь «шторкой» вниз, нажмите и удерживайте рекламное уведомление.</li>
+<li>Нажмите на название приложения или на шестерёнку.</li>
+<li>Теперь видно приложение-источник. Дальше — выключить уведомления целиком или удалить приложение.</li>
+</ol>
+<p>Найти все приложения, которые шлют уведомления: Настройки → Уведомления → Управление уведомлениями. Отключайте рекламные — не отключайте банки, Госуслуги и мессенджеры.</p>
+<div class="callout note"><span class="callout-title">Контекст</span>
+<p>Отключить все уведомления подряд — плохая идея: вместе с рекламой выключатся уведомления о платежах и входе в аккаунт. Это как раз те, которые спасают.</p>
+</div>
+<h2 id="что-реально-опасно-разрешения-а-не-пуши">Что реально опасно: «разрешения», а не пуши</h2>
+<p>Сам пуш ничего не заражает. Заражает приложение, которое вы установили после него, — а чаще не после пуша, а после разрешения.</p>
+<p>Проверьте на Android пять списков из <a href="android.html">Android</a>:</p>
+<table tabindex="0" aria-label="Что реально опасно: «разрешения», а не пуши">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Разрешение</th>
+<th scope="col">Почему страшно</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Специальные возможности (Accessibility)</td>
+<td>Читает экран банка и нажимает кнопки за вас</td>
+</tr>
+<tr class="even">
+<td>Доступ к уведомлениям</td>
+<td>Читает коды и подтверждения в других приложениях</td>
+</tr>
+<tr class="odd">
+<td>Администратор устройства</td>
+<td>Не даёт удалить приложение</td>
+</tr>
+<tr class="even">
+<td>Поверх других приложений</td>
+<td>Подменяет окно входа в банк</td>
+</tr>
+<tr class="odd">
+<td>Использование данных об использовании</td>
+<td>Видит, что вы открываете</td>
+</tr>
+</tbody>
+</table>
+<p>Правило: приложение со словом «сканер», «клинер», «ускоритель», «антивирус» в списках Accessibility или администраторов — удалить сразу.</p>
+<h2 id="приложения-чистильщики-и-антивирусы">Приложения-«чистильщики» и «антивирусы»</h2>
+<p>На Android системная защита есть: Play Protect сканирует все приложения, включая сторонние. Отдельный «антивирус» из магазина чаще показывает «найдено 12 угроз», чтобы продать подписку.</p>
+<ul>
+<li>Play Protect: Play Store → значок профиля → Play Protect → «Проверить».</li>
+<li>Приложения из системного магазина уже проверены. Ставить ещё один «сканер» — значит отдать ему те же разрешения.</li>
+<li>Сканеры с Accessibility — почти всегда вредоносное. Это уже описано в <a href="android.html">Android</a>.</li>
+</ul>
+<h2 id="пуши-в-браузере">Пуши в браузере</h2>
+<p>Сайт просит «Показывать уведомления?» — это не про безопасность, это про рекламу.</p>
+<ul>
+<li>Chrome: три точки → Настройки → Уведомления сайтов → удалить разрешение.</li>
+<li>Safari на iPhone: Настройки → Safari → Уведомления.</li>
+</ul>
+<p>Смотрите список сайтов: если там сайт, который вы не помните, — разрешение отозвать.</p>
+<h2 id="что-делать-если-уже-установили">Что делать, если уже установили</h2>
+<p>Порядок важен, и он короткий.</p>
+<ol type="1">
+<li><strong>Выключите интернет</strong> — Wi-Fi и мобильные данные; на Android ещё и нажмите «Режим полёта».</li>
+<li><strong>Удалите приложение.</strong> Если не удаляется — сначала снимите права: Настройки → Безопасность → Администраторы устройства, и Настройки → Специальные возможности → уберите из списка.</li>
+<li><strong>Смените пароли</strong> с другого устройства: почта, банк, мессенджеры.</li>
+<li><strong>Позвоните в банк</strong>, если на телефоне были банковские приложения. Проверьте последние операции.</li>
+<li><strong>Проверьте, к каким аккаунтам был доступ:</strong> Google или Apple — «устройства и сеансы», WhatsApp — «связанные устройства», Telegram — «активные сеансы».</li>
+<li>Если нужна глубокая проверка — не через приложения из магазина, а через <a href="incident-response.html">реагирование</a> и <a href="app-analysis.html">анализ приложений</a>.</li>
+</ol>
+<div class="callout warning"><span class="callout-title">Важно</span>
+<p>Если приложение просило «дайте доступ к экрану», «включите спецвозможности» или «войдите в банк для проверки» — считайте, что данные банка утекли. Смена пароля в интернет-банке и звонок в банк обязательны. Пароль по телефону и в мессенджерах банк не спрашивает никогда.</p>
+</div>
+<h2 id="как-не-попасть-снова">Как не попасть снова</h2>
+<ul>
+<li>Устанавливать только из магазина, запретить установку из неизвестных источников: <a href="android.html">Android</a>.</li>
+<li>Включить Advanced Protection там, где она есть: ещё и USB и Accessibility ограничивает.</li>
+<li>Не нажимать «Разрешить уведомления» на сайтах, которые вы не открываете каждый день.</li>
+<li>Если «сотрудник банка» или «следователь» торопит — положите трубку и перезвоните сами по номеру с обратной стороны карты.</li>
+</ul>
+<h2 id="для-родителя">Для родителя</h2>
+<p>Короткая версия для другого человека — <a href="fam-parent.html">чек-лист для родителя</a>. Если телефон настраиваете сами, начните с <a href="fam-phone.html">восьми шагов</a>.</p>
+<blockquote>
+<p>Механизмы разрешений и Play Protect описаны в <a href="android.html">Android</a>; что делать при угоне аккаунта — в <a href="incident-response.html">реагировании</a>. Сроки и названия пунктов меняются между релизами Android — сверяйте по версии.</p>
+</blockquote>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="fam-detect.html"><span class="dir">Назад</span>Какой у меня телефон</a><a class="next" href="fam-parent.html"><span class="dir">Дальше</span>Чек-лист для родителя</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      <a href="about.html">Как устроен проект и откуда факты</a>.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+      Ленты: <a href="feed-updates.xml">обновления</a>, <a href="feed-digest.xml">сводка</a>.
+    </footer>
+  </main>
+
+  <nav class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#откуда-берутся-пуши">Откуда берутся пуши</a>
+<a class="d2" href="#правило-которое-закрывает-90-случаев">Правило, которое закрывает 90% случаев</a>
+<a class="d2" href="#android-найти-от-какого-приложения-реклама">Android: найти, от какого приложения реклама</a>
+<a class="d2" href="#что-реально-опасно-разрешения-а-не-пуши">Что реально опасно: «разрешения», а не пуши</a>
+<a class="d2" href="#приложения-чистильщики-и-антивирусы">Приложения-«чистильщики» и «антивирусы»</a>
+<a class="d2" href="#пуши-в-браузере">Пуши в браузере</a>
+<a class="d2" href="#что-делать-если-уже-установили">Что делать, если уже установили</a>
+<a class="d2" href="#как-не-попасть-снова">Как не попасть снова</a>
+<a class="d2" href="#для-родителя">Для родителя</a>
+  </nav>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false" aria-label="Поиск по сайту">
+    <div id="searchResults" class="search-results" role="listbox" aria-live="polite" aria-label="Результаты поиска"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js?v=2611242158"></script>
+<script src="assets/app.js?v=2611242158"></script>
+</body>
+</html>
