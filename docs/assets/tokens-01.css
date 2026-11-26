@@ -1,0 +1,63 @@
+/* Тема 01 «Кабинет». По умолчанию.
+   Любая другая тема переопределяет эти переменные в themes/0N.css.
+   Правила ниже читают только переменные; прямое правило меняет вид. */
+:root{
+  /* поверхности */
+  --bg:#f7f5ef; --bg-soft:#eeece5; --bg-code:#f1eee5;
+  --fg:#101722; --muted:#46515f; --line:#d5d0c4;
+  /* акцент */
+  --accent:#1b4a7a; --accent-soft:#e4ecf6; --accent-ink:#123a63; --ring:#1b4a7a;
+  /* тёмная шапка */
+  --bar-accent:#8fc0f0; --bar-accent-2:#cfe3fa;
+  --ink:#0d1622; --ink-fg:#e8eef7; --ink-muted:#a3b3c6;
+  /* статусы и приоритеты */
+  --ok:#0f7b4f; --ok-soft:#e3f2e9;
+  --warn:#9a5b00; --warn-soft:#f8ecd8;
+  --myth:#46515f; --myth-soft:#ece9e1;
+  --p0-bg:#fbe4e4; --p0-fg:#8f1d1d; --p0-line:#f0c4c4;
+  --p1-bg:#faedd6; --p1-fg:#7a4800; --p1-line:#ecd3a8;
+  --p2-bg:#e4ecf6; --p2-fg:#123a63; --p2-line:#c6d8ec;
+  /* наложения */
+  --veil:rgba(4,8,10,.62);
+  --on-ink-7:color-mix(in srgb, #fff 7%, transparent);
+  --on-ink-18:color-mix(in srgb, #fff 18%, transparent);
+  --on-ink-22:color-mix(in srgb, #fff 22%, transparent);
+  /* форма */
+  --shadow:0 18px 50px rgba(13,22,34,.18);
+  --radius:8px; --radius-sm:6px; --radius-xs:4px; --radius-badge:3px;
+  --track:.1em;
+  --mark-shape:polygon(50% 0,100% 18%,100% 58%,50% 100%,0 58%,0 18%);
+  /* шрифты */
+  --font-body:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --font-label:var(--font-mono);
+  --font-display:var(--font-body);
+  /* размеры и шкала */
+  --size-base:16.5px; --lh:1.62; --measure:840px;
+  --h1:34px; --h2:21px; --h3:16.5px; --lead:15.5px;
+  --micro:10.5px; --small:12.8px; --body-sm:14px;
+  --gap:32px; --pad:24px; --col-nav:250px; --col-toc:218px; --bar-h:56px;
+  --stroke-accent:3px;
+  /* вид компонентов: по умолчанию наследуется из style.css */
+  --nav-bg:var(--bg-soft); --nav-border:var(--line);
+  --nav-active-bg:var(--accent-soft); --nav-active-fg:var(--accent-ink);
+  --h2-rule:1px solid var(--line); --h2-num:block;
+  --topbar-bg:var(--ink); --topbar-fg:var(--ink-fg);
+  --topbar-rule:none;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#080b10; --bg-soft:#0f151d; --bg-code:#0d131a;
+    --fg:#e6ecf4; --muted:#9aa8b7; --line:#1e2936;
+    --accent:#7fb3e8; --accent-soft:#0e2033; --accent-ink:#aacbf0; --ring:#7fb3e8;
+    --bar-accent:#8fc0f0; --bar-accent-2:#cfe3fa;
+    --ink:#05080d; --ink-fg:#dce6f2; --ink-muted:#8d9cb0;
+    --ok:#3ddc97; --ok-soft:#0c241b;
+    --warn:#f5b544; --warn-soft:#2a2113;
+    --myth:#9aa8b7; --myth-soft:#121a23;
+    --p0-bg:#2f1414; --p0-fg:#ffb0b0; --p0-line:#532020;
+    --p1-bg:#2a2110; --p1-fg:#f0c076; --p1-line:#4a3a17;
+    --p2-bg:#0e2033; --p2-fg:#aacbf0; --p2-line:#1b3550;
+    --shadow:0 18px 50px rgba(0,0,0,.55);
+  }
+}

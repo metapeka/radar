@@ -1,0 +1,89 @@
+/* Тема 02 «Журнал». Печатная, русская классическая типографика.
+   Новая тема меняет только переменные. Прямые правила читать .style.css. */
+
+/* Тёмная ветка не нужна: журнал всегда светлый, цвет бумаги не инвертируется. */
+:root{
+  --bg:#fbfaf7; --bg-soft:#f2efe8; --bg-code:#f0eee7;
+  --fg:#141210; --muted:#55504a; --line:#c9c2b5;
+  --accent:#8e2f1e; --accent-soft:#f6e4de; --accent-ink:#6d2215; --ring:#8e2f1e;
+
+  --ink:#141210; --ink-fg:#fbfaf7; --ink-muted:#c9c2b5;
+  --bar-accent:#fbfaf7; --bar-accent-2:#f6e4de;
+
+  --ok:#2c6b47; --ok-soft:#e7f1ea;
+  --warn:#8a5a12; --warn-soft:#f7eedb;
+  --myth:#4f4a45; --myth-soft:#e8e3d9;
+  --p0-bg:#f6e4de; --p0-fg:#6d2215; --p0-line:#e3b9ae;
+  --p1-bg:#f7eedb; --p1-fg:#5e3d08; --p1-line:#e4c99a;
+  --p2-bg:#eef0ea; --p2-fg:#3c4a3e; --p2-line:#c9d0c4;
+
+  --on-ink-7:color-mix(in srgb, #fbfaf7 8%, transparent);
+  --on-ink-18:color-mix(in srgb, #fbfaf7 22%, transparent);
+  --on-ink-22:color-mix(in srgb, #fbfaf7 30%, transparent);
+  --shadow:0 10px 30px rgba(20,18,16,.12);
+
+  --radius:2px; --radius-sm:2px; --radius-xs:2px; --radius-badge:2px;
+  --track:.06em;
+  --mark-shape:polygon(0 0,100% 0,100% 100%,0 100%);
+
+  --font-body:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --font-label:var(--font-body);
+  --font-display:var(--font-body);
+
+  --size-base:17.2px; --lh:1.66; --measure:760px;
+  --h1:37px; --h2:23px; --h3:17.4px; --lead:16.4px;
+  --micro:11px; --small:13px; --body-sm:14.5px;
+  --gap:36px; --pad:24px; --col-nav:238px; --col-toc:206px; --bar-h:56px;
+
+  --nav-bg:var(--bg); --nav-border:var(--line);
+  --nav-active-bg:transparent; --nav-active-fg:var(--accent-ink);
+  --h2-rule:2px solid var(--ink); --h2-num:inline;
+
+  --topbar-bg:var(--bg); --topbar-fg:var(--ink);
+  --topbar-rule:2px solid var(--ink);
+  --h1-rule:1px solid var(--line);
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#fbfaf7; --bg-soft:#f2efe8; --bg-code:#f0eee7;
+    --fg:#141210; --muted:#55504a; --line:#c9c2b5;
+    --accent:#8e2f1e; --accent-soft:#f6e4de; --accent-ink:#6d2215; --ring:#8e2f1e;
+    --ink:#141210; --ink-fg:#fbfaf7; --ink-muted:#c9c2b5;
+    --ok:#2c6b47; --ok-soft:#e7f1ea; --warn:#8a5a12; --warn-soft:#f7eedb;
+    --myth:#4f4a45; --myth-soft:#e8e3d9;
+    --p0-bg:#f6e4de; --p0-fg:#6d2215; --p0-line:#e3b9ae;
+    --p1-bg:#f7eedb; --p1-fg:#5e3d08; --p1-line:#e4c99a;
+    --p2-bg:#eef0ea; --p2-fg:#3c4a3e; --p2-line:#c9d0c4;
+  }
+}
+
+/* характер темы: только переопределения, без дублей из style.css */
+.topbar{border-bottom:var(--topbar-rule)}
+.topbar .gh,.topbar kbd{color:var(--muted)}
+.topbar .search-btn{color:var(--fg); border-color:var(--line)}
+.brand{letter-spacing:.12em; font-size:12.5px}
+.sidebar,.toc{border-color:var(--line)}
+.nav-group{padding:2px 0 10px; border-width:0 0 1px; border-radius:0}
+.nav-title{color:var(--accent); letter-spacing:.12em; font-size:11px}
+.nav-group .nav-title::before{color:var(--muted)}
+.nav-group a{padding:6px 2px; border-left:0; border-bottom:1px solid transparent; font-size:14.5px}
+.nav-group a:hover{background:none; color:var(--accent); border-bottom-color:var(--line)}
+.nav-group a.active{background:none; color:var(--accent-ink); font-weight:600; border-bottom-color:var(--accent)}
+.crumbs{letter-spacing:.08em; color:var(--muted)}
+article h1{padding-bottom:12px}
+article h2{padding-top:0; margin-top:44px; letter-spacing:0}
+article h2::before{margin-right:10px; margin-bottom:0; color:var(--accent); letter-spacing:.1em}
+article blockquote{border-left:0; border-top:2px solid var(--ink); border-bottom:1px solid var(--line);
+  border-right:0; background:none; border-radius:0; padding:16px 0}
+article blockquote p{font-size:var(--lead); font-style:italic; color:var(--fg)}
+.callout{border-radius:0; border-left:3px solid var(--line); background:var(--bg-soft)}
+.callout-title{font-family:var(--font-body); font-style:italic; letter-spacing:.02em; font-size:12px}
+article table{font-size:13.6px}
+article th{font-family:var(--font-body); text-transform:none; letter-spacing:0; font-size:12.4px; font-style:italic}
+.card,.step,.pager a{border-radius:0}
+.card::before,.step b{font-family:var(--font-label); letter-spacing:.1em}
+.hero-stats b{font-family:var(--font-display); font-weight:600}
+.hero-stats span{font-family:var(--font-label); text-transform:none; letter-spacing:.04em}
+.badge{font-family:var(--font-label); border-radius:2px}

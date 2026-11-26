@@ -6,8 +6,10 @@
 <title>Последние обновления — Личная безопасность и мессенджеры</title>
 <meta name="description" content="Что изменилось на сайте: даты, суть правок и ссылки на затронутые страницы.">
 <meta name="color-scheme" content="light dark">
+<script>try{var q=new URLSearchParams(location.search).get('theme');var t=q||localStorage.getItem('theme');if(!/^0[1-4]$/.test(t||''))t='01';document.documentElement.dataset.theme=t;if(t!=='01'){var l=document.querySelector('link[data-theme-link]');l.href=l.href.replace('tokens-01.css','tokens-'+t+'.css');}}catch(e){document.documentElement.dataset.theme='01';}</script>
 <script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
-<link rel="stylesheet" href="assets/style.css?v=2611242158">
+<link rel="stylesheet" href="assets/tokens-01.css?v=2611262358" data-theme-link="1">
+<link rel="stylesheet" href="assets/style.css?v=2611262358">
 <link rel="alternate" type="application/atom+xml" title="Обновления сайта" href="feed-updates.xml">
 <link rel="alternate" type="application/atom+xml" title="Сводка за неделю" href="feed-digest.xml">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
@@ -36,6 +38,16 @@
       </div>
       <div class="profile-hint" aria-live="polite"></div>
     </div>
+    <div class="profile-switch theme-switch">
+      <div class="nav-title">Тема</div>
+      <div class="seg" role="radiogroup" aria-label="Тема оформления">
+        <button type="button" data-theme-btn="01" aria-pressed="true" title="Тема 01, Ctrl+Alt+1">01</button>
+        <button type="button" data-theme-btn="02" aria-pressed="false" title="Тема 02, Ctrl+Alt+2">02</button>
+        <button type="button" data-theme-btn="03" aria-pressed="false" title="Тема 03, Ctrl+Alt+3">03</button>
+        <button type="button" data-theme-btn="04" aria-pressed="false" title="Тема 04, Ctrl+Alt+4">04</button>
+      </div>
+      <div class="profile-hint">Ссылка вида <code>?theme=02</code> открывает тему 02 у всех, кому её дадите.</div>
+    </div>
     <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="services.html">Каталог сервисов</a><a href="about.html">О проекте</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="sources.html">Здоровье источников</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a><a href="updates.html" class="active" aria-current="page">Обновления</a></div>
 <div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
 <div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
@@ -47,7 +59,7 @@
   <main id="main" class="content">
     <article>
       <div class="crumbs"><a href="index.html">Главная</a><span class="sep">/</span><span>Начало</span><span class="sep">/</span><span class="here">Последние обновления</span></div>
-      <h1>Последние обновления</h1><p class="verified"><time datetime="2026-11-23">проверено 23.11.2026</time></p>
+      <h1>Последние обновления</h1><p class="verified"><time datetime="2026-11-24">проверено 24.11.2026</time></p>
       <blockquote>
 <p>Что изменилось на сайте: даты, суть правок и ссылки на затронутые страницы.</p>
 </blockquote>
@@ -69,86 +81,91 @@
 </thead>
 <tbody>
 <tr class="odd">
+<td>26.11.2026</td>
+<td>Темы: токены вынесены в <code>tokens-01.css</code>, переключатель 01–04 в сайдбаре, <code>?theme=02</code> в ссылке; новые темы «Журнал», «Ночь», «Тепло»</td>
+<td>Все страницы</td>
+</tr>
+<tr class="even">
 <td>24.11.2026</td>
 <td>Раздел «Семья»: телефон за 15 минут, как определить устройство, пуши и обман, чек-лист для родителя; чек-листы печатаются с прогрессом</td>
 <td><a href="fam-phone.html">Телефон за 15 минут</a>, <a href="fam-detect.html">Какой у меня телефон</a>, <a href="push.html">Пуши и обман</a>, <a href="fam-parent.html">Чек-лист для родителя</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>23.11.2026</td>
 <td>Палитра: тёмно-синий акцент, контрастнее подписи, панели разделов в сайдбаре</td>
 <td><a href="index.html">Главная</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>23.11.2026</td>
 <td>Редизайн: тёмная шапка, моноподписи, нумерация разделов, новая главная с шагами и картой</td>
 <td><a href="index.html">Главная</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>23.11.2026</td>
 <td>Проверка утечек: страница со ссылками, без форм и запросов</td>
 <td><a href="breaches.html">Проверка утечек</a>, <a href="passwords.html">Менеджеры паролей</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>23.11.2026</td>
 <td>Почта, браузеры, роутеры: Gmail, Firefox, домашний роутер; в каталоге 15 сервисов</td>
 <td><a href="mail.html">Почта</a>, <a href="browsers.html">Браузеры</a>, <a href="routers.html">Роутер</a>, <a href="services.html">Каталог сервисов</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>23.11.2026</td>
 <td>Менеджеры паролей: Bitwarden, 1Password, KeePassXC; в каталоге 12 сервисов</td>
 <td><a href="passwords.html">Менеджеры паролей</a>, <a href="services.html">Каталог сервисов</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>23.11.2026</td>
 <td>Чек-листы платформ перенесены в <code>services.json</code>; в каталоге 9 сервисов</td>
 <td><a href="services.html">Каталог сервисов</a>, <a href="macos.html">macOS</a>, <a href="windows.html">Windows</a>, <a href="linux.html">Linux</a>, <a href="ios.html">iOS</a>, <a href="android.html">Android</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>23.11.2026</td>
 <td>Каталог сервисов и чек-листы из <code>services.json</code>: WhatsApp, Telegram, Signal, MAX</td>
 <td><a href="services.html">Каталог сервисов</a>, <a href="whatsapp.html">WhatsApp</a>, <a href="telegram.html">Telegram</a>, <a href="signal.html">Signal</a>, <a href="max.html">MAX</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>23.11.2026</td>
 <td>Здоровье источников, Atom-ленты, проверка ссылок, шаблон «Новый источник», лицензии</td>
 <td><a href="sources.html">Здоровье источников</a>, <a href="digest.html">Сводка</a>, <a href="updates.html">Обновления</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>23.11.2026</td>
 <td>Дата проверки под заголовком; хранение в <code>site/data/verified.json</code></td>
 <td>Все страницы</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>23.11.2026</td>
 <td>Гид: «О проекте», CONTRIBUTING, шаблоны Issue и PR</td>
 <td><a href="about.html">О проекте</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>23.11.2026</td>
 <td>Автосбор недельной сводки: GitHub Actions и Issue-шаблон</td>
 <td><a href="digest.html">Сводка</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>23.11.2026</td>
 <td>Свежие CVE: WhatsApp, Telegram, iPhone, Signal, MAX; добавлена недельная сводка</td>
 <td><a href="digest.html">Сводка</a>, <a href="comparison.html">Сравнение</a>, <a href="whatsapp.html">WhatsApp</a>, <a href="telegram.html">Telegram</a>, <a href="signal.html">Signal</a>, <a href="ios.html">iOS</a>, <a href="max.html">MAX</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>22.11.2026</td>
 <td>Сравнение переработано: матрица «кто что отдаёт», хронология раскрытий, вывод</td>
 <td><a href="comparison.html">Сравнение</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>21.11.2026</td>
 <td>MAX: таймлайн исследований и разбор промахов; провенанс источников; правила Pages и Issues</td>
 <td><a href="max-research.html">MAX: разбор</a>, <a href="https://github.com/metapeka/whatsapp-security-research/blob/master/provenance/README.md">Провенанс</a>, <a href="https://github.com/metapeka/whatsapp-security-research/blob/master/DESIGN.md">DESIGN</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>21.11.2026</td>
 <td>Профили риска, фильтр таблиц по платформам, счётчики чек-листов</td>
 <td><a href="threat-model.html">Модель угроз</a>, <a href="ios.html">iOS</a>, <a href="android.html">Android</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>21.11.2026</td>
 <td>Базовые разделы: MAX, анализ приложений, стенд, методика</td>
 <td><a href="max.html">MAX</a>, <a href="app-analysis.html">Анализ приложений</a>, <a href="lab-bench.html">Стенд</a>, <a href="methodology.html">Методика</a></td>
@@ -194,7 +211,7 @@
   </div>
 </div>
 
-<script src="assets/search-index.js?v=2611242158"></script>
-<script src="assets/app.js?v=2611242158"></script>
+<script src="assets/search-index.js?v=2611262358"></script>
+<script src="assets/app.js?v=2611262358"></script>
 </body>
 </html>

@@ -439,3 +439,58 @@
     });
   });
 })();
+
+/* ---------- темы ---------- */
+(function () {
+  var root = document.documentElement;
+  var THEMES = [
+    { id: '01', name: 'Кабинет' },
+    { id: '02', name: 'Журнал' },
+    { id: '03', name: 'Ночь' },
+    { id: '04', name: 'Эксперимент' }
+  ];
+  var link = document.querySelector('link[data-theme-link]');
+  var btns = Array.prototype.slice.call(document.querySelectorAll('[data-theme-btn]'));
+  if (!link || !btns.length) return;
+  var base = link.getAttribute('href').replace(/tokens-[\w-]+\.css/, '').replace(/\?.*$/, '');
+
+  function swap(id) {
+    var next = base + 'tokens-' + id + '.css' + (location.search.match(/[?&]v=(\d+)/) ? '?v=' + RegExp.$1 : '');
+    if (link.getAttribute('href') === next) return;
+    var old = link;
+    var fresh = old.cloneNode();
+    fresh.href = next;
+    fresh.addEventListener('load', function () { if (old.parentNode) old.remove(); });
+    fresh.addEventListener('error', function () { fresh.remove(); });
+    old.parentNode.insertBefore(fresh, old.nextSibling);
+    link = fresh;
+  }
+
+  function apply(id, persist) {
+    var t = THEMES.filter(function (x) { return x.id === id; })[0];
+    if (!t) return;
+    root.dataset.theme = t.id;
+    swap(t.id);
+    btns.forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.themeBtn === t.id));
+    });
+    if (persist) { try { localStorage.setItem('theme', t.id); } catch (e) {} }
+    var url = new URL(location.href);
+    if (t.id === '01') url.searchParams.delete('theme'); else url.searchParams.set('theme', t.id);
+    history.replaceState(null, '', url);
+  }
+
+  apply(root.dataset.theme || '01', false);
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { apply(b.dataset.themeBtn, true); });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (!e.altKey || !(e.ctrlKey || e.metaKey)) return;
+    var t = THEMES.filter(function (x) { return x.id === e.key; })[0];
+    if (!t) return;
+    e.preventDefault();
+    apply(t.id, true);
+  });
+})();

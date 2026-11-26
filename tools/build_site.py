@@ -535,8 +535,9 @@ def main() -> None:
     template = (SITE / "template.html").read_text().replace("<!--VER-->", ver)
     OUT.mkdir(exist_ok=True)
     (OUT / "assets").mkdir(exist_ok=True)
-    for name in ("style.css", "app.js"):
+    for name in sorted(p.name for p in (SITE / "assets").glob("*.css")):
         (OUT / "assets" / name).write_text((SITE / "assets" / name).read_text())
+    (OUT / "assets" / "app.js").write_text((SITE / "assets" / "app.js").read_text())
 
     render_charts()
 

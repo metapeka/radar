@@ -1,0 +1,97 @@
+/* Тема 04 «Тепло». Экспериментальная: для домашнего пользователя и пожилых —
+   крупнее шрифт, спокойный тёплый фон, мягкие скругления, без строгих линеек.
+   Проверить контраст перед публикацией: основная цель — читаемость с 1 метра. */
+:root{
+  --bg:#fdf9f2; --bg-soft:#f6eee0; --bg-code:#f4ece0;
+  --fg:#221d16; --muted:#5c5245; --line:#e0d3bd;
+  --accent:#a4471a; --accent-soft:#fbe6d5; --accent-ink:#7a3210; --ring:#a4471a;
+
+  --ink:#2b2118; --ink-fg:#fdf9f2; --ink-muted:#d8c9b4;
+  --bar-accent:#ffd9a8; --bar-accent-2:#f2b775;
+
+  --ok:#1f6b45; --ok-soft:#e5f4ea;
+  --warn:#8a5200; --warn-soft:#fdeccf;
+  --myth:#5c5245; --myth-soft:#efe5d5;
+  --p0-bg:#fbe0d8; --p0-fg:#7c2010; --p0-line:#efb9a8;
+  --p1-bg:#fdeccf; --p1-fg:#6b3d00; --p1-line:#f0cd93;
+  --p2-bg:#e8f0f7; --p2-fg:#1d4a6b; --p2-line:#c0d8e8;
+
+  --on-ink-7:color-mix(in srgb, #fff 9%, transparent);
+  --on-ink-18:color-mix(in srgb, #fff 22%, transparent);
+  --on-ink-22:color-mix(in srgb, #fff 30%, transparent);
+  --shadow:0 14px 34px rgba(52,36,18,.14);
+
+  --radius:16px; --radius-sm:12px; --radius-xs:8px; --radius-badge:999px;
+  --track:.02em;
+  --mark-shape:polygon(50% 0,100% 18%,100% 58%,50% 100%,0 58%,0 18%);
+
+  --font-body:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --font-label:var(--font-body);
+  --font-display:var(--font-body);
+
+  --size-base:19px; --lh:1.72; --measure:760px;
+  --h1:36px; --h2:24px; --h3:20px; --lead:18px;
+  --micro:12px; --small:14px; --body-sm:16px;
+  --gap:34px; --pad:24px; --col-nav:260px; --col-toc:214px; --bar-h:60px;
+
+  --nav-bg:var(--bg-soft); --nav-border:transparent;
+  --nav-active-bg:var(--accent); --nav-active-fg:#fff;
+  --h2-rule:0; --h2-num:none;
+
+  --topbar-bg:var(--ink); --topbar-fg:var(--ink-fg);
+  --topbar-rule:0;
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#1a1512; --bg-soft:#241d18; --bg-code:#201a15;
+    --fg:#f5ece0; --muted:#c3b4a2; --line:#3a2f26;
+    --accent:#ffb273; --accent-soft:#3a2415; --accent-ink:#ffd0a8; --ring:#ffb273;
+    --ink:#120e0b; --ink-fg:#f5ece0; --ink-muted:#a8998a;
+    --ok:#6fdca0; --ok-soft:#12291d; --warn:#ffcb6b; --warn-soft:#2c2310;
+    --myth:#c3b4a2; --myth-soft:#241d18;
+    --p0-bg:#3a1810; --p0-fg:#ffb3a0; --p0-line:#5a2a1d;
+    --p1-bg:#2c2310; --p1-fg:#ffcb6b; --p1-line:#4a3a17;
+    --p2-bg:#122433; --p2-fg:#a8d4f0; --p2-line:#1d3a4d;
+    --shadow:0 14px 34px rgba(0,0,0,.5);
+  }
+}
+
+.topbar{border-bottom:var(--topbar-rule)}
+.brand{text-transform:none; letter-spacing:.01em; font-size:15px; font-weight:700}
+.brand-mark{border-radius:999px; width:18px; height:18px; background:var(--bar-accent)}
+.topbar .gh{color:var(--ink-muted)}
+.topbar .search-btn{border-radius:999px; padding:7px 14px}
+
+.shell{padding:0 20px}
+.nav-group{border-radius:var(--radius); padding:14px 12px 14px; border:0; background:var(--bg-soft)}
+.nav-title{font-family:var(--font-label); font-size:12px; letter-spacing:.02em; text-transform:none; color:var(--muted)}
+.nav-group .nav-title::before{color:var(--accent); font-weight:700}
+.nav-group a{font-size:16px; padding:8px 10px; border-left:0; border-radius:var(--radius-xs)}
+.nav-group a:hover{background:color-mix(in srgb, var(--accent) 12%, transparent)}
+.nav-group a.active{border-left:0; background:var(--nav-active-bg); color:var(--nav-active-fg)}
+.sidebar-foot{font-size:12px}
+
+article h1{font-weight:750; letter-spacing:-.01em}
+article h2{border-top:0; padding-top:0; letter-spacing:0}
+article h3{font-weight:700}
+article p,article li{max-width:70ch}
+article blockquote{border-radius:var(--radius); border-left:0; border-top:4px solid var(--accent); background:var(--bg-soft)}
+article blockquote p{font-style:normal; font-size:var(--lead); color:var(--fg)}
+.callout{border-radius:var(--radius); border-left-width:4px; padding:16px 18px}
+.callout-title{text-transform:none; letter-spacing:.02em; font-family:var(--font-label); font-size:12px}
+article table{border-radius:var(--radius); font-size:16px}
+article th{text-transform:none; letter-spacing:.01em; font-family:var(--font-label); font-size:12px; white-space:normal}
+article th,article td{padding:12px 14px}
+code{font-size:.88em; border-radius:var(--radius-xs)}
+pre{border-radius:var(--radius)}
+.badge{font-family:var(--font-label); letter-spacing:.02em; padding:1px 10px}
+.card,.step,.pager a{border-radius:var(--radius); padding:18px 20px}
+.card span,.step span{font-size:15.5px; line-height:1.5}
+.card::before,.step b{font-family:var(--font-label); letter-spacing:.04em; font-size:12px}
+.hero-stats b{font-family:var(--font-display); font-weight:750}
+.hero-stats span{font-family:var(--font-label); text-transform:none; letter-spacing:.02em; font-size:12px}
+.steps{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.check-summary{border-radius:999px; font-family:var(--font-label); font-size:13px; padding:10px 16px}
+.toc a{font-size:14.5px}
