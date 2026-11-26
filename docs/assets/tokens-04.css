@@ -20,6 +20,7 @@
   --on-ink-18:color-mix(in srgb, #fff 22%, transparent);
   --on-ink-22:color-mix(in srgb, #fff 30%, transparent);
   --shadow:0 14px 34px rgba(52,36,18,.14);
+  --veil:rgba(34,29,22,.42);
 
   --radius:16px; --radius-sm:12px; --radius-xs:8px; --radius-badge:999px;
   --track:.02em;
