@@ -10,11 +10,11 @@ body{
 a{color:var(--accent); text-decoration:none}
 a:hover{text-decoration:underline}
 :where(a,button,input,select,textarea,[tabindex]):focus-visible{
-  outline:3px solid var(--ring); outline-offset:2px; var(--radius-xs);
+  outline:3px solid var(--ring); outline-offset:2px; border-radius:var(--radius-xs);
 }
 :where(.sr-item,.nav-group a,.toc a,.pager a):focus-visible{outline-offset:-2px}
 .skip{position:absolute; left:-9999px; top:0; background:var(--accent-ink); color:var(--bg); padding:8px 14px; z-index:100}
-.skip:focus{left:8px; top:8px; var(--radius-xs)}
+.skip:focus{left:8px; top:8px; border-radius:var(--radius-xs)}
 @media (prefers-color-scheme: dark){ .skip{color:var(--bg)} }
 
 /* progress */
@@ -36,11 +36,10 @@ a:hover{text-decoration:underline}
 .gh:hover{color:var(--bar-accent)}
 .search-btn{
   font:inherit; font-size:13px; color:var(--ink-fg); background:var(--on-ink-7);
-  border:1px solid var(--on-ink-18); var(--radius-xs); padding:5px 9px; cursor:pointer;
+  border:1px solid var(--on-ink-18); border-radius:var(--radius-xs); padding:5px 9px; cursor:pointer;
 }
 .search-btn:hover{color:var(--bar-accent); border-color:var(--bar-accent)}
-kbd{font:10.5px/1 var(--font-mono); border:1px solid var(--on-ink-22);
-  var(--radius-badge); padding:2px 5px; color:var(--ink-muted); background:transparent}
+kbd{font:10.5px/1 var(--font-mono); border:1px solid var(--on-ink-22); border-radius:var(--radius-badge); padding:2px 5px; color:var(--ink-muted); background:transparent}
 .menu-btn{display:none; font-size:20px; line-height:1; background:none; border:0; color:var(--ink-fg); cursor:pointer; padding:6px}
 
 /* layout */
@@ -121,7 +120,7 @@ article blockquote p{margin:0; font-size:15.5px; color:color-mix(in srgb, var(--
 /* badges */
 .badge{display:inline-block; min-width:28px; text-align:center;
   font:700 10.5px/1.6 var(--font-mono); letter-spacing:.06em;
-  padding:0 6px; var(--radius-badge); border:1px solid transparent}
+  padding:0 6px; border-radius:var(--radius-badge); border:1px solid transparent}
 .badge.p0{background:var(--p0-bg); color:var(--p0-fg); border-color:var(--p0-line)}
 .badge.p1{background:var(--p1-bg); color:var(--p1-fg); border-color:var(--p1-line)}
 .badge.p2{background:var(--p2-bg); color:var(--p2-fg); border-color:var(--p2-line)}
@@ -133,7 +132,7 @@ article blockquote p{margin:0; font-size:15.5px; color:color-mix(in srgb, var(--
 
 /* home: stats + steps */
 .hero-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin:6px 0 10px;
-  background:var(--line); border:1px solid var(--line); var(--radius-sm); overflow:hidden}
+  background:var(--line); border:1px solid var(--line); border-radius:var(--radius-sm); overflow:hidden}
 .hero-stats div{background:var(--bg); padding:14px 16px}
 .hero-stats b{display:block; font:700 26px/1.1 var(--font-mono);
   letter-spacing:-.02em; color:var(--accent)}
@@ -141,8 +140,7 @@ article blockquote p{margin:0; font-size:15.5px; color:color-mix(in srgb, var(--
   letter-spacing:.09em; text-transform:uppercase; color:var(--muted)}
 .steps{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; margin:6px 0 20px}
 .steps > p, .cards > p{display:contents}
-.step{display:flex; flex-direction:column; gap:6px; padding:14px 16px; border:1px solid var(--line);
-  var(--radius-sm); color:var(--fg); background:var(--bg)}
+.step{display:flex; flex-direction:column; gap:6px; padding:14px 16px; border:1px solid var(--line); border-radius:var(--radius-sm); color:var(--fg); background:var(--bg)}
 .step:hover{border-color:var(--accent); background:var(--accent-soft); text-decoration:none}
 .step b{font:700 10.5px/1 var(--font-mono); letter-spacing:.14em; color:var(--accent)}
 .step span{font-size:14.5px; line-height:1.45}
@@ -152,8 +150,7 @@ article blockquote p{margin:0; font-size:15.5px; color:color-mix(in srgb, var(--
 /* cards */
 .cards{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:8px 0 22px;
   counter-reset:card}
-.card{display:flex; flex-direction:column; gap:4px; padding:14px 16px; border:1px solid var(--line);
-  var(--radius-sm); color:var(--fg); background:var(--bg); counter-increment:card}
+.card{display:flex; flex-direction:column; gap:4px; padding:14px 16px; border:1px solid var(--line); border-radius:var(--radius-sm); color:var(--fg); background:var(--bg); counter-increment:card}
 .card::before{content:counter(card,decimal-leading-zero); font:700 10px/1 var(--font-mono);
   letter-spacing:.12em; color:var(--accent); margin-bottom:6px}
 .card:hover{border-color:var(--accent); text-decoration:none; background:var(--accent-soft)}
@@ -172,7 +169,7 @@ article blockquote p{margin:0; font-size:15.5px; color:color-mix(in srgb, var(--
 
 /* figures */
 figure{margin:0 0 24px}
-figure img{display:block; width:100%; height:auto; border:1px solid var(--line); var(--radius-sm); background:var(--bg)}
+figure img{display:block; width:100%; height:auto; border:1px solid var(--line); border-radius:var(--radius-sm); background:var(--bg)}
 figcaption{font-size:12.5px; color:var(--muted); margin-top:8px; line-height:1.5}
 
 /* timeline */
@@ -198,13 +195,13 @@ figcaption{font-size:12.5px; color:var(--muted); margin-top:8px; line-height:1.5
 .timeline .tl-src a{word-break:break-word}
 .timeline-actions{margin:0 0 12px; font-size:13px; color:var(--muted)}
 .timeline-actions button{font:inherit; font:500 11px/1.4 var(--font-mono);
-  padding:5px 10px; border:1px solid var(--line); var(--radius-xs); background:var(--bg); color:var(--fg); cursor:pointer}
+  padding:5px 10px; border:1px solid var(--line); border-radius:var(--radius-xs); background:var(--bg); color:var(--fg); cursor:pointer}
 .timeline-actions button:hover{border-color:var(--accent); color:var(--accent)}
 @media print{ .timeline-actions{display:none} .timeline > li{break-inside:avoid} }
 
 /* tables */
 article table{display:block; width:100%; overflow-x:auto; border-collapse:collapse; margin:6px 0 20px;
-  font-size:13.8px; border:1px solid var(--line); var(--radius-sm)}
+  font-size:13.8px; border:1px solid var(--line); border-radius:var(--radius-sm)}
 article table:focus-visible{outline:3px solid var(--ring); outline-offset:2px}
 article caption{text-align:left; font-size:12.5px; color:var(--muted); padding:0 0 6px}
 article th,article td{padding:9px 12px; text-align:left; vertical-align:top; border:0;
@@ -215,10 +212,43 @@ article tbody tr:nth-child(even){background:color-mix(in srgb, var(--bg-soft) 45
 
 /* code */
 code{font:.9em var(--font-mono); background:var(--bg-code);
-  border:1px solid var(--line); var(--radius-badge); padding:1px 5px}
-pre{background:var(--bg-code); border:1px solid var(--line); var(--radius-sm);
+  border:1px solid var(--line); border-radius:var(--radius-badge); padding:1px 5px}
+pre{background:var(--bg-code); border:1px solid var(--line); border-radius:var(--radius-sm);
   padding:14px 16px; overflow-x:auto; margin:0 0 20px; font-size:13.2px; line-height:1.55}
 pre code{background:none; border:0; padding:0; font-size:inherit}
+
+/* terminal block */
+.term{margin:0 0 20px; border:1px solid var(--line); border-radius:var(--radius-sm);
+  background:var(--bg-code); overflow:hidden}
+.term-bar{display:flex; align-items:center; gap:6px; padding:7px 12px; background:var(--bg-soft);
+  border-bottom:1px solid var(--line)}
+.term-bar i{display:block; width:8px; height:8px; border-radius:50%; background:var(--line)}
+.term-bar span{margin-left:auto; font:600 var(--micro)/1.4 var(--font-label); letter-spacing:var(--track);
+  text-transform:uppercase; color:var(--muted)}
+.term pre{margin:0; border:0; border-radius:0; background:none; padding:12px 14px; font-size:13px}
+.term .p{color:var(--accent); user-select:none}
+
+/* spec list */
+.spec{display:grid; grid-template-columns:minmax(120px,auto) 1fr; gap:1px; margin:0 0 20px;
+  background:var(--line); border:1px solid var(--line); border-radius:var(--radius-sm); overflow:hidden}
+.spec dt,.spec dd{margin:0; padding:8px 12px; background:var(--bg)}
+.spec dt{font:600 var(--micro)/1.6 var(--font-label); letter-spacing:var(--track);
+  text-transform:uppercase; color:var(--muted)}
+.spec dd{font-size:var(--body-sm)}
+
+/* diagram: inline SVG, читает переменные темы */
+.diagram{margin:0 0 22px}
+.diagram svg{display:block; width:100%; height:auto; border:1px solid var(--line);
+  border-radius:var(--radius-sm); background:var(--bg)}
+.diagram .box{fill:var(--bg-soft); stroke:var(--line)}
+.diagram .is-bad{fill:var(--p0-bg); stroke:var(--p0-line)}
+.diagram .is-ok{fill:var(--ok-soft); stroke:var(--ok)}
+.diagram .arrow{stroke:var(--accent); stroke-width:1.5; fill:none}
+.diagram .head{fill:var(--accent); stroke:none}
+.diagram text{fill:var(--fg); font-family:var(--font-body); font-size:12.5px}
+.diagram .cap{fill:var(--muted); font-family:var(--font-label); font-size:9.5px;
+  letter-spacing:var(--track); text-transform:uppercase}
+@media print{ .diagram svg{break-inside:avoid} }
 
 /* task lists */
 article input[type=checkbox]{margin:0 8px 0 0; width:16px; height:16px; accent-color:var(--accent); transform:translateY(2px)}
@@ -228,7 +258,7 @@ article li.done{text-decoration:line-through; text-decoration-color:color-mix(in
 
 /* checklist summary */
 .check-summary{position:fixed; right:18px; bottom:18px; z-index:45; display:flex; align-items:center; gap:10px;
-  background:var(--bg); border:1px solid var(--line); var(--radius-sm); padding:8px 12px;
+  background:var(--bg); border:1px solid var(--line); border-radius:var(--radius-sm); padding:8px 12px;
   box-shadow:var(--shadow); font:500 11.5px/1.4 var(--font-mono); color:var(--muted)}
 .check-summary b{color:var(--fg)}
 .check-summary button{font:inherit; color:var(--accent); background:none; border:0; cursor:pointer; padding:0}
@@ -250,7 +280,7 @@ h2:hover .anchor, h3:hover .anchor, .anchor:focus-visible{opacity:1}
 /* pager + footer */
 .pager{display:flex; gap:10px; justify-content:space-between; max-width:var(--measure); margin:44px 0 0;
   padding-top:20px; border-top:1px solid var(--line)}
-.pager a{flex:1; padding:12px 14px; border:1px solid var(--line); var(--radius-sm); color:var(--fg)}
+.pager a{flex:1; padding:12px 14px; border:1px solid var(--line); border-radius:var(--radius-sm); color:var(--fg)}
 .pager a:hover{border-color:var(--accent); text-decoration:none; background:var(--accent-soft)}
 .pager .dir{display:block; font:600 10.5px/1.4 var(--font-mono);
   text-transform:uppercase; letter-spacing:var(--track); color:var(--muted)}
@@ -318,7 +348,7 @@ h2:hover .anchor, h3:hover .anchor, .anchor:focus-visible{opacity:1}
 /* table filter */
 .table-filter{display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin:0 0 10px}
 .table-filter button{font:500 11px/1.4 var(--font-mono); padding:4px 9px;
-  border:1px solid var(--line); var(--radius-xs); background:var(--bg); color:var(--muted); cursor:pointer}
+  border:1px solid var(--line); border-radius:var(--radius-xs); background:var(--bg); color:var(--muted); cursor:pointer}
 .table-filter button:hover{border-color:var(--accent); color:var(--fg)}
 .table-filter button[aria-pressed="true"]{background:var(--accent-soft); border-color:var(--accent);
   color:var(--accent-ink); font-weight:600}
@@ -332,14 +362,14 @@ h2:hover .anchor, h3:hover .anchor, .anchor:focus-visible{opacity:1}
 .profile-switch .nav-title{padding:0 2px 7px}
 .profile-switch .nav-title::before{content:none}
 .seg{display:flex; gap:3px; background:var(--bg); border:1px solid var(--line); border-radius:5px; padding:3px}
-.seg button{flex:1; font:inherit; font-size:11px; line-height:1.2; padding:6px 3px; border:0; var(--radius-badge);
+.seg button{flex:1; font:inherit; font-size:11px; line-height:1.2; padding:6px 3px; border:0; border-radius:var(--radius-badge);
   background:none; color:var(--muted); cursor:pointer}
 .seg button:hover{color:var(--fg)}
 .seg button[aria-pressed="true"]{background:var(--accent-soft); color:var(--accent-ink); font-weight:600; box-shadow:none}
 
 /* profile blocks */
 .profile{margin:26px 0 0; padding:14px 16px 6px;
-  border:1px solid color-mix(in srgb, var(--accent) 34%, var(--line)); var(--radius-sm);
+  border:1px solid color-mix(in srgb, var(--accent) 34%, var(--line)); border-radius:var(--radius-sm);
   background:color-mix(in srgb, var(--accent-soft) 50%, transparent)}
 .profile::before{display:block; font:700 10.5px/1.4 var(--font-mono);
   letter-spacing:var(--track); text-transform:uppercase; color:var(--accent-ink); margin-bottom:8px}
@@ -352,13 +382,12 @@ html[data-profile="elevated"] .profile.targeted{display:none}
 
 /* profile feedback */
 .profile-hint{font-size:11px; color:var(--muted); margin:6px 2px 0; line-height:1.35}
-.seg button .cnt{display:inline-block; min-width:14px; margin-left:4px; padding:0 4px; var(--radius-badge);
+.seg button .cnt{display:inline-block; min-width:14px; margin-left:4px; padding:0 4px; border-radius:var(--radius-badge);
   background:color-mix(in srgb, var(--muted) 18%, transparent); font-size:10px; line-height:14px; vertical-align:1px}
 .seg button[aria-pressed="true"] .cnt{background:var(--accent-soft); color:var(--accent-ink)}
 .seg button[data-count="0"] .cnt{opacity:.45}
 .toast{position:fixed; left:18px; bottom:18px; z-index:55; display:flex; align-items:center; gap:10px;
-  max-width:min(420px,calc(100vw - 36px)); padding:10px 14px; background:var(--bg); border:1px solid var(--line);
-  var(--radius-sm); box-shadow:var(--shadow); font-size:12.8px; color:var(--fg)}
+  max-width:min(420px,calc(100vw - 36px)); padding:10px 14px; background:var(--bg); border:1px solid var(--line); border-radius:var(--radius-sm); box-shadow:var(--shadow); font-size:12.8px; color:var(--fg)}
 .toast button{font:500 11px/1.4 var(--font-mono); color:var(--accent);
   background:none; border:0; cursor:pointer; padding:0}
 @media (max-width:520px){ .toast{left:10px; right:10px; bottom:64px; max-width:none} }

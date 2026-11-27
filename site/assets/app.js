@@ -294,7 +294,7 @@
 (function () {
   var root = document.documentElement;
   var order = { basic: 0, elevated: 1, targeted: 2 };
-  var btns = Array.prototype.slice.call(document.querySelectorAll('.profile-switch button'));
+  var btns = Array.prototype.slice.call(document.querySelectorAll('.profile-switch button[data-profile]'));
   if (!btns.length) return;
 
   var groups = {
@@ -447,7 +447,9 @@
     { id: '01', name: 'Кабинет' },
     { id: '02', name: 'Журнал' },
     { id: '03', name: 'Ночь' },
-    { id: '04', name: 'Эксперимент' }
+    { id: '04', name: 'Эксперимент' },
+    { id: '05', name: 'Хай-тек' },
+    { id: '06', name: 'Андеграунд' }
   ];
   var link = document.querySelector('link[data-theme-link]');
   var btns = Array.prototype.slice.call(document.querySelectorAll('[data-theme-btn]'));

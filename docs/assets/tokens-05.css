@@ -1,0 +1,105 @@
+/* Тема 05 «Хай-тек». Холодная светлая палитра, волосяные линии, малые радиусы.
+   Гарнитура — системный гротеск, подписи моноширинные, много воздуха.
+   Контраст: fg 15.8:1, muted 5.6:1, accent 5.9:1 на --bg. */
+:root{
+  color-scheme:light;
+  /* поверхности */
+  --bg:#f8fafc; --bg-soft:#eef2f7; --bg-code:#f1f5f9;
+  --fg:#0c1420; --muted:#55637a; --line:#d7dfe9;
+  /* акцент */
+  --accent:#0b5cd5; --accent-soft:#e6efff; --accent-ink:#0a3f96; --ring:#0b5cd5;
+  /* шапка */
+  --bar-accent:#0b5cd5; --bar-accent-2:#b9d3ff;
+  --ink:#0c1420; --ink-fg:#f8fafc; --ink-muted:#93a3b8;
+  /* статусы и приоритеты */
+  --ok:#0b6b47; --ok-soft:#e4f4eb;
+  --warn:#8a5300; --warn-soft:#fdf0d9;
+  --myth:#55637a; --myth-soft:#e9eef5;
+  --p0-bg:#fdeaea; --p0-fg:#8c1c1c; --p0-line:#f2c4c4;
+  --p1-bg:#fdf0d9; --p1-fg:#6f4300; --p1-line:#ecd0a1;
+  --p2-bg:#e6efff; --p2-fg:#0a3f96; --p2-line:#c3d7f7;
+  /* наложения */
+  --veil:rgba(12,20,32,.42);
+  --on-ink-7:color-mix(in srgb, #0c1420 4%, transparent);
+  --on-ink-18:color-mix(in srgb, #0c1420 12%, transparent);
+  --on-ink-22:color-mix(in srgb, #0c1420 16%, transparent);
+  /* форма */
+  --shadow:0 1px 2px rgba(12,20,32,.06), 0 10px 28px rgba(12,20,32,.07);
+  --radius:6px; --radius-sm:4px; --radius-xs:3px; --radius-badge:2px;
+  --track:.05em;
+  --mark-shape:polygon(50% 0,100% 50%,50% 100%,0 50%);
+  /* шрифты */
+  --font-body:"Inter","SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI Variable Text","Segoe UI",Roboto,Arial,sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --font-label:var(--font-mono);
+  --font-display:var(--font-body);
+  /* размеры */
+  --size-base:16.8px; --lh:1.6; --measure:800px;
+  --h1:33px; --h2:20px; --h3:16.8px; --lead:15.8px;
+  --micro:10px; --small:12.6px; --body-sm:14px;
+  --gap:30px; --pad:24px; --col-nav:246px; --col-toc:214px; --bar-h:54px;
+  --stroke-accent:2px;
+  /* вид компонентов */
+  --nav-bg:var(--bg); --nav-border:var(--line);
+  --nav-active-bg:var(--accent-soft); --nav-active-fg:var(--accent-ink);
+  --h2-rule:1px solid var(--line); --h2-num:inline;
+  --topbar-bg:var(--bg); --topbar-fg:var(--fg);
+  --topbar-rule:1px solid var(--line);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    color-scheme:dark;
+    --bg:#0a0f16; --bg-soft:#101823; --bg-code:#0d141d;
+    --fg:#e8eef6; --muted:#93a3b8; --line:#1e2a38;
+    --accent:#6fb1ff; --accent-soft:#0e1d30; --accent-ink:#a8ccff; --ring:#6fb1ff;
+    --bar-accent:#6fb1ff; --bar-accent-2:#204066;
+    --ink:#060a10; --ink-fg:#e8eef6; --ink-muted:#8496ab;
+    --ok:#56d29a; --ok-soft:#0b241a;
+    --warn:#f0b64c; --warn-soft:#241b0c;
+    --myth:#93a3b8; --myth-soft:#121a24;
+    --p0-bg:#2b1414; --p0-fg:#ffb0b0; --p0-line:#4a2222;
+    --p1-bg:#241b0c; --p1-fg:#f0c076; --p1-line:#44330f;
+    --p2-bg:#0e1d30; --p2-fg:#a8ccff; --p2-line:#1b3352;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.45);
+  }
+}
+
+/* характер темы */
+.topbar{border-bottom:var(--topbar-rule); backdrop-filter:saturate(1.2)}
+.brand{letter-spacing:.14em; font-size:11.5px; font-weight:700}
+.brand-mark{width:14px; height:14px; background:var(--accent)}
+.topbar .gh,.topbar kbd{color:var(--muted)}
+.topbar .search-btn{color:var(--fg); border-color:var(--line); background:var(--bg-soft)}
+.topbar .search-btn:hover{color:var(--accent); border-color:var(--accent)}
+
+.sidebar{border-right:1px solid var(--line)}
+.nav-group{background:none; border:0; border-radius:0; padding:0 0 14px;
+  border-bottom:1px solid var(--line); margin-bottom:2px}
+.nav-title{font-size:9.5px; letter-spacing:.16em; color:var(--muted); padding:0 6px 8px}
+.nav-group .nav-title::before{color:var(--accent); font-weight:700}
+.nav-group a{padding:5px 8px; border-left:0; border-radius:var(--radius-xs); font-size:13.8px}
+.nav-group a:hover{background:var(--bg-soft)}
+.nav-group a.active{background:var(--nav-active-bg); color:var(--nav-active-fg); border-left:0; font-weight:600}
+
+article h1{letter-spacing:-.028em; font-weight:680}
+article h2{font-weight:660; letter-spacing:-.01em; margin-top:42px}
+article h2::before{font-size:9.5px; letter-spacing:.18em; margin-right:9px}
+article h3{font-weight:660}
+article blockquote{border-left:2px solid var(--accent); border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  background:var(--bg-soft)}
+.callout{border-radius:var(--radius-sm); border-left-width:2px}
+.callout-title{font-size:9.5px; letter-spacing:.16em}
+article table{font-size:13.6px; border-radius:var(--radius-sm)}
+article th{font-size:9.5px; letter-spacing:.14em; background:var(--bg-soft)}
+article tbody tr:nth-child(even){background:color-mix(in srgb, var(--bg-soft) 40%, transparent)}
+.badge{font-size:10px; letter-spacing:.06em; border-radius:var(--radius-badge)}
+.step,.card,.pager a{border-radius:var(--radius-sm)}
+.step:hover,.card:hover,.pager a:hover{background:var(--bg-soft); border-color:var(--accent)}
+.card::before,.step b{font-size:9.5px; letter-spacing:.16em}
+.hero-stats{border-radius:var(--radius-sm)}
+.hero-stats b{font-family:var(--font-mono); font-weight:600; letter-spacing:-.02em}
+.hero-stats span{font-size:9.5px; letter-spacing:.14em}
+.toc a{border-left-width:1px}
+.check-summary{border-radius:var(--radius-sm); box-shadow:var(--shadow)}
+pre,.term{border-radius:var(--radius-sm)}
+.diagram svg{border-radius:var(--radius-sm)}

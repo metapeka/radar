@@ -1,0 +1,112 @@
+/* Тема 06 «Андеграунд». Тёмный терминал: фосфорный акцент, моноширинный набор,
+   прямые углы, пунктирные линии, лёгкие сканлайны. Всегда тёмная.
+   Контраст: fg 13.9:1, muted 5.6:1, accent 11.2:1 на --bg. */
+:root{
+  color-scheme:dark;
+  /* поверхности */
+  --bg:#06080a; --bg-soft:#0c1114; --bg-code:#0a0f12;
+  --fg:#dbe6dd; --muted:#8fa196; --line:#20302a;
+  /* акцент */
+  --accent:#4fe08c; --accent-soft:#0d2117; --accent-ink:#a6f5c6; --ring:#4fe08c;
+  /* шапка */
+  --bar-accent:#4fe08c; --bar-accent-2:#123a25;
+  --ink:#040607; --ink-fg:#dbe6dd; --ink-muted:#7f9187;
+  /* статусы и приоритеты */
+  --ok:#4fe08c; --ok-soft:#0d2117;
+  --warn:#e8b64a; --warn-soft:#221a09;
+  --myth:#8fa196; --myth-soft:#101619;
+  --p0-bg:#2a1010; --p0-fg:#ff9d9d; --p0-line:#4a1d1d;
+  --p1-bg:#221a09; --p1-fg:#e8c47a; --p1-line:#41310f;
+  --p2-bg:#0b1d19; --p2-fg:#7fe0c4; --p2-line:#173a31;
+  /* наложения */
+  --veil:rgba(2,4,4,.82);
+  --on-ink-7:color-mix(in srgb, #4fe08c 6%, transparent);
+  --on-ink-18:color-mix(in srgb, #4fe08c 16%, transparent);
+  --on-ink-22:color-mix(in srgb, #4fe08c 22%, transparent);
+  /* форма */
+  --shadow:0 0 0 1px var(--line), 0 20px 50px rgba(0,0,0,.8);
+  --radius:0px; --radius-sm:0px; --radius-xs:0px; --radius-badge:2px;
+  --track:.1em;
+  --mark-shape:polygon(0 0,100% 0,100% 70%,50% 100%,0 70%);
+  /* шрифты */
+  --font-body:"Berkeley Mono","JetBrains Mono","IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --font-mono:var(--font-body);
+  --font-label:var(--font-body);
+  --font-display:var(--font-body);
+  /* размеры */
+  --size-base:15px; --lh:1.64; --measure:820px;
+  --h1:28px; --h2:18px; --h3:15.4px; --lead:14.6px;
+  --micro:10px; --small:12.2px; --body-sm:13.4px;
+  --gap:24px; --pad:20px; --col-nav:240px; --col-toc:200px; --bar-h:50px;
+  --stroke-accent:2px;
+  /* вид компонентов */
+  --nav-bg:var(--bg); --nav-border:var(--line);
+  --nav-active-bg:var(--accent-soft); --nav-active-fg:var(--accent-ink);
+  --h2-rule:1px dashed var(--line); --h2-num:inline;
+  --topbar-bg:var(--bg); --topbar-fg:var(--accent);
+  --topbar-rule:1px dashed var(--line);
+}
+
+/* сканлайны: 1px каждые 4px, 3% акцента. Не мешает чтению, отключаются в печати. */
+body::before{
+  content:""; position:fixed; inset:0; z-index:1; pointer-events:none;
+  background:repeating-linear-gradient(180deg,
+    color-mix(in srgb, var(--accent) 3%, transparent) 0 1px, transparent 1px 4px);
+}
+@media print{ body::before{display:none} }
+
+.topbar{border-bottom:var(--topbar-rule)}
+.brand{letter-spacing:.18em; font-size:10.5px; color:var(--accent); font-weight:700}
+.brand-mark{width:12px; height:14px; background:var(--accent)}
+.topbar .gh,.topbar kbd{color:var(--muted)}
+.topbar .search-btn{color:var(--fg); border:1px solid var(--line); border-radius:0; background:var(--bg-soft)}
+.topbar .search-btn:hover{color:var(--accent); border-color:var(--accent)}
+
+.sidebar{border-right:1px dashed var(--line)}
+.nav-group{background:none; border:0; border-radius:0; padding:0 0 12px;
+  border-bottom:1px dashed var(--line)}
+.nav-title{color:var(--accent); font-size:9.5px; letter-spacing:.2em}
+.nav-group .nav-title::before{content:"0x" counter(grp,decimal-leading-zero); color:var(--muted)}
+.nav-group a{font-size:12.6px; padding:4px 8px; border-left:1px solid transparent; border-radius:0}
+.nav-group a:hover{background:var(--bg-soft); color:var(--accent)}
+.nav-group a.active{background:var(--accent-soft); border-left:2px solid var(--accent);
+  color:var(--accent-ink)}
+.crumbs{letter-spacing:.14em}
+.crumbs a{color:var(--muted)}
+
+article h1{letter-spacing:-.02em; font-weight:700}
+article h1::before{content:"> "; color:var(--accent)}
+article h2{letter-spacing:-.01em; padding-top:8px}
+article h2::before{content:"[" counter(sec,decimal-leading-zero) "]"; color:var(--accent);
+  margin-right:8px; letter-spacing:.06em}
+article h3{font-weight:700; color:var(--accent-ink)}
+article blockquote{border-left:2px solid var(--accent); border-radius:0; background:var(--bg-soft)}
+article blockquote p{font-size:var(--lead)}
+article a{text-decoration-style:dotted; text-underline-offset:3px}
+article strong{color:var(--accent-ink); font-weight:700}
+article li::marker{color:var(--accent); content:"» "}
+.callout{border-radius:0; border-left:2px solid var(--line); border-bottom:1px dashed var(--line)}
+.callout-title{font-size:9.5px; letter-spacing:.18em}
+.callout-title::before{content:"// "}
+article table{font-size:12.8px; border-radius:0}
+article th{font-size:9.5px; letter-spacing:.16em; color:var(--accent); background:var(--bg-soft)}
+article td{border-top:1px dashed var(--line)}
+article tbody tr:nth-child(even){background:color-mix(in srgb, var(--bg-soft) 60%, transparent)}
+.badge{font-size:9.5px; letter-spacing:.1em; border-radius:2px}
+.card,.step,.pager a{border-radius:0; border-style:dashed}
+.card::before,.step b{letter-spacing:.16em}
+.card:hover,.step:hover,.pager a:hover{background:var(--accent-soft); border-color:var(--accent); border-style:solid}
+.hero-stats{border-radius:0; border-style:dashed}
+.hero-stats b{font-size:22px; color:var(--accent)}
+.hero-stats span{font-size:9.5px; letter-spacing:.14em}
+.term{border-radius:0}
+.term-bar{border-bottom:1px dashed var(--line)}
+.term-bar i{background:var(--accent); border-radius:0; opacity:.7}
+.spec{border-radius:0}
+.spec dt{color:var(--accent)}
+.diagram svg{border-radius:0}
+.toc{border-left:1px dashed var(--line)}
+.toc a{border-left:1px solid transparent}
+.toc a:hover{border-left-color:var(--accent)}
+.check-summary{border-radius:0; border-style:dashed}
+:where(a,button,input,select,textarea,[tabindex]):focus-visible{outline-style:dashed}

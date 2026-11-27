@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Элементы — Личная безопасность и мессенджеры</title>
+<meta name="description" content="Страница для проверки оформления: здесь собраны все компоненты вики. Переключите тему в сайдбаре — «Кабинет», «Журнал», «Ночь», «Эксперимент», «Хай-тек», «Андеграунд» — и сравните,">
+<meta name="color-scheme" content="light dark">
+<script>try{var q=new URLSearchParams(location.search).get('theme');var t=q||localStorage.getItem('theme');if(!/^0[1-6]$/.test(t||''))t='01';document.documentElement.dataset.theme=t;if(t!=='01'){var l=document.querySelector('link[data-theme-link]');l.href=l.href.replace('tokens-01.css','tokens-'+t+'.css');}}catch(e){document.documentElement.dataset.theme='01';}</script>
+<script>try{var p=localStorage.getItem('profile');if(p!=='elevated'&&p!=='targeted')p='basic';document.documentElement.dataset.profile=p;}catch(e){document.documentElement.dataset.profile='basic';}</script>
+<link rel="stylesheet" href="assets/style.css?v=2611270305">
+<link rel="stylesheet" href="assets/tokens-01.css?v=2611270305" data-theme-link="1">
+<link rel="alternate" type="application/atom+xml" title="Обновления сайта" href="feed-updates.xml">
+<link rel="alternate" type="application/atom+xml" title="Сводка за неделю" href="feed-digest.xml">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23245fda'/%3E%3Cpath d='M16 6l8 3v7c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V9l8-3z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span></button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span> Личная безопасность</a>
+  <div class="topbar-right">
+    <button class="search-btn" id="searchBtn" aria-haspopup="dialog">Поиск <kbd aria-hidden="true">/</kbd></button>
+    <a class="gh" href="https://github.com/metapeka/whatsapp-security-research" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="profile-switch">
+      <div class="nav-title">Профиль риска</div>
+      <div class="seg" role="radiogroup" aria-label="Профиль риска">
+        <button type="button" data-profile="basic" aria-pressed="true">Обычный</button>
+        <button type="button" data-profile="elevated" aria-pressed="false">Повыш.</button>
+        <button type="button" data-profile="targeted" aria-pressed="false">Целевой</button>
+      </div>
+      <div class="profile-hint" aria-live="polite"></div>
+    </div>
+    <div class="profile-switch theme-switch">
+      <div class="nav-title">Тема</div>
+      <div class="seg" role="radiogroup" aria-label="Тема оформления">
+        <button type="button" data-theme-btn="01" aria-pressed="true" title="Тема 01, Ctrl+Alt+1">01</button>
+        <button type="button" data-theme-btn="02" aria-pressed="false" title="Тема 02, Ctrl+Alt+2">02</button>
+        <button type="button" data-theme-btn="03" aria-pressed="false" title="Тема 03, Ctrl+Alt+3">03</button>
+        <button type="button" data-theme-btn="04" aria-pressed="false" title="Тема 04, Ctrl+Alt+4">04</button>
+        <button type="button" data-theme-btn="05" aria-pressed="false" title="Тема 05, Ctrl+Alt+5">05</button>
+        <button type="button" data-theme-btn="06" aria-pressed="false" title="Тема 06, Ctrl+Alt+6">06</button>
+      </div>
+      <div class="profile-hint">Ссылка вида <code>?theme=02</code> открывает тему 02 у всех, кому её дадите.</div>
+    </div>
+    <nav aria-label="Разделы"><div class="nav-group"><div class="nav-title">Начало</div><a href="index.html">Обзор</a><a href="services.html">Каталог сервисов</a><a href="about.html">О проекте</a><a href="threat-model.html">Модель угроз</a><a href="methodology.html">Методика</a><a href="sources.html">Здоровье источников</a><a href="charts.html">Данные</a><a href="digest.html">Сводка</a><a href="updates.html">Обновления</a><a href="styleguide.html" class="active" aria-current="page">Элементы</a></div>
+<div class="nav-group"><div class="nav-title">Мессенджеры</div><a href="comparison.html">Сравнение</a><a href="whatsapp.html">WhatsApp</a><a href="telegram.html">Telegram</a><a href="signal.html">Signal</a><a href="max.html">MAX</a><a href="max-research.html">MAX: разбор</a></div>
+<div class="nav-group"><div class="nav-title">Платформы</div><a href="macos.html">macOS</a><a href="windows.html">Windows</a><a href="linux.html">Linux</a><a href="ios.html">iOS</a><a href="android.html">Android</a></div>
+<div class="nav-group"><div class="nav-title">Семья</div><a href="fam-phone.html">Телефон за 15 минут</a><a href="fam-detect.html">Какой у меня телефон</a><a href="push.html">Пуши и обман</a><a href="fam-parent.html">Чек-лист для родителя</a></div>
+<div class="nav-group"><div class="nav-title">Практика</div><a href="network.html">Сеть и периметр</a><a href="monitoring.html">Мониторинг</a><a href="passwords.html">Менеджеры паролей</a><a href="breaches.html">Проверка утечек</a><a href="mail.html">Почта</a><a href="browsers.html">Браузеры</a><a href="routers.html">Роутер</a><a href="app-analysis.html">Анализ приложений</a><a href="lab-bench.html">Стенд для анализа</a><a href="incident-response.html">Реагирование</a><a href="diagnostics-ai.html">Диагностика с AI</a><a href="iphone-lab.html">iPhone как стенд</a></div></nav>
+    <div class="sidebar-foot">Версия 0.4 · 23.11.2026</div>
+  </aside>
+
+  <main id="main" class="content">
+    <article>
+      <div class="crumbs"><a href="index.html">Главная</a><span class="sep">/</span><span>Начало</span><span class="sep">/</span><span class="here">Элементы</span></div>
+      <h1>Элементы</h1><p class="verified"><time datetime="2026-11-27">проверено 27.11.2026</time></p>
+      <blockquote>
+<p>Страница для проверки оформления: здесь собраны все компоненты вики. Переключите тему в сайдбаре — «Кабинет», «Журнал», «Ночь», «Эксперимент», «Хай-тек», «Андеграунд» — и сравните, как один и тот же HTML выглядит в каждой.</p>
+</blockquote>
+<div class="callout note"><span class="callout-title">Контекст</span>
+<p>Это служебная страница. Она показывает, из чего собираются обычные разделы, и помогает проверять темы. Читателю вики она не нужна, автору — нужна: здесь видно, что сломалось в вёрстке, до того как это заметят на странице про WhatsApp.</p>
+</div>
+<h2 id="типографика">Типографика</h2>
+<p>Обычный абзац с <strong>выделением</strong>, <code>кодом внутри строки</code> и <a href="methodology.html">ссылкой на раздел</a>. Длина строки ограничена переменной <code>--measure</code>, поэтому текст не расползается на широком мониторе.</p>
+<h3 id="подзаголовок-третьего-уровня">Подзаголовок третьего уровня</h3>
+<p>Список — для перечислений, не для прозы:</p>
+<ul>
+<li>первый пункт, короткий;</li>
+<li>второй пункт с пояснением, которое занимает одну строку;</li>
+<li>третий пункт, где есть <code>путь → к → настройке</code>.</li>
+</ul>
+<p>Нумерованный список — когда важен порядок:</p>
+<ol type="1">
+<li>Сначала действие, которое нельзя отложить.</li>
+<li>Потом то, что можно сделать в течение суток.</li>
+<li>В конце — гигиена.</li>
+</ol>
+<p>Цитата-лид стоит под заголовком страницы и задаёт рамку. Она собрана из того же текста, что и остальное, но с отступом и левой линией.</p>
+<h2 id="таблицы-и-приоритеты">Таблицы и приоритеты</h2>
+<p>Приоритеты в таблицах собираются автоматически: в Markdown пишется <code>P0</code>, в HTML приходит цветной чип.</p>
+<table tabindex="0" aria-label="Таблицы и приоритеты">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Действие</th>
+<th scope="col">Кому нужно</th>
+<th scope="col">Приоритет</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Двухшаговая проверка в мессенджере</td>
+<td>всем</td>
+<td><span class="badge p0">P0</span></td>
+</tr>
+<tr class="even">
+<td>Резервная копия со сквозным шифрованием</td>
+<td>всем</td>
+<td><span class="badge p0">P0</span></td>
+</tr>
+<tr class="odd">
+<td>Проверка связанных устройств раз в месяц</td>
+<td>всем</td>
+<td><span class="badge p1">P1</span></td>
+</tr>
+<tr class="even">
+<td>Отдельный номер для чувствительных сервисов</td>
+<td>повышенный профиль</td>
+<td><span class="badge p2">P2</span></td>
+</tr>
+</tbody>
+</table>
+<p>Таблица прокручивается по горизонтали, если не влезает, и получает <code>aria-label</code> из ближайшего заголовка. На телефоне заголовки не ломаются на две строки.</p>
+<h2 id="блоки">Блоки</h2>
+<h3 id="callout">Callout</h3>
+<p>Четыре типа, различаются цветом полосы и подписью.</p>
+<div class="callout note"><span class="callout-title">Контекст</span>
+<p>Контекст. Сюда попадает то, что помогает понять пункт, но не является самим действием.</p>
+</div>
+<div class="callout warning"><span class="callout-title">Важно</span>
+<p>Важно. Риск потери данных или доступа: ключ невосстановим, аккаунт не вернуть, деньги уходят сразу.</p>
+</div>
+<div class="callout ok"><span class="callout-title">Проверено</span>
+<p>Проверено. Так работает, это подтверждено на живой версии.</p>
+</div>
+<div class="callout myth"><span class="callout-title">Миф</span>
+<p>Миф. Разбор распространённого заблуждения — например, что перегрев телефона означает слежку.</p>
+</div>
+<h3 id="терминал">Терминал</h3>
+<p>Команда с подписью окна. Подпись — моноширинная, точка-индикатор берёт цвет линии темы.</p>
+<div class="term">
+<div class="term-bar">
+<i></i><i></i><i></i><span>bash</span>
+</div>
+<pre><code><span class="p">$</span> python3 tools/build_site.py
+собрано страниц: 36 → docs
+<span class="p">$</span> python3 tools/check_themes.py
+темы: проверка пройдена</code></pre>
+</div>
+<p>Длинная строка внутри блока прокручивается, а не вылезает за край страницы.</p>
+<h3 id="список-характеристик">Список характеристик</h3>
+<p>Пары «поле — значение» без таблицы. Удобно для паспорта пункта или устройства.</p>
+<dl class="spec">
+<dt>
+Устройство
+</dt>
+<dd>
+iPhone 13, iOS 18.7.12
+</dd>
+<dt>
+Угроза
+</dt>
+<dd>
+T0 — массовая, автоматика
+</dd>
+<dt>
+Цена
+</dt>
+<dd>
+1 из 3: меняет привычку, не ломает сценарий
+</dd>
+<dt>
+Проверено
+</dt>
+<dd>
+23.11.2026
+</dd>
+</dl>
+<h2 id="таймлайн">Таймлайн</h2>
+<p>Последовательность событий. Каждый пункт раскрывается нативным <code>&lt;details&gt;</code> — работает без JavaScript.</p>
+<ol class="timeline">
+<li>
+<details class="tl">
+<summary>
+<time datetime="2025-08-19">19 августа 2025</time> <span class="tl-title">Первый разбор приложения</span> <span class="tl-note">Статический анализ без запуска</span>
+</summary>
+<div class="tl-body">
+<p>
+Что нашли, чем проверяли и что это значит для пользователя. Внутри можно держать таблицу и список источников.
+</p>
+</div>
+</details>
+</li>
+<li>
+<details class="tl">
+<summary>
+<time datetime="2026-03-06">6 марта 2026</time> <span class="tl-title">Обновление вывода после проверки</span> <span class="tl-note">Один источник, статус «не подтверждено»</span>
+</summary>
+<div class="tl-body">
+<p>
+Что изменилось и почему прошлый вывод пришлось поправить. Ссылка на источник обязательна.
+</p>
+</div>
+</details>
+</li>
+</ol>
+<h2 id="чек-лист">Чек-лист</h2>
+<p>Отметки сохраняются в браузере, счётчик «сделано N из M» появляется сам. На печати счётчик становится обычным блоком над списком.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />Пункт, который человек отмечает сам</label></li>
+<li><label><input type="checkbox" />Второй пункт, с путём в меню: Настройки → Безопасность</label></li>
+<li><label><input type="checkbox" />Третий пункт, который можно отложить</label></li>
+</ul>
+<h2 id="схема">Схема</h2>
+<p>Инлайн-SVG читает переменные темы: фон, линии, акцент и статусы меняются вместе с оформлением. Такую схему можно вставлять в любую страницу.</p>
+<figure class="diagram">
+<svg viewBox="0 0 720 200" role="img" aria-label="Схема: сообщение со ссылкой ведёт к установке APK и выдаче разрешений; установка из магазина обрывает цепочку">
+<rect class="box" x="8" y="34" width="150" height="56" rx="4"/> <text x="83" y="58" text-anchor="middle">Сообщение</text> <text class="cap" x="83" y="76" text-anchor="middle">«обновите»</text> <path class="arrow" d="M158 62 H196"/> <polygon class="head" points="196,62 188,58 188,66"/> <rect class="is-bad" x="196" y="34" width="150" height="56" rx="4"/> <text x="271" y="58" text-anchor="middle">Файл .apk</text> <text class="cap" x="271" y="76" text-anchor="middle">не из магазина</text> <path class="arrow" d="M346 62 H384"/> <polygon class="head" points="384,62 376,58 376,66"/> <rect class="is-bad" x="384" y="34" width="150" height="56" rx="4"/> <text x="459" y="58" text-anchor="middle">Разрешения</text> <text class="cap" x="459" y="76" text-anchor="middle">экран, уведомления</text> <path class="arrow" d="M534 62 H572"/> <polygon class="head" points="572,62 564,58 564,66"/> <rect class="is-bad" x="572" y="34" width="140" height="56" rx="4"/> <text x="642" y="58" text-anchor="middle">Доступ</text> <text class="cap" x="642" y="76" text-anchor="middle">банк, коды</text> <rect class="is-ok" x="196" y="126" width="150" height="48" rx="4"/> <text x="271" y="146" text-anchor="middle">Магазин</text> <text class="cap" x="271" y="162" text-anchor="middle">проверено</text> <path class="arrow" d="M271 90 V126"/> <polygon class="head" points="271,126 267,118 275,118"/> <text class="cap" x="8" y="188" text-anchor="start">Верхняя ветка — типовой сценарий заражения. Нижняя — точка, где цепочка обрывается.</text>
+</svg>
+<figcaption>
+Схема собрана из прямоугольников, линий и подписей; цвета берутся из темы.
+</figcaption>
+</figure>
+<h2 id="карточки-и-шаги">Карточки и шаги</h2>
+<div class="steps">
+<p><a class="step" href="fam-detect.html"><b>Шаг 01</b><span>Определить устройство и версию</span><em>2 минуты</em></a> <a class="step" href="fam-phone.html"><b>Шаг 02</b><span>Пройти восемь пунктов</span><em>15 минут</em></a> <a class="step" href="fam-parent.html"><b>Шаг 03</b><span>Настроить телефон родителя</span><em>20 минут</em></a></p>
+</div>
+<div class="cards">
+<p><a class="card" href="push.html"><b>Пуши и обман</b><span>Откуда реклама и как найти источник</span></a> <a class="card" href="android.html"><b>Android</b><span>Пять опасных разрешений</span></a></p>
+</div>
+<h2 id="как-это-использовать">Как это использовать</h2>
+<p>Компоненты — обычный HTML в Markdown. Сборка пропускает его как есть.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;term&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;term-bar&quot;</span><span class="dt">&gt;&lt;</span><span class="kw">i</span><span class="dt">&gt;&lt;/</span><span class="kw">i</span><span class="dt">&gt;&lt;</span><span class="kw">i</span><span class="dt">&gt;&lt;/</span><span class="kw">i</span><span class="dt">&gt;&lt;</span><span class="kw">i</span><span class="dt">&gt;&lt;/</span><span class="kw">i</span><span class="dt">&gt;&lt;</span><span class="kw">span</span><span class="dt">&gt;</span>bash<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">pre</span><span class="dt">&gt;&lt;</span><span class="kw">code</span><span class="dt">&gt;&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;p&quot;</span><span class="dt">&gt;</span>$<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> команда<span class="dt">&lt;/</span><span class="kw">code</span><span class="dt">&gt;&lt;/</span><span class="kw">pre</span><span class="dt">&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">dl</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;spec&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">dt</span><span class="dt">&gt;</span>Поле<span class="dt">&lt;/</span><span class="kw">dt</span><span class="dt">&gt;&lt;</span><span class="kw">dd</span><span class="dt">&gt;</span>Значение<span class="dt">&lt;/</span><span class="kw">dd</span><span class="dt">&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">dl</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>Правило одно: в этих блоках не должно быть своих цветов и размеров. Всё берётся из переменных темы, иначе новая тема их не перекрасит и компонент выпадет из оформления.</p>
+<h2 id="что-проверять-при-смене-темы">Что проверять при смене темы</h2>
+<ul>
+<li>Таблица не ломается на узком экране, заголовки читаются.</li>
+<li>Чипы P0–P2 различимы и не сливаются с фоном.</li>
+<li>Терминал: подпись окна и текст команды контрастны.</li>
+<li>Схема: подписи не наезжают на линии, стрелки видны.</li>
+<li>Чек-лист: отметка видна, зачёркивание не мешает прочитать пункт.</li>
+<li>На печати: блок «сделано N из M» на месте, служебные кнопки скрыты.</li>
+</ul>
+<blockquote>
+<p>Страница не входит в маршрут читателя: она для автора. Если компонент меняется — меняйте его здесь первым, потом на страницах.</p>
+</blockquote>
+
+    </article>
+    <nav class="pager" aria-label="Соседние разделы"><a class="prev" href="updates.html"><span class="dir">Назад</span>Обновления</a><a class="next" href="comparison.html"><span class="dir">Дальше</span>Сравнение</a></nav>
+    <footer class="foot">
+      Материал носит защитный характер: описываются угрозы и меры противодействия, без инструкций по атакам.
+      <a href="about.html">Как устроен проект и откуда факты</a>.
+      Проверяйте версии ОС — названия пунктов меняются между релизами.
+      Ленты: <a href="feed-updates.xml">обновления</a>, <a href="feed-digest.xml">сводка</a>.
+    </footer>
+  </main>
+
+  <nav class="toc" aria-label="Содержание страницы">
+    <div class="toc-title">На странице</div>
+    <a class="d2" href="#типографика">Типографика</a>
+<a class="d3" href="#подзаголовок-третьего-уровня">Подзаголовок третьего уровня</a>
+<a class="d2" href="#таблицы-и-приоритеты">Таблицы и приоритеты</a>
+<a class="d2" href="#блоки">Блоки</a>
+<a class="d3" href="#callout">Callout</a>
+<a class="d3" href="#терминал">Терминал</a>
+<a class="d3" href="#список-характеристик">Список характеристик</a>
+<a class="d2" href="#таймлайн">Таймлайн</a>
+<a class="d2" href="#чек-лист">Чек-лист</a>
+<a class="d2" href="#схема">Схема</a>
+<a class="d2" href="#карточки-и-шаги">Карточки и шаги</a>
+<a class="d2" href="#как-это-использовать">Как это использовать</a>
+<a class="d2" href="#что-проверять-при-смене-темы">Что проверять при смене темы</a>
+  </nav>
+</div>
+
+<div class="search-modal" id="searchModal" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <input id="searchInput" type="search" placeholder="Найти раздел, настройку, команду…" autocomplete="off" spellcheck="false" aria-label="Поиск по сайту">
+    <div id="searchResults" class="search-results" role="listbox" aria-live="polite" aria-label="Результаты поиска"></div>
+    <div class="search-hint">Esc — закрыть · Enter — перейти · ↑↓ — выбор</div>
+  </div>
+</div>
+
+<script src="assets/search-index.js?v=2611270305"></script>
+<script src="assets/app.js?v=2611270305"></script>
+</body>
+</html>
